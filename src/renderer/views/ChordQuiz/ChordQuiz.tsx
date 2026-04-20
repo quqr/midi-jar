@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import useQuiz, { STATUSES, Game } from 'renderer/hooks/useQuiz';
@@ -15,6 +16,7 @@ const cx = classnames.bind(styles);
 
 const ChordQuiz: React.FC = () => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const quizSettings = settings.chordQuiz;
   const notationSettings = settings.notation;
@@ -72,7 +74,7 @@ const ChordQuiz: React.FC = () => {
   if (!games.length)
     return (
       <div id="ChordQuiz" className={cx('base')}>
-        Game will start
+        {t('chordQuiz.gameWillStart')}
       </div>
     );
 
@@ -123,7 +125,11 @@ const ChordQuiz: React.FC = () => {
         <div className={cx('progress')}>
           {gameState.index + 1} / {games[gameState.gameIndex].chords.length}
         </div>
-        {quizSettings.gamification && <div className={cx('score')}>{gameState.score} pts</div>}
+        {quizSettings.gamification && (
+          <div className={cx('score')}>
+            {gameState.score} {t('chordQuiz.pts')}
+          </div>
+        )}
         <div className={cx('playedChord')}>
           <ChordName chord={gameState.chord} notation={quizSettings.chordNotation} />
         </div>

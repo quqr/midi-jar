@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import { Note } from 'tonal';
 import { Tab, TabList } from '@la-jarre-a-son/ui';
 
@@ -27,10 +28,12 @@ const ChordDictionaryChromaMenu: React.FC<Props> = ({
   onSelect,
   filterChordsInKey,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <TabList
       className={cx('chromanav')}
-      aria-label="Chroma Navigation"
+      aria-label={t('chordDictionary.chromaNavigation')}
       direction="vertical"
       variant="ghost"
       block

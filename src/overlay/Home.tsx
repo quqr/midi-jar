@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import {
   Grid,
@@ -20,42 +21,41 @@ import { useSettings } from 'renderer/contexts/Settings';
 
 const Home: React.FC = () => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <Container size="xl" className="Home">
-      <img className="Home-logo" src={logo} alt="MIDI Jar" />
-      <h1>MIDI Jar Overlay</h1>
-      <p>
-        You can use this local website as a BrowserSource in OBS to integrate MIDI Jar as an
-        overlay, or load it on another device to use MIDI Jar remotely.Settings can be edited
-        directly through the main application.
-      </p>
+      <img className="Home-logo" src={logo} alt={t('overlay.midiJar')} />
+      <h1>{t('overlay.midiJarOverlay')}</h1>
+      <p>{t('overlay.description')}</p>
       <Grid size="md" gap="md">
         {settings.chordDisplay.map((module) => (
           <Card outlined elevation={1}>
-            <CardThumbnail alt="Chord Display preview" src={ThumbnaildChordDisplay}>
+            <CardThumbnail alt={t('home.chordDisplayPreview')} src={ThumbnaildChordDisplay}>
               <CardThumbnailOverlay as={NavLink} to={`/chords/${module.id}`} interactive />
             </CardThumbnail>
-            <CardHeader left={<Icon name="music" />}>Chord Display ({module.id})</CardHeader>
+            <CardHeader left={<Icon name="music" />}>
+              {t('nav.chordDisplayWithId', { moduleId: module.id })}
+            </CardHeader>
           </Card>
         ))}
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Chord Quiz preview" src={ThumbnaildChordQuiz}>
+          <CardThumbnail alt={t('home.chordQuizPreview')} src={ThumbnaildChordQuiz}>
             <CardThumbnailOverlay as={NavLink} to="/quiz" interactive />
           </CardThumbnail>
-          <CardHeader left={<Icon name="quiz" />}>Chord Quiz</CardHeader>
+          <CardHeader left={<Icon name="quiz" />}>{t('nav.chordQuiz')}</CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Circle of Fifths preview" src={ThumbnaildCircleOfFifths}>
+          <CardThumbnail alt={t('home.circleOfFifthsPreview')} src={ThumbnaildCircleOfFifths}>
             <CardThumbnailOverlay as={NavLink} to="/circle-of-fifths" interactive />
           </CardThumbnail>
-          <CardHeader left={<Icon name="circle-of-fifths" />}>Circle of Fifths</CardHeader>
+          <CardHeader left={<Icon name="circle-of-fifths" />}>{t('nav.circleOfFifths')}</CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Chord Dictionary preview" src={ThumbnaildChordDictionary}>
+          <CardThumbnail alt={t('home.chordDictionaryPreview')} src={ThumbnaildChordDictionary}>
             <CardThumbnailOverlay as={NavLink} to="/chord-dictionary" interactive />
           </CardThumbnail>
-          <CardHeader left={<Icon name="dictionary" />}>Chord Dictionary</CardHeader>
+          <CardHeader left={<Icon name="dictionary" />}>{t('nav.chordDictionary')}</CardHeader>
         </Card>
       </Grid>
     </Container>

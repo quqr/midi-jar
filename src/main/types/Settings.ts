@@ -91,6 +91,7 @@ export type ServerSettings = {
 export type GeneralSettings = {
   launchAtStartup: boolean;
   startMinimized: boolean;
+  language: 'en' | 'zh-CN';
 };
 
 export type Settings = {

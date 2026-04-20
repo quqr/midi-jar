@@ -1,10 +1,21 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import { useServerState } from 'renderer/contexts/ServerState';
 
-import { Box, Container, FormControlLabel, Switch, Input, FormFieldset } from '@la-jarre-a-son/ui';
+import {
+  Box,
+  Container,
+  FormControlLabel,
+  Switch,
+  Input,
+  FormFieldset,
+  Select,
+} from '@la-jarre-a-son/ui';
+
+import { supportedLanguages } from 'locales/i18n';
 
 import styles from './GeneralSettings.module.scss';
 
@@ -13,6 +24,19 @@ const cx = classnames.bind(styles);
 const GeneralSettings: React.FC = () => {
   const { settings, updateSetting } = useSettings();
   const { state, enable } = useServerState();
+  const { t, i18n } = useTranslation();
+
+  const getServerStatus = () => {
+    if (state.error) return t('settings.generalSettings.serverErrored', { error: state.error });
+    if (state.started) return t('settings.generalSettings.serverRunning', { port: state.port });
+    return t('settings.generalSettings.serverStopped');
+  };
+
+  const handleLanguageChange = (value: string) => {
+    updateSetting('general.language', value);
+    i18n.changeLanguage(value);
+    window.app.changeLanguage(value);
+  };
 
   return (
     <>
@@ -23,12 +47,10 @@ const GeneralSettings: React.FC = () => {
         })}
         pad="md"
       >
-        {!state.error && state.started && `Server is currently running on port ${state.port}`}
-        {!state.error && !state.started && 'Server is currently stopped'}
-        {state.error && `Server has errored: ${state.error}`}
+        {getServerStatus()}
         {state.started && !!state.addresses.length && (
           <div className={cx('serverUrlContainer')}>
-            {'You can access it through: '}
+            {t('settings.generalSettings.accessThrough')}
             {state.addresses.flatMap((address, index) => {
               const url = `http://${address}:${state.port}/`;
 
@@ -45,27 +67,43 @@ const GeneralSettings: React.FC = () => {
         )}
       </Box>
       <Container size="md">
-        <FormFieldset label="Startup">
-          <FormControlLabel label="Launch At Startup" reverse>
+        <FormFieldset label={t('settings.generalSettings.language')}>
+          <FormControlLabel
+            label={t('settings.generalSettings.language')}
+            hint={t('settings.generalSettings.languageHint')}
+            reverse
+          >
+            <Select
+              value={settings.general.language}
+              onChange={handleLanguageChange}
+              options={supportedLanguages.map((lang) => ({
+                value: lang,
+                label: lang === 'en' ? 'English' : '简体中文',
+              }))}
+            />
+          </FormControlLabel>
+        </FormFieldset>
+        <FormFieldset label={t('settings.generalSettings.startup')}>
+          <FormControlLabel label={t('settings.generalSettings.launchAtStartup')} reverse>
             <Switch
               checked={settings.general.launchAtStartup}
               onChange={(value) => updateSetting('general.launchAtStartup', value)}
             />
           </FormControlLabel>
 
-          <FormControlLabel label="Start Minimized" reverse>
+          <FormControlLabel label={t('settings.generalSettings.startMinimized')} reverse>
             <Switch
               checked={settings.general.startMinimized}
               onChange={(value) => updateSetting('general.startMinimized', value)}
             />
           </FormControlLabel>
         </FormFieldset>
-        <FormFieldset label="Overlay server">
-          <FormControlLabel label="Enable HTTP &amp; WS server" reverse>
+        <FormFieldset label={t('settings.generalSettings.overlayServer')}>
+          <FormControlLabel label={t('settings.generalSettings.enableHttpWs')} reverse>
             <Switch checked={settings.server.enabled} onChange={(value) => enable(!!value)} />
           </FormControlLabel>
 
-          <FormControlLabel label="Server Port" reverse>
+          <FormControlLabel label={t('settings.generalSettings.serverPort')} reverse>
             <Input
               type="number"
               onChange={(value) => updateSetting('server.port', Number(value))}

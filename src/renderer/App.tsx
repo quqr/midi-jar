@@ -1,6 +1,8 @@
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@la-jarre-a-son/ui';
 
+import '../locales/i18n';
+
 import SettingsManagerProvider from './contexts/SettingsManager';
 import ServerStateProvider from './contexts/ServerState';
 import MidiRoutingProvider from './contexts/MidiRouting';

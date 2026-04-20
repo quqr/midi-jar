@@ -6,6 +6,7 @@ window.os = {
 
 window.app = {
   quit: jest.fn(),
+  changeLanguage: jest.fn(),
   settings: {
     clear: jest.fn(),
     reset: jest.fn(),

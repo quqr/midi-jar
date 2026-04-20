@@ -112,6 +112,7 @@ export const defaults: StoreType = {
     general: {
       launchAtStartup: false,
       startMinimized: false,
+      language: 'en' as const,
     },
     chordDisplay: [defaultChordDisplaySettings],
     chordQuiz: defaultChordQuizSettings,

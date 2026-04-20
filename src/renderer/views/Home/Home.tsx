@@ -12,6 +12,7 @@ import {
   CardHeader,
   Container,
 } from '@la-jarre-a-son/ui';
+import { useTranslation } from 'react-i18next';
 
 import { ServerState } from 'main/types';
 
@@ -35,6 +36,7 @@ const cx = classnames.bind(styles);
 const Home: React.FC = () => {
   const { settings } = useSettings();
   const { state } = useServerState();
+  const { t } = useTranslation();
   const overlayEnabled = state.started && !!state.addresses.length;
 
   return (
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
       <Grid size="md" gap="md">
         {settings.chordDisplay.map((module) => (
           <Card key={`chord-display/${module.id}`} outlined elevation={1}>
-            <CardThumbnail alt="Chord Display preview" src={ThumbnaildChordDisplay}>
+            <CardThumbnail alt={t('home.chordDisplayPreview')} src={ThumbnaildChordDisplay}>
               <CardThumbnailOverlay as={NavLink} to={`/chords/${module.id}`} interactive />
               {overlayEnabled && (
                 <CardThumbnailItem position="top-left">
@@ -50,7 +52,7 @@ const Home: React.FC = () => {
                     as="a"
                     href={getOverlayUrl(state, `/chords/${module.id}`)}
                     target="_blank"
-                    aria-label="overlay"
+                    aria-label={t('common.overlay')}
                     icon
                     intent="primary"
                     variant="ghost"
@@ -65,7 +67,7 @@ const Home: React.FC = () => {
               left={<Icon name="piano" />}
               right={
                 <NavButton
-                  aria-label="settings"
+                  aria-label={t('common.settings')}
                   icon
                   variant="ghost"
                   intent="neutral"
@@ -75,12 +77,12 @@ const Home: React.FC = () => {
                 </NavButton>
               }
             >
-              Chord Display ({module.id})
+              {t('nav.chordDisplayWithId', { moduleId: module.id })}
             </CardHeader>
           </Card>
         ))}
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Chord Quiz preview" src={ThumbnaildChordQuiz}>
+          <CardThumbnail alt={t('home.chordQuizPreview')} src={ThumbnaildChordQuiz}>
             <CardThumbnailOverlay as={NavLink} to="/quiz" interactive />
             {overlayEnabled && (
               <CardThumbnailItem position="top-left">
@@ -88,7 +90,7 @@ const Home: React.FC = () => {
                   as="a"
                   href={getOverlayUrl(state, '/quiz')}
                   target="_blank"
-                  aria-label="overlay"
+                  aria-label={t('common.overlay')}
                   icon
                   intent="primary"
                   variant="ghost"
@@ -103,7 +105,7 @@ const Home: React.FC = () => {
             left={<Icon name="quiz" />}
             right={
               <NavButton
-                aria-label="settings"
+                aria-label={t('common.settings')}
                 icon
                 variant="ghost"
                 intent="neutral"
@@ -113,11 +115,11 @@ const Home: React.FC = () => {
               </NavButton>
             }
           >
-            Chord Quiz
+            {t('nav.chordQuiz')}
           </CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Circle of Fifths preview" src={ThumbnaildCircleOfFifths}>
+          <CardThumbnail alt={t('home.circleOfFifthsPreview')} src={ThumbnaildCircleOfFifths}>
             <CardThumbnailOverlay as={NavLink} to="/circle-of-fifths" interactive />
             {overlayEnabled && (
               <CardThumbnailItem position="top-left">
@@ -125,7 +127,7 @@ const Home: React.FC = () => {
                   as="a"
                   href={getOverlayUrl(state, '/circle-of-fifths')}
                   target="_blank"
-                  aria-label="overlay"
+                  aria-label={t('common.overlay')}
                   icon
                   intent="primary"
                   variant="ghost"
@@ -140,7 +142,7 @@ const Home: React.FC = () => {
             left={<Icon name="circle-of-fifths" />}
             right={
               <NavButton
-                aria-label="settings"
+                aria-label={t('common.settings')}
                 icon
                 variant="ghost"
                 intent="neutral"
@@ -150,11 +152,11 @@ const Home: React.FC = () => {
               </NavButton>
             }
           >
-            Circle of Fifths
+            {t('nav.circleOfFifths')}
           </CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Chord Dictionary preview" src={ThumbnaildChordDictionary}>
+          <CardThumbnail alt={t('home.chordDictionaryPreview')} src={ThumbnaildChordDictionary}>
             <CardThumbnailOverlay as={NavLink} to="/chord-dictionary" interactive />
             {overlayEnabled && (
               <CardThumbnailItem position="top-left">
@@ -162,7 +164,7 @@ const Home: React.FC = () => {
                   as="a"
                   href={getOverlayUrl(state, '/chord-dictionary')}
                   target="_blank"
-                  aria-label="overlay"
+                  aria-label={t('common.overlay')}
                   icon
                   intent="primary"
                   variant="ghost"
@@ -177,7 +179,7 @@ const Home: React.FC = () => {
             left={<Icon name="dictionary" />}
             right={
               <NavButton
-                aria-label="settings"
+                aria-label={t('common.settings')}
                 icon
                 variant="ghost"
                 intent="neutral"
@@ -187,20 +189,20 @@ const Home: React.FC = () => {
               </NavButton>
             }
           >
-            Chord Dictionary
+            {t('nav.chordDictionary')}
           </CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Settings preview" src={ThumbnailRouting}>
+          <CardThumbnail alt={t('home.settingsPreview')} src={ThumbnailRouting}>
             <CardThumbnailOverlay as={NavLink} to="/settings/routing" interactive />
           </CardThumbnail>
-          <CardHeader left={<Icon name="routing" />}>Routing</CardHeader>
+          <CardHeader left={<Icon name="routing" />}>{t('nav.routing')}</CardHeader>
         </Card>
         <Card outlined elevation={1}>
-          <CardThumbnail alt="Debugger preview" src={ThumbnailDebugger}>
+          <CardThumbnail alt={t('home.debuggerPreview')} src={ThumbnailDebugger}>
             <CardThumbnailOverlay as={NavLink} to="/settings/debug" interactive />
           </CardThumbnail>
-          <CardHeader left={<Icon name="bug" />}>Debugger</CardHeader>
+          <CardHeader left={<Icon name="bug" />}>{t('nav.debugger')}</CardHeader>
         </Card>
       </Grid>
     </Container>

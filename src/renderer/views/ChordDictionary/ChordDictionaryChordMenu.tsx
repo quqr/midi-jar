@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import { TreeView, TreeViewItem } from '@la-jarre-a-son/ui';
 
 import { ChordDictionarySettings } from 'main/types';
@@ -34,6 +35,8 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
   hideDisabled,
   filterChordsInKey,
 }) => {
+  const { t } = useTranslation();
+
   const groups = useMemo(
     () =>
       getChordGroups(
@@ -67,7 +70,7 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
   return (
     <TreeView
       className={cx('chordnav')}
-      aria-label="Chord Types Navigation"
+      aria-label={t('chordDictionary.chordTypesNavigation')}
       sticky={groupBy !== 'none'}
     >
       {groups.map((item) => renderTreeViewGroup(item))}

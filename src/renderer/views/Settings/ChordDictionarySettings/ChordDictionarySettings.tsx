@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   FormControlLabel,
@@ -27,6 +28,7 @@ const cx = classnames.bind(styles);
 
 const ChordDictionarySettings: React.FC = () => {
   const { settings, updateSetting } = useSettings();
+  const { t } = useTranslation();
 
   const deleteDisabled = (value: string) => {
     const disabledChords = settings.chordDictionary.disabled.filter((c) => c !== value);
@@ -42,51 +44,57 @@ const ChordDictionarySettings: React.FC = () => {
 
   return (
     <Container size="md">
-      <FormFieldset label="Browse">
+      <FormFieldset label={t('settings.chordDictionarySettings.browse')}>
         <FormField
-          label="Interactive"
-          hint="DETECT: midi input will browse played chord, PLAY: midi input will be displayed"
+          label={t('settings.chordDictionarySettings.interactive')}
+          hint={t('settings.chordDictionarySettings.interactiveHint')}
         >
           <ButtonGroup justify="center">
             <ToggleButton
               onClick={() => updateSetting('chordDictionary.interactive', 'detect')}
               selected={settings.chordDictionary.interactive === 'detect'}
             >
-              Detect
+              {t('chordDictionary.detect')}
             </ToggleButton>
             <ToggleButton
               onClick={() => updateSetting('chordDictionary.interactive', 'play')}
               selected={settings.chordDictionary.interactive === 'play'}
             >
-              Play
+              {t('chordDictionary.play')}
             </ToggleButton>
           </ButtonGroup>
         </FormField>
 
-        <FormField label="Group chords">
+        <FormField label={t('settings.chordDictionarySettings.groupChords')}>
           <RadioGroup
             value={settings.chordDictionary.groupBy}
             name="groupBy"
             onChange={(value) => updateSetting('chordDictionary.groupBy', value)}
           >
             <div>
-              <FormControlLabel label="No Group" hint="A single list with all chords">
+              <FormControlLabel
+                label={t('settings.chordDictionarySettings.noGroup')}
+                hint={t('settings.chordDictionarySettings.noGroupHint')}
+              >
                 <Radio value="none" />
               </FormControlLabel>
               <FormControlLabel
-                label="By Quality"
-                hint="Simple groups of chord quality (Major, Minor, ...)"
+                label={t('settings.chordDictionarySettings.byQuality')}
+                hint={t('settings.chordDictionarySettings.byQualityHint')}
               >
                 <Radio value="quality" />
               </FormControlLabel>
-              <FormControlLabel label="By Interval" hint="Hierarchical groups of intervals">
+              <FormControlLabel
+                label={t('settings.chordDictionarySettings.byInterval')}
+                hint={t('settings.chordDictionarySettings.byIntervalHint')}
+              >
                 <Radio value="intervals" />
               </FormControlLabel>
             </div>
           </RadioGroup>
         </FormField>
 
-        <FormControlLabel label="Hide disabled chords" reverse>
+        <FormControlLabel label={t('settings.chordDictionarySettings.hideDisabledChords')} reverse>
           <Switch
             onChange={(value) => updateSetting('chordDictionary.hideDisabled', value)}
             checked={settings.chordDictionary.hideDisabled}
@@ -94,8 +102,8 @@ const ChordDictionarySettings: React.FC = () => {
         </FormControlLabel>
 
         <FormControlLabel
-          label="Filter chords in key"
-          hint="Only chords that are in the current key signature will be displayed"
+          label={t('settings.chordDictionarySettings.filterChordsInKey')}
+          hint={t('settings.chordDictionarySettings.filterChordsInKeyHint')}
           reverse
         >
           <Switch
@@ -104,7 +112,7 @@ const ChordDictionarySettings: React.FC = () => {
           />
         </FormControlLabel>
       </FormFieldset>
-      <FormFieldset label="Disabled chords">
+      <FormFieldset label={t('settings.chordDictionarySettings.disabledChords')}>
         <Box elevation={1}>
           <List>
             {settings.chordDictionary.disabled.map((disabledChord) => (
@@ -117,7 +125,7 @@ const ChordDictionarySettings: React.FC = () => {
                       intent="neutral"
                       size="sm"
                       icon
-                      aria-label="see in dictionary"
+                      aria-label={t('settings.chordDictionarySettings.seeInDictionary')}
                       to={`/chord-dictionary/${encodeURIComponent(`C${disabledChord}`)}`}
                     >
                       <Icon name="dictionary" />
@@ -126,7 +134,7 @@ const ChordDictionarySettings: React.FC = () => {
                       intent="neutral"
                       size="sm"
                       icon
-                      aria-label="delete"
+                      aria-label={t('common.delete')}
                       onClick={() => deleteDisabled(disabledChord)}
                     >
                       <Icon name="trash" />
@@ -138,15 +146,15 @@ const ChordDictionarySettings: React.FC = () => {
               </ListItem>
             ))}
             {!settings.chordDictionary.disabled.length && (
-              <ListItem disabled>No disabled Chords</ListItem>
+              <ListItem disabled>{t('settings.chordDictionarySettings.noDisabledChords')}</ListItem>
             )}
           </List>
         </Box>
       </FormFieldset>
-      <FormFieldset label="Preferred notation">
+      <FormFieldset label={t('settings.chordDictionarySettings.preferredNotation')}>
         <FormControlLabel
-          label="Default notation"
-          hint="Choose the preferred notation chords are displayed in by default"
+          label={t('settings.chordDictionarySettings.defaultNotation')}
+          hint={t('settings.chordDictionarySettings.defaultNotationHint')}
           reverse
         >
           <Select
@@ -167,7 +175,7 @@ const ChordDictionarySettings: React.FC = () => {
                       intent="neutral"
                       size="sm"
                       icon
-                      aria-label="see in dictionary"
+                      aria-label={t('settings.chordDictionarySettings.seeInDictionary')}
                       to={`/chord-dictionary/${encodeURIComponent(`C${chordType}`)}`}
                     >
                       <Icon name="dictionary" />
@@ -176,7 +184,7 @@ const ChordDictionarySettings: React.FC = () => {
                       intent="neutral"
                       size="sm"
                       icon
-                      aria-label="delete"
+                      aria-label={t('common.delete')}
                       onClick={() => deleteAlias(chordType)}
                     >
                       <Icon name="trash" />
@@ -194,7 +202,9 @@ const ChordDictionarySettings: React.FC = () => {
               </ListItem>
             ))}
             {!Object.keys(settings.chordDictionary.aliases).length && (
-              <ListItem disabled>No preferred aliases</ListItem>
+              <ListItem disabled>
+                {t('settings.chordDictionarySettings.noPreferredAliases')}
+              </ListItem>
             )}
           </List>
         </Box>

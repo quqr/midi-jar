@@ -1,5 +1,6 @@
 import React, { useRef, useCallback, useState } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import { Button, ToggleButton, Box, Toolbar } from '@la-jarre-a-son/ui';
 
@@ -18,6 +19,7 @@ const cx = classnames.bind(styles);
 
 const Debugger: React.FC = () => {
   const [displayTimingClock, setDisplayTimingClock] = useState(false);
+  const { t } = useTranslation();
 
   const preElementRef = useRef<HTMLPreElement>(document.createElement('pre'));
 
@@ -77,7 +79,7 @@ const Debugger: React.FC = () => {
       <Toolbar elevation={2}>
         <ToggleButton onClick={toggleTimingClock} selected={displayTimingClock}>
           <Icon name="clock" />
-          MIDI Clock
+          {t('settings.debuggerSettings.midiClock')}
         </ToggleButton>
       </Toolbar>
       <Box pad="md" className={cx('container')}>
@@ -92,7 +94,7 @@ const Debugger: React.FC = () => {
       </Box>
       <Toolbar elevation={2} placement="bottom">
         <Button onClick={clearMessages} intent="neutral" left={<Icon name="trash" />}>
-          Clear messages
+          {t('settings.debuggerSettings.clearMessages')}
         </Button>
       </Toolbar>
     </>

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import { Game } from 'renderer/hooks/useQuiz';
 
@@ -29,6 +30,7 @@ const GameList: React.FC<Props> = ({
   gameIndex,
   maxCount = defaultProps.maxCount,
 }: Props) => {
+  const { t } = useTranslation();
   const displayedGames = useMemo(
     () =>
       games
@@ -52,7 +54,7 @@ const GameList: React.FC<Props> = ({
     <ul className={cx('base', className)}>
       {displayedGames.length > maxCount && (
         <li className={cx('game', 'game--best')}>
-          <span className={cx('label')}>BEST</span>
+          <span className={cx('label')}>{t('chordQuiz.best')}</span>
           <span className={cx('score')}>{best}</span>
         </li>
       )}
@@ -64,7 +66,7 @@ const GameList: React.FC<Props> = ({
           })}
           key={game.index}
         >
-          <span className={cx('label')}>GAME {game.index + 1}</span>
+          <span className={cx('label')}>{t('chordQuiz.game', { n: game.index + 1 })}</span>
           <span className={cx('score')}>{game.score}</span>
         </li>
       ))}

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button, ButtonGroup } from '@la-jarre-a-son/ui';
+import { useTranslation } from 'react-i18next';
 import { Icon } from 'renderer/components';
 
 import { useWindowState } from 'renderer/contexts/WindowState';
@@ -15,6 +16,7 @@ const defaultProps = {
 
 const TrafficLightButtons: React.FC<Props> = ({ className }) => {
   const { windowState, maximize, unmaximize, minimize, close } = useWindowState();
+  const { t } = useTranslation();
 
   const handleEvent = (callback: () => void) => (event: React.MouseEvent<unknown>) => {
     (event.currentTarget as HTMLButtonElement)?.blur();
@@ -24,7 +26,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
   return (
     <ButtonGroup className={className}>
       <Button
-        aria-label="Minimize"
+        aria-label={t('layout.minimize')}
         onClick={handleEvent(minimize)}
         intent="warning"
         hoverIntent
@@ -34,7 +36,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
       </Button>
       {windowState.maximized ? (
         <Button
-          aria-label="Unmaximize"
+          aria-label={t('layout.unmaximize')}
           onClick={handleEvent(unmaximize)}
           intent="success"
           hoverIntent
@@ -44,7 +46,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
         </Button>
       ) : (
         <Button
-          aria-label="Maximize"
+          aria-label={t('layout.maximize')}
           onClick={handleEvent(maximize)}
           intent="success"
           hoverIntent
@@ -53,7 +55,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
           <Icon name="maximize" />
         </Button>
       )}
-      <Button aria-label="Close" onClick={close} intent="danger" hoverIntent icon>
+      <Button aria-label={t('common.close')} onClick={close} intent="danger" hoverIntent icon>
         <Icon name="cross" />
       </Button>
     </ButtonGroup>

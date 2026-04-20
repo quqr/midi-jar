@@ -8,6 +8,7 @@ import {
   Select,
   Toolbar,
 } from '@la-jarre-a-son/ui';
+import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
 
@@ -17,14 +18,15 @@ import { fields } from './constants';
 
 const CircleOfFifthsSettings: React.FC = () => {
   const { settings, updateSetting, resetSettings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <>
       <ScrollContainer pad="md">
         <Container size="md">
           <FormControlLabel
-            label="Display Major"
-            hint="Enables the Majoy keys section of the circle"
+            label={t('settings.circleOfFifthsSettings.displayMajor')}
+            hint={t('settings.circleOfFifthsSettings.displayMajorHint')}
             reverse
           >
             <Switch
@@ -34,8 +36,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Minor"
-            hint="Enables the Minor keys section of the circle"
+            label={t('settings.circleOfFifthsSettings.displayMinor')}
+            hint={t('settings.circleOfFifthsSettings.displayMinorHint')}
             reverse
           >
             <Switch
@@ -45,11 +47,14 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormField
-            label="Main scale"
-            hint="Choose what scale to put first (only if both major and minor are displayed)"
+            label={t('settings.circleOfFifthsSettings.mainScale')}
+            hint={t('settings.circleOfFifthsSettings.mainScaleHint')}
           >
             <Select
-              options={fields.scale.choices}
+              options={fields.scale.choices.map((c: { value: string; labelKey: string }) => ({
+                value: c.value,
+                label: t(c.labelKey),
+              }))}
               onChange={(value) => updateSetting('circleOfFifths.scale', value)}
               value={settings.circleOfFifths.scale}
               disabled={
@@ -59,8 +64,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormField>
 
           <FormControlLabel
-            label="Display Diminished"
-            hint="Enables the Diminished chords section of the circle"
+            label={t('settings.circleOfFifthsSettings.displayDiminished')}
+            hint={t('settings.circleOfFifthsSettings.displayDiminishedHint')}
             reverse
           >
             <Switch
@@ -70,8 +75,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Dominant Chords"
-            hint="Adds a section in the circle with dominant chords: V7, bVII7, bII7, and III7"
+            label={t('settings.circleOfFifthsSettings.displayDominantChords')}
+            hint={t('settings.circleOfFifthsSettings.displayDominantChordsHint')}
             reverse
           >
             <Switch
@@ -81,8 +86,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Suspended Chords"
-            hint="Adds suspended chords between associated keys"
+            label={t('settings.circleOfFifthsSettings.displaySuspendedChords')}
+            hint={t('settings.circleOfFifthsSettings.displaySuspendedChordsHint')}
             reverse
           >
             <Switch
@@ -92,8 +97,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Alterations"
-            hint="Adds the Key signature alterations"
+            label={t('settings.circleOfFifthsSettings.displayAlterations')}
+            hint={t('settings.circleOfFifthsSettings.displayAlterationsHint')}
             reverse
           >
             <Switch
@@ -103,8 +108,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Modes"
-            hint="Adds markers for each enharmonic mode in the underlying key"
+            label={t('settings.circleOfFifthsSettings.displayModes')}
+            hint={t('settings.circleOfFifthsSettings.displayModesHint')}
             reverse
           >
             <Switch
@@ -114,8 +119,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Degrees"
-            hint="Adds a section above each key with its degree name"
+            label={t('settings.circleOfFifthsSettings.displayDegrees')}
+            hint={t('settings.circleOfFifthsSettings.displayDegreesHint')}
             reverse
           >
             <Switch
@@ -125,8 +130,8 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Degrees Labels"
-            hint="Adds the degree names in the selected key. Left is in major key, right is in minor key"
+            label={t('settings.circleOfFifthsSettings.displayDegreeLabels')}
+            hint={t('settings.circleOfFifthsSettings.displayDegreeLabelsHint')}
             reverse
           >
             <Switch
@@ -136,19 +141,24 @@ const CircleOfFifthsSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormField
-            label="Hightlight Sectors"
-            hint="Enables sectors of the circle to be shown when played on chords or on notes"
+            label={t('settings.circleOfFifthsSettings.highlightSectors')}
+            hint={t('settings.circleOfFifthsSettings.highlightSectorsHint')}
           >
             <Select
-              options={fields.highlightSector.choices}
+              options={fields.highlightSector.choices.map(
+                (c: { value: string; labelKey: string }) => ({
+                  value: c.value,
+                  label: t(c.labelKey),
+                })
+              )}
               onChange={(value) => updateSetting('circleOfFifths.highlightSector', value)}
               value={settings.circleOfFifths.highlightSector}
             />
           </FormField>
 
           <FormControlLabel
-            label="Highlight sectors in the key"
-            hint="Shows differently the sectors in the current key scale"
+            label={t('settings.circleOfFifthsSettings.highlightSectorsInKey')}
+            hint={t('settings.circleOfFifthsSettings.highlightSectorsInKeyHint')}
             reverse
           >
             <Switch
@@ -161,7 +171,7 @@ const CircleOfFifthsSettings: React.FC = () => {
       <Toolbar elevation={2} placement="bottom">
         <Button onClick={() => resetSettings('circleOfFifths')} intent="neutral">
           <Icon name="reset" />
-          Reset to Defaults
+          {t('common.resetToDefaults')}
         </Button>
       </Toolbar>
     </>

@@ -9,7 +9,8 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, Tray, Menu, nativeImage } from 'electron';
+import { app, BrowserWindow, shell, Tray, Menu, nativeImage, ipcMain } from 'electron';
+import i18n, { changeLanguage, Language } from './i18n';
 import { resolveHtmlPath, getAssetPath } from './util';
 
 import MenuBuilder from './menu';
@@ -28,6 +29,7 @@ import {
 
 const singleInstance = app.requestSingleInstanceLock();
 let mainWindow: BrowserWindow | null = null;
+let menuBuilderInstance: MenuBuilder | null = null;
 let tray: Tray | null = null;
 
 setStartupSetting();
@@ -108,6 +110,7 @@ const createWindow = async () => {
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilderInstance = menuBuilder;
   menuBuilder.buildMenu();
 
   // Open urls in the user's browser
@@ -143,13 +146,13 @@ const createTray = () => {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Open App',
+      label: i18n.t('mainMenu.openApp'),
       click: () => {
         openWindow();
       },
     },
     {
-      label: 'Quit',
+      label: i18n.t('mainMenu.quit'),
       click: () => {
         app.quit();
       },
@@ -158,8 +161,33 @@ const createTray = () => {
 
   tray.on('double-click', () => openWindow());
   tray.setContextMenu(contextMenu);
-  tray.setToolTip('MIDI Jar');
+  tray.setToolTip(i18n.t('mainMenu.midiJar'));
 };
+
+ipcMain.on('change-language', (_event, lang: string) => {
+  changeLanguage(lang as Language);
+  if (menuBuilderInstance) {
+    menuBuilderInstance.buildMenu();
+  }
+  if (tray) {
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: i18n.t('mainMenu.openApp'),
+        click: () => {
+          openWindow();
+        },
+      },
+      {
+        label: i18n.t('mainMenu.quit'),
+        click: () => {
+          app.quit();
+        },
+      },
+    ]);
+    tray.setContextMenu(contextMenu);
+    tray.setToolTip(i18n.t('mainMenu.midiJar'));
+  }
+});
 
 /**
  * Add event listeners...

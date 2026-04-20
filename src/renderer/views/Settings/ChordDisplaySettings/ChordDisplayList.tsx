@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classnames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Button, Stack, TabList, Toolbar } from '@la-jarre-a-son/ui';
 
@@ -17,6 +18,7 @@ const cx = classnames.bind(styles);
 const ChordDisplayList: React.FC = () => {
   const navigate = useNavigate();
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { settings, updateSetting } = useSettings();
 
@@ -40,7 +42,11 @@ const ChordDisplayList: React.FC = () => {
   return (
     <>
       <Toolbar as={Stack} className={cx('header')} elevation={2}>
-        <TabList className={cx('list')} aria-label="Chord display list" justify="center">
+        <TabList
+          className={cx('list')}
+          aria-label={t('settings.chordDisplaySettings.chordDisplayList')}
+          justify="center"
+        >
           {moduleIds.map((moduleId) => (
             <NavTab key={moduleId} to={`/settings/chords/${moduleId}`}>
               {moduleId}
@@ -48,7 +54,7 @@ const ChordDisplayList: React.FC = () => {
           ))}
         </TabList>
         <Button
-          aria-label="Add session"
+          aria-label={t('settings.chordDisplaySettings.addSession')}
           intent="success"
           hoverIntent
           left={<Icon name="plus" />}

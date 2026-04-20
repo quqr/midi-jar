@@ -1,25 +1,19 @@
 export const fields = {
   scale: {
     choices: [
-      {
-        value: 'major',
-        label: 'Major',
-      },
-      {
-        value: 'minor',
-        label: 'Minor',
-      },
+      { value: 'major', labelKey: 'settings.circleOfFifthsSettings.scaleOptions.major' },
+      { value: 'minor', labelKey: 'settings.circleOfFifthsSettings.scaleOptions.minor' },
     ],
   },
   highlightSector: {
     choices: [
       {
         value: 'chord',
-        label: 'On Chord',
+        labelKey: 'settings.circleOfFifthsSettings.highlightSectorOptions.onChord',
       },
       {
         value: 'notes',
-        label: 'On Notes',
+        labelKey: 'settings.circleOfFifthsSettings.highlightSectorOptions.onNotes',
       },
     ],
   },

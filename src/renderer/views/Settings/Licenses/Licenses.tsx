@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -32,6 +33,7 @@ const cx = classnames.bind(styles);
 
 const Licenses: React.FC = () => {
   const [open, setOpen] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const stopPropagation = (e: React.MouseEvent<HTMLAnchorElement>) => e.stopPropagation();
 
@@ -61,7 +63,7 @@ const Licenses: React.FC = () => {
                     size="sm"
                     left={<Icon name="github" />}
                   >
-                    Github
+                    {t('settings.licensesSettings.github')}
                   </Button>
                 )}
                 <span className={cx('itemHandle')}>

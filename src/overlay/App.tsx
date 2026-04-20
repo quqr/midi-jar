@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import '../locales/i18n';
+
 import MidiMessageManagerProvider from 'renderer/contexts/MidiMessageManager';
 import SettingsProvider from 'renderer/contexts/Settings';
 import SettingsManagerProvider from 'renderer/contexts/SettingsManager';

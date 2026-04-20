@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import useEvent from 'renderer/hooks/useEvent';
 
@@ -19,6 +20,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
   step,
   ...rest
 }) => {
+  const { t } = useTranslation();
   const increment = useEvent(() => {
     if (onChange) onChange(Number(value) + Number(step));
   });
@@ -41,10 +43,20 @@ export const InputNumber: React.FC<InputNumberProps> = ({
         step={step}
         {...rest}
       />
-      <Button className={cx('decrement')} onClick={decrement} icon aria-label="decrement">
+      <Button
+        className={cx('decrement')}
+        onClick={decrement}
+        icon
+        aria-label={t('common.decrement')}
+      >
         <Icon name="minus" />
       </Button>
-      <Button className={cx('increment')} onClick={increment} icon aria-label="increment">
+      <Button
+        className={cx('increment')}
+        onClick={increment}
+        icon
+        aria-label={t('common.increment')}
+      >
         <Icon name="plus" />
       </Button>
     </InputGroup>

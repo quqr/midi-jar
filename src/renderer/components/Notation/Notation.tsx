@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import {
   Accidental,
   Formatter,
@@ -39,6 +40,7 @@ export const Notation: React.FC<NotationProps> = ({
     () => getTransposedNotes(midiNotes ?? [], keySignature.notes, staffTranspose),
     [midiNotes, keySignature, staffTranspose]
   );
+  const { t } = useTranslation();
 
   const container = useRef<HTMLDivElement | null>(null);
   const renderer = useRef<Renderer | null>(null);
@@ -63,7 +65,7 @@ export const Notation: React.FC<NotationProps> = ({
         staveTreble.addClef('treble');
         staveTreble.addKeySignature(keySignature.tonic);
         staveTreble.setText(
-          `Key: ${formatSharpsFlats(keySignature.tonic)}`,
+          t('notation.key', { tonic: formatSharpsFlats(keySignature.tonic) }),
           Modifier.Position.ABOVE,
           {
             justification: 0,
@@ -118,9 +120,13 @@ export const Notation: React.FC<NotationProps> = ({
         const stave = new Stave(0, STAVE_Y, staveWidth);
         stave.addClef(staffClef);
         stave.addKeySignature(keySignature.tonic);
-        stave.setText(`Key: ${formatSharpsFlats(keySignature.tonic)}`, Modifier.Position.ABOVE, {
-          justification: 0,
-        });
+        stave.setText(
+          t('notation.key', { tonic: formatSharpsFlats(keySignature.tonic) }),
+          Modifier.Position.ABOVE,
+          {
+            justification: 0,
+          }
+        );
         stave.setBegBarType(BarlineType.NONE);
         stave.setNoteStartX(60 + keySignatureWidth);
         stave.setContext(context).draw();
@@ -139,7 +145,7 @@ export const Notation: React.FC<NotationProps> = ({
         }
       }
     }
-  }, [notes, staffClef, keySignature]);
+  }, [notes, staffClef, keySignature, t]);
 
   return <div id={id} ref={container} className={cx('base', className)} />;
 };

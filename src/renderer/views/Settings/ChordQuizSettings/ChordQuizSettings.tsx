@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Container,
@@ -22,12 +23,16 @@ const cx = classnames.bind(styles);
 
 const ChordQuizSettings: React.FC = () => {
   const { settings, updateSetting, resetSettings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <>
       <ScrollContainer pad="md">
         <Container size="md">
-          <FormField label="Mode" hint="Choose what alorithm is used to generate chords">
+          <FormField
+            label={t('settings.chordQuizSettings.mode')}
+            hint={t('settings.chordQuizSettings.modeHint')}
+          >
             <Select
               options={fields.mode.choices}
               onChange={(value) => updateSetting('chordQuiz.mode', value)}
@@ -36,8 +41,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormField>
 
           <FormField
-            label="Difficulty"
-            hint="An arbitrary complexity score is given to chords, the more intervals and alterations a chord has, the more it is complex."
+            label={t('settings.chordQuizSettings.difficulty')}
+            hint={t('settings.chordQuizSettings.difficultyHint')}
           >
             <Select
               options={fields.difficulty.choices}
@@ -48,9 +53,11 @@ const ChordQuizSettings: React.FC = () => {
 
           <div className={cx('chordList')}>
             {settings.chordQuiz.difficulty > 0 && (
-              <span className={cx('previousLevel')}>Previous level +</span>
+              <span className={cx('previousLevel')}>
+                {t('settings.chordQuizSettings.previousLevel')}
+              </span>
             )}
-            {chordsByComplexity[settings.chordQuiz.difficulty]?.map((chord) => (
+            {chordsByComplexity[settings.chordQuiz.difficulty]?.map((chord: string) => (
               <span className={cx('chord')} key={chord}>
                 {chord}
               </span>
@@ -58,12 +65,14 @@ const ChordQuizSettings: React.FC = () => {
           </div>
 
           <FormField
-            label="Game Length"
-            hint="Number of chords to be generated for a single round (belonging to the same key signature)"
+            label={t('settings.chordQuizSettings.gameLength')}
+            hint={t('settings.chordQuizSettings.gameLengthHint')}
           >
             <Slider
               value={settings.chordQuiz.gameLength}
-              onChange={(value: number) => updateSetting('chordQuiz.gameLength', value)}
+              onChange={(value) =>
+                updateSetting('chordQuiz.gameLength', Array.isArray(value) ? value[0] : value)
+              }
               min={4}
               max={32}
               step={4}
@@ -73,8 +82,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormField>
 
           <FormControlLabel
-            label="Gamification"
-            hint="Gamifies the quiz by adding scores and game count (no persistence of scoreboard)"
+            label={t('settings.chordQuizSettings.gamification')}
+            hint={t('settings.chordQuizSettings.gamificationHint')}
             reverse
           >
             <Switch
@@ -84,8 +93,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Chord Notation"
-            hint="Choose the notation chords are displayed in"
+            label={t('settings.chordQuizSettings.chordNotation')}
+            hint={t('settings.chordQuizSettings.chordNotationHint')}
             reverse
           >
             <Select
@@ -96,8 +105,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Reaction"
-            hint="Enables the textual reactions to success and fail"
+            label={t('settings.chordQuizSettings.displayReaction')}
+            hint={t('settings.chordQuizSettings.displayReactionHint')}
             reverse
           >
             <Switch
@@ -107,8 +116,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Chord Name"
-            hint="Display the name of target chord in full text"
+            label={t('settings.chordQuizSettings.displayChordName')}
+            hint={t('settings.chordQuizSettings.displayChordNameHint')}
             reverse
           >
             <Switch
@@ -118,8 +127,8 @@ const ChordQuizSettings: React.FC = () => {
           </FormControlLabel>
 
           <FormControlLabel
-            label="Display Intervals"
-            hint="Enables the list of intervals expected and currently played"
+            label={t('settings.chordQuizSettings.displayIntervals')}
+            hint={t('settings.chordQuizSettings.displayIntervalsHint')}
             reverse
           >
             <Switch
@@ -132,7 +141,7 @@ const ChordQuizSettings: React.FC = () => {
       <Toolbar elevation={2} placement="bottom">
         <Button onClick={() => resetSettings('chordQuiz')} intent="neutral">
           <Icon name="reset" />
-          Reset to Defaults
+          {t('common.resetToDefaults')}
         </Button>
       </Toolbar>
     </>

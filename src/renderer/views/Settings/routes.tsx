@@ -21,7 +21,7 @@ import Licenses from './Licenses';
 export const settingsRoutes = () => (
   <Route
     path="settings"
-    handle={{ title: 'Settings', icon: <Icon name="settings" /> }}
+    handle={{ title: 'settings.title', icon: <Icon name="settings" /> }}
     element={<SettingsLayout />}
   >
     <Route index element={<Navigate to="general" replace />} />

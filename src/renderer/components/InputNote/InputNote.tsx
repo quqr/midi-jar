@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import classNames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 
 import { Note } from 'tonal';
 import { Input, Button, InputGroup } from '@la-jarre-a-son/ui';
@@ -25,6 +26,7 @@ export const InputNote: React.FC<InputNoteProps> = ({
 }) => {
   const [learning, setLearning] = useState(false);
   const learningPromise = useRef<Promise<void> | null>(null);
+  const { t } = useTranslation();
 
   const handleKeyPress = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -92,7 +94,7 @@ export const InputNote: React.FC<InputNoteProps> = ({
           onClick={toggleLearning}
           intent={learning ? 'success' : 'neutral'}
         >
-          {learning ? '...' : 'Learn'}
+          {learning ? '...' : t('common.learn')}
         </Button>
       ) : null}
       {learning ? <MidiLearn type="note" onLearn={handleLearn} /> : null}

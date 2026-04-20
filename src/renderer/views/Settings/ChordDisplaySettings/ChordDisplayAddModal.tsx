@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   Button,
@@ -22,6 +23,7 @@ type Props = {
 const ChordDisplayAddModal: React.FC<Props> = ({ open, onCancel, onSave }) => {
   const [name, setName] = useState<string>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { t } = useTranslation();
 
   const handleSave = () => {
     return onSave(name)
@@ -31,19 +33,19 @@ const ChordDisplayAddModal: React.FC<Props> = ({ open, onCancel, onSave }) => {
 
   return (
     <Modal open={open} onClose={onCancel} size="sm">
-      <ModalHeader title="New module" />
+      <ModalHeader title={t('settings.chordDisplaySettings.newModule')} />
       <ModalContent>
-        <FormField label="Name" error={errors.name}>
+        <FormField label={t('common.name')} error={errors.name}>
           <Input value={name} onChange={setName} autoFocus />
         </FormField>
       </ModalContent>
       <ModalActions>
         <Button variant="ghost" intent="neutral" onClick={onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <ModalActionsSeparator />
         <StateButton intent="success" onClick={handleSave}>
-          Add
+          {t('common.add')}
         </StateButton>
       </ModalActions>
     </Modal>

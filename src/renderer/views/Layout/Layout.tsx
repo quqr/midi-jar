@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalActions,
 } from '@la-jarre-a-son/ui';
+import { useTranslation } from 'react-i18next';
 import { useWindowState } from 'renderer/contexts/WindowState';
 
 import About from 'renderer/views/Settings/About';
@@ -22,6 +23,7 @@ const cx = classnames.bind(styles);
 
 const Layout: React.FC = () => {
   const { windowState, updateInfo, dismissChangelog, dismissUpdate } = useWindowState();
+  const { t } = useTranslation();
 
   const closeAboutModalOpen = () => {
     dismissChangelog();
@@ -40,17 +42,16 @@ const Layout: React.FC = () => {
             <Outlet />
           </div>
           <Modal onClose={closeAboutModalOpen} open={!windowState.changelogDismissed} size="lg">
-            <ModalHeader title="MIDI Jar" />
+            <ModalHeader title={t('layout.midiJar')} />
             <ModalContent>
               <About />
             </ModalContent>
           </Modal>
           {!!updateInfo && (
             <Modal onClose={closeUpdateModalOpen} open={!windowState.updateDismissed} size="sm">
-              <ModalHeader title="Update available" />
+              <ModalHeader title={t('layout.updateAvailable')} />
               <ModalContent>
-                A new version of MIDI Jar (v{updateInfo.version}) is available. Since this app is
-                not signed, auto-update cannot install it automatically.
+                {t('layout.updateMessage', { version: updateInfo.version })}
               </ModalContent>
               <ModalActions>
                 <Button
@@ -60,7 +61,7 @@ const Layout: React.FC = () => {
                   href={`https://github.com/la-jarre-a-son/midi-jar/releases/tag/v${updateInfo.version}`}
                   target="_blank"
                 >
-                  Go to release page
+                  {t('layout.goToReleasePage')}
                 </Button>
               </ModalActions>
             </Modal>

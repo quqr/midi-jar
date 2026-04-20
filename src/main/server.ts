@@ -105,8 +105,8 @@ function closeHttpServer(): Promise<void> {
 export function getAddresses(): string[] {
   const nets = os.networkInterfaces();
 
-  const ips = Object.keys(nets).map(
-    (name) => nets[name]?.map((net) => (net.family === 'IPv4' ? net.address : null))
+  const ips = Object.keys(nets).map((name) =>
+    nets[name]?.map((net) => (net.family === 'IPv4' ? net.address : null))
   );
   ips.unshift(['localhost']);
 
@@ -135,7 +135,7 @@ export async function stopServer() {
 
 export async function startServer(): Promise<ServerState | null> {
   const settings = getSettings();
-  const { enabled, port } = settings.server;
+  const { enabled, port } = settings.server || {};
 
   if (enabled && port) {
     try {

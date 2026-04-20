@@ -1,4 +1,5 @@
 import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import i18n from './i18n';
 import { resolveHtmlPath } from './util';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -28,36 +29,36 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'MIDI Jar',
+      label: i18n.t('mainMenu.midiJar'),
       submenu: [
         {
-          label: 'About MIDI Jar',
+          label: i18n.t('mainMenu.aboutMidiJar'),
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         {
-          label: 'Preferences',
+          label: i18n.t('mainMenu.preferences'),
           submenu: [
             {
-              label: 'General',
+              label: i18n.t('mainMenu.general'),
               click: () => {
                 this.goTo('/settings/general');
               },
             },
             {
-              label: 'Routing',
+              label: i18n.t('mainMenu.routing'),
               click: () => {
                 this.goTo('/settings/routing');
               },
             },
             {
-              label: 'Debugger',
+              label: i18n.t('mainMenu.debugger'),
               click: () => {
                 this.goTo('/settings/debugger');
               },
             },
             {
-              label: 'Server',
+              label: i18n.t('mainMenu.server'),
               click: () => {
                 this.goTo('/settings/server');
               },
@@ -65,29 +66,29 @@ export default class MenuBuilder {
           ],
         },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
+        { label: i18n.t('mainMenu.services'), submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide MIDI Jar',
+          label: i18n.t('mainMenu.hideMidiJar'),
           accelerator: 'Command+H',
           selector: 'hide:',
         },
         {
-          label: 'Hide Others',
+          label: i18n.t('mainMenu.hideOthers'),
           accelerator: 'Command+Shift+H',
           selector: 'hideOtherApplications:',
         },
-        { label: 'Show All', selector: 'unhideAllApplications:' },
+        { label: i18n.t('mainMenu.showAll'), selector: 'unhideAllApplications:' },
         { type: 'separator' },
         {
-          label: 'Close',
+          label: i18n.t('mainMenu.close'),
           accelerator: 'Command+W',
           click: () => {
             this.mainWindow.close();
           },
         },
         {
-          label: 'Quit',
+          label: i18n.t('mainMenu.quit'),
           accelerator: 'Command+Q',
           click: () => {
             app.quit();
@@ -96,24 +97,24 @@ export default class MenuBuilder {
       ],
     };
     const subMenuWindow: DarwinMenuItemConstructorOptions = {
-      label: 'Window',
+      label: i18n.t('mainMenu.window'),
       submenu: [
         {
-          label: 'Minimize',
+          label: i18n.t('mainMenu.minimize'),
           accelerator: 'Command+M',
           selector: 'performMiniaturize:',
         },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
+        { label: i18n.t('mainMenu.close'), accelerator: 'Command+W', selector: 'performClose:' },
         { type: 'separator' },
         {
-          label: 'Toggle Full Screen',
+          label: i18n.t('mainMenu.toggleFullScreen'),
           accelerator: 'Ctrl+Command+F',
           click: () => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           },
         },
         {
-          label: 'Toggle Always On Top',
+          label: i18n.t('mainMenu.toggleAlwaysOnTop'),
           accelerator: 'Ctrl+Command+P',
           click: () => {
             const isAlwaysOnTop = this.mainWindow.isAlwaysOnTop();
@@ -121,26 +122,26 @@ export default class MenuBuilder {
             this.mainWindow.setAlwaysOnTop(!isAlwaysOnTop, 'floating');
           },
         },
-        { label: 'Bring All to Front', selector: 'arrangeInFront:' },
+        { label: i18n.t('mainMenu.bringAllToFront'), selector: 'arrangeInFront:' },
       ],
     };
     const subMenuHelp: MenuItemConstructorOptions = {
-      label: 'Help',
+      label: i18n.t('mainMenu.help'),
       submenu: [
         {
-          label: 'Credits',
+          label: i18n.t('mainMenu.credits'),
           click: () => {
             this.goTo('/settings/credits');
           },
         },
         {
-          label: 'Licenses',
+          label: i18n.t('mainMenu.licenses'),
           click: () => {
             this.goTo('/settings/licenses');
           },
         },
         {
-          label: 'Report Bug',
+          label: i18n.t('mainMenu.reportBug'),
           click() {
             shell.openExternal('https://github.com/la-jarre-a-son/midi-jar/issues');
           },

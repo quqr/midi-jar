@@ -1,3 +1,5 @@
+import i18n from 'i18next';
+
 import { GameState, STATUSES } from 'renderer/hooks/useQuiz';
 
 export type Reaction = {
@@ -9,50 +11,17 @@ export type Reaction = {
   visible: boolean;
 };
 
-/**
- * A list of reaction for each game state status.
- *
- * NOTE: don't take it personally, it's the funny part of the software.
- */
-export const REACTIONS: { [key in STATUSES]?: string[] } = {
-  [STATUSES.different]: [
-    'No',
-    'Not even close',
-    'Nope',
-    '???',
-    'Try again',
-    'Wut ?',
-    'Come on...',
-    'Incorrect',
-    'Wrong',
-    '👎',
-  ],
-  [STATUSES.subset]: [
-    'Almost',
-    'Not so far',
-    'Not quite my chord',
-    'Kinda',
-    'Close',
-    'Close one',
-    '🤏',
-  ],
-  [STATUSES.equal]: ['Yeah', 'Right', 'Correct', 'Good', 'Perfect', 'OK', '👍'],
-  [STATUSES.superset]: [
-    'Wow !',
-    'Super !',
-    'Awesome !',
-    'Impressive !',
-    'Even Better !',
-    'JAZZY !!',
-    'Smooth !',
-    'Ooh !',
-    '👌',
-  ],
-};
+const getReactions = (): { [key in STATUSES]?: string[] } => ({
+  [STATUSES.different]: i18n.t('chordQuiz.reactions.different', {
+    returnObjects: true,
+  }) as string[],
+  [STATUSES.subset]: i18n.t('chordQuiz.reactions.subset', { returnObjects: true }) as string[],
+  [STATUSES.equal]: i18n.t('chordQuiz.reactions.equal', { returnObjects: true }) as string[],
+  [STATUSES.superset]: i18n.t('chordQuiz.reactions.superset', { returnObjects: true }) as string[],
+});
 
-/**
- * Returns true if the current game state should trigger a new reaction
- */
+export const REACTIONS: { [key in STATUSES]?: string[] } = getReactions();
+
 export const shouldTriggerNewReaction = (gameState: GameState, reaction?: Reaction | null) => {
   return (
     gameState.status >= 0 &&

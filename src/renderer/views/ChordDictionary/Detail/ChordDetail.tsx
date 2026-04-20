@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import classnames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import { Chord, Note } from 'tonal';
 import {
   Badge,
@@ -76,6 +77,7 @@ const ChordDetail: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { chordName } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { settings, updateSetting } = useSettings();
   const { staffClef, staffTranspose } = settings.notation;
@@ -158,7 +160,12 @@ const ChordDetail: React.FC = () => {
           chord={chord}
         />
         {!disableUpdate && (
-          <Tooltip title="Disable/enable chord" placement="left" describeAs="label" disablePortal>
+          <Tooltip
+            title={t('chordDictionary.disableEnableChord')}
+            placement="left"
+            describeAs="label"
+            disablePortal
+          >
             <label>
               <Switch id="toggleChord" checked={!isDisabled} onChange={toggleDisabled} />
             </label>
@@ -177,7 +184,7 @@ const ChordDetail: React.FC = () => {
       />
       <div className={cx('columns')}>
         <section className={cx('column')}>
-          <h2 className={cx('title')}>Intervals</h2>
+          <h2 className={cx('title')}>{t('chordDictionary.intervals')}</h2>
           <ChordIntervals
             className={cx('intervals')}
             intervals={playedIntervals}
@@ -187,7 +194,7 @@ const ChordDetail: React.FC = () => {
           />
         </section>
         <section className={cx('column')}>
-          <h2 className={cx('title')}>Notation</h2>
+          <h2 className={cx('title')}>{t('chordDictionary.notation')}</h2>
           <Notation
             className={cx('notation')}
             midiNotes={midi}
@@ -200,7 +207,7 @@ const ChordDetail: React.FC = () => {
 
       <div className={cx('columns')}>
         <section className={cx('column')}>
-          <h2 className={cx('title')}>Aliases</h2>
+          <h2 className={cx('title')}>{t('chordDictionary.aliases')}</h2>
           <List className={cx('list')}>
             {chord.aliases.map((alias, index) => {
               const isPreferred = preferredAlias === alias;
@@ -226,12 +233,22 @@ const ChordDetail: React.FC = () => {
                         name={isPreferred || isDefault ? 'star-filled' : 'star'}
                       />
                     ) : (
-                      <Tooltip title={isPreferred ? 'Unset as preferred' : 'Set as preferred'}>
+                      <Tooltip
+                        title={
+                          isPreferred
+                            ? t('chordDictionary.unsetAsPreferred')
+                            : t('chordDictionary.setAsPreferred')
+                        }
+                      >
                         <Button
                           aria-label={
                             isPreferred
-                              ? `Unset ${chord.aliases[index]} as preferred`
-                              : `Set ${chord.aliases[index]} as preferred`
+                              ? t('chordDictionary.unsetAsPreferredAlias', {
+                                  alias: chord.aliases[index],
+                                })
+                              : t('chordDictionary.setAsPreferredAlias', {
+                                  alias: chord.aliases[index],
+                                })
                           }
                           icon
                           rounded
@@ -254,7 +271,7 @@ const ChordDetail: React.FC = () => {
         </section>
         {!!alternativeChords.length && (
           <section className={cx('column')}>
-            <h2 className={cx('title')}>Other interpretations</h2>
+            <h2 className={cx('title')}>{t('chordDictionary.otherInterpretations')}</h2>
             <List className={cx('list')}>
               {alternativeChords.map((altChord) => (
                 <ListItem
@@ -271,7 +288,7 @@ const ChordDetail: React.FC = () => {
       </div>
       <div className={cx('columns')}>
         <section className={cx('column')}>
-          <h2 className={cx('title')}>Inversions</h2>
+          <h2 className={cx('title')}>{t('chordDictionary.inversions')}</h2>
           {chord.intervals.map((_, index) => {
             if (!index) return null;
 
@@ -291,10 +308,12 @@ const ChordDetail: React.FC = () => {
               <div key={index} className={cx('inversion')}>
                 <div className={cx('inversionInfo')}>
                   <ChordName className={cx('inversionChord')} chord={slashChord} />
-                  <div className={cx('inversionInterval')}>inversion on {interval}</div>
+                  <div className={cx('inversionInterval')}>
+                    {t('chordDictionary.inversionOn', { interval })}
+                  </div>
                   {altChord && (
                     <div className={cx('inversionAltChord')}>
-                      {'see also '}
+                      {t('chordDictionary.seeAlso')}
                       <Link
                         as={NavLink}
                         to={`../${encodeURIComponent(altChord.tonic + altChord.aliases[0])}`}
@@ -326,7 +345,7 @@ const ChordDetail: React.FC = () => {
       <div className={cx('columns')}>
         {!!subsetChords.length && (
           <section className={cx('column')}>
-            <h2 className={cx('title')}>Simplified</h2>
+            <h2 className={cx('title')}>{t('chordDictionary.simplified')}</h2>
             <div className={cx('chordSet')}>
               {subsetChords.map((c, index) => (
                 <NavButton
@@ -346,7 +365,7 @@ const ChordDetail: React.FC = () => {
         )}
         {!!supersetChords.length && (
           <section className={cx('column')}>
-            <h2 className={cx('title')}>Extended</h2>
+            <h2 className={cx('title')}>{t('chordDictionary.extended')}</h2>
             <div className={cx('chordSet')}>
               {supersetChords.map((c, index) => (
                 <NavButton

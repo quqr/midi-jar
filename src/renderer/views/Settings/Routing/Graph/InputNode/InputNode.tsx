@@ -7,6 +7,7 @@ import useMidiActivity from 'renderer/hooks/useMidiActivity';
 import { ApiMidiInput } from 'main/types/api';
 
 import { Icon } from 'renderer/components';
+import { useTranslation } from 'react-i18next';
 
 import styles from './InputNode.module.scss';
 
@@ -23,6 +24,7 @@ type Props = NodeProps & {
 const InputNode: React.FC<Props> = ({ data }) => {
   const statusElementRef = useRef<HTMLDivElement>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { t } = useTranslation();
 
   const onActivity = useCallback(() => {
     if (statusElementRef.current) {
@@ -51,7 +53,7 @@ const InputNode: React.FC<Props> = ({ data }) => {
       <div className={cx('footer')}>
         {data.input.error && (
           <div className={cx('error')}>
-            <Icon name="midi-error" /> error
+            <Icon name="midi-error" /> {t('common.error')}
           </div>
         )}
         <div ref={statusElementRef} className={cx('activity')} />

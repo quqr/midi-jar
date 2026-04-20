@@ -1,5 +1,6 @@
 import { Note } from 'tonal';
 import { Chord } from '@tonaljs/chord';
+import i18n from 'i18next';
 
 import { containsInterval, range } from 'renderer/helpers';
 import { formatSharpsFlats } from 'renderer/helpers/note';
@@ -31,9 +32,19 @@ export const FIFTHS_ALTERATIONS = '• # ## ### #### 5#/7b 6#/6b 7#/5b bbbb bbb 
   .split(' ')
   .map((v) => v.split('/'));
 
-export const DEGREE_NAMES = 'tonic,supertonic,mediant,subdominant,dominant,submediant,leading tone'
-  .toUpperCase()
-  .split(',');
+const DEGREE_NAME_KEYS = [
+  'tonic',
+  'supertonic',
+  'mediant',
+  'subdominant',
+  'dominant',
+  'submediant',
+  'leadingTone',
+] as const;
+
+export const DEGREE_NAMES = DEGREE_NAME_KEYS.map(
+  (key) => i18n.t(`circleOfFifths.degreeNames.${key}`) as string
+);
 
 export const DEGREE_COLORS = [
   '#6F8CDD',
@@ -53,9 +64,19 @@ export const DEGREES_MINOR = 'i ii bIII iv v bVI bVII'.split(' ');
 
 export const MODE_OFFSETS = [0, 2, 4, -1, 1, 3, 5];
 
-export const MODE_NAMES = 'ionian dorian phrygian lydian mixolydian aeolian locrian'
-  .toUpperCase()
-  .split(' ');
+const MODE_NAME_KEYS = [
+  'ionian',
+  'dorian',
+  'phrygian',
+  'lydian',
+  'mixolydian',
+  'aeolian',
+  'locrian',
+] as const;
+
+export const MODE_NAMES = MODE_NAME_KEYS.map(
+  (key) => i18n.t(`circleOfFifths.modeNames.${key}`) as string
+);
 
 const SECTIONS_TOTAL = 0.46;
 

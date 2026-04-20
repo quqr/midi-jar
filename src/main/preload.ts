@@ -18,6 +18,7 @@ const registerListener =
 
 export const AppApi = {
   quit: () => ipcRenderer.send('app:quit'),
+  changeLanguage: (lang: string) => ipcRenderer.send('change-language', lang),
   settings: {
     clear: () => ipcRenderer.send('app:settings:clear'),
     reset: (key: keyof Settings) => ipcRenderer.invoke('app:settings:reset', key),

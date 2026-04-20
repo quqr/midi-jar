@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -21,7 +22,6 @@ import { useSettings } from 'renderer/contexts/Settings';
 import { Icon } from 'renderer/components';
 
 import { ChordDictionarySettings as TChordDictionarySettings } from 'main/types';
-import { groupValues } from './utils';
 import { ChordSearch } from './ChordSearch';
 
 import styles from './ChordDictionary.module.scss';
@@ -36,6 +36,7 @@ type Props = {
 const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
   const navigate = useNavigate();
   const { settings, updateSetting } = useSettings();
+  const { t } = useTranslation();
 
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
@@ -52,6 +53,12 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
     checked: settings.chordDictionary.groupBy === groupBy,
   });
 
+  const getGroupLabel = (groupBy: string) => {
+    if (groupBy === 'none') return t('chordDictionary.groupNames.noGroup');
+    if (groupBy === 'quality') return t('chordDictionary.groupNames.byQuality');
+    return t('chordDictionary.groupNames.byIntervals');
+  };
+
   const menuTrigger: (internals: DropdownTriggerInternal) => React.ReactNode = ({
     open,
     triggerRef,
@@ -62,8 +69,8 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
       right={open ? <Icon name="angle-up" /> : <Icon name="angle-down" />}
       intent="neutral"
     >
-      {`${groupValues[settings.chordDictionary.groupBy]}${
-        settings.chordDictionary.filterInKey ? ' (In Key)' : ''
+      {`${getGroupLabel(settings.chordDictionary.groupBy)}${
+        settings.chordDictionary.filterInKey ? t('chordDictionary.inKey') : ''
       }`}
     </Button>
   );
@@ -83,28 +90,32 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
       <Toolbar as={Stack} className={cx('header')} elevation={2}>
         {!disableUpdate && (
           <Menu className={cx('menu')} trigger={menuTrigger}>
-            <MenuGroup header="Group">
-              <MenuItemRadio {...bindSortAndFilter('none')}>{groupValues.none}</MenuItemRadio>
-              <MenuItemRadio {...bindSortAndFilter('quality')}>{groupValues.quality}</MenuItemRadio>
+            <MenuGroup header={t('chordDictionary.group')}>
+              <MenuItemRadio {...bindSortAndFilter('none')}>
+                {t('chordDictionary.groupNames.noGroup')}
+              </MenuItemRadio>
+              <MenuItemRadio {...bindSortAndFilter('quality')}>
+                {t('chordDictionary.groupNames.byQuality')}
+              </MenuItemRadio>
               <MenuItemRadio {...bindSortAndFilter('intervals')}>
-                {groupValues.intervals}
+                {t('chordDictionary.groupNames.byIntervals')}
               </MenuItemRadio>
             </MenuGroup>
             <Divider />
-            <MenuGroup header="Filter">
+            <MenuGroup header={t('chordDictionary.filter')}>
               <MenuItemCheckbox
                 checked={settings.chordDictionary.hideDisabled}
                 variant="switch"
                 onClick={toggleHideDisabled}
               >
-                Hide disabled chords
+                {t('chordDictionary.hideDisabledChords')}
               </MenuItemCheckbox>
               <MenuItemCheckbox
                 checked={settings.chordDictionary.filterInKey}
                 variant="switch"
                 onClick={toggleFilterInKey}
               >
-                Only chords in key
+                {t('chordDictionary.onlyChordsInKey')}
               </MenuItemCheckbox>
             </MenuGroup>
           </Menu>
@@ -117,13 +128,13 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
               onClick={handleToggleInteractive('detect')}
               selected={settings.chordDictionary.interactive === 'detect'}
             >
-              Detect
+              {t('chordDictionary.detect')}
             </ToggleButton>
             <ToggleButton
               onClick={handleToggleInteractive('play')}
               selected={settings.chordDictionary.interactive === 'play'}
             >
-              Play
+              {t('chordDictionary.play')}
             </ToggleButton>
           </ButtonGroup>
         )}
@@ -131,7 +142,7 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
           onClick={() => setSettingsOpen(true)}
           intent="neutral"
           icon
-          aria-label="Open dictionary settings"
+          aria-label={t('chordDictionary.openDictionarySettings')}
         >
           <Icon name="settings" />
         </Button>
@@ -142,7 +153,7 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
         size="lg"
         onClose={handleSettingsClosed}
         className={cx('base')}
-        aria-label="Chord Dictionary Settings"
+        aria-label={t('chordDictionary.chordDictionarySettings')}
       >
         <ChordDictionarySettings />
       </Drawer>

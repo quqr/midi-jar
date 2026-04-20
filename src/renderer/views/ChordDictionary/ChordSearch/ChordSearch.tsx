@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames/bind';
+import { useTranslation } from 'react-i18next';
 import { Chord } from 'tonal';
 import { Chord as TChord } from '@tonaljs/chord';
 import {
@@ -25,6 +26,7 @@ const cx = classNames.bind(styles);
 export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect }) => {
   const [search, setSearch] = useState<string>('');
   const [previousChords, setPreviousChords] = useState<TChord[]>([]);
+  const { t } = useTranslation();
 
   const options = useMemo(() => searchChords(search), [search]);
 
@@ -53,7 +55,7 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
         },
         disableAutoFocus: true,
       }}
-      placeholder="Search Chord"
+      placeholder={t('chordDictionary.searchChord')}
       navOptions={{
         itemQuerySelector: '[role="option"], input',
         disableSearchNav: true,
@@ -73,16 +75,18 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
       <>
         <div className={cx('searchContainer')}>
           <Input
-            placeholder="Type chord..."
+            placeholder={t('chordDictionary.typeChord')}
             block
-            aria-label="Type chord"
+            aria-label={t('chordDictionary.typeChord')}
             left={<Icon name="search" />}
             onChange={setSearch}
             autoFocus
           />
         </div>
         <ul>
-          <ListGroup header={search ? 'matches' : 'previous chords'}>
+          <ListGroup
+            header={search ? t('chordDictionary.matches') : t('chordDictionary.previousChords')}
+          >
             {search ? (
               <>
                 {options.map((option) => (
@@ -95,7 +99,9 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
                 ))}
                 {!options.length && (
                   <SelectOption className={cx('empty')} tabIndex={undefined} interactive={false}>
-                    <Typography intent="placeholder">No chords found</Typography>
+                    <Typography intent="placeholder">
+                      {t('chordDictionary.noChordsFound')}
+                    </Typography>
                   </SelectOption>
                 )}
               </>
@@ -111,7 +117,9 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
                   ))}
                 {(!previousChords || !previousChords.length) && (
                   <SelectOption className={cx('empty')} tabIndex={undefined} interactive={false}>
-                    <Typography intent="placeholder">No chords in history</Typography>
+                    <Typography intent="placeholder">
+                      {t('chordDictionary.noChordsInHistory')}
+                    </Typography>
                   </SelectOption>
                 )}
               </>

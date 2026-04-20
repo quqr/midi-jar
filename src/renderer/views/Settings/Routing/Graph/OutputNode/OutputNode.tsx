@@ -5,6 +5,7 @@ import { NodeProps, Handle, Position } from 'react-flow-renderer';
 import { ApiMidiOutput } from 'main/types/api';
 
 import { Icon } from 'renderer/components';
+import { useTranslation } from 'react-i18next';
 
 import styles from './OutputNode.module.scss';
 
@@ -17,6 +18,7 @@ type Props = NodeProps & {
 };
 
 const OutputNode: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={cx('container', {
@@ -39,7 +41,7 @@ const OutputNode: React.FC<Props> = ({ data }) => {
         <div className={cx('footer')}>
           {data.output.error && (
             <div className={cx('error')}>
-              <Icon name="midi-error" /> error
+              <Icon name="midi-error" /> {t('common.error')}
             </div>
           )}
         </div>

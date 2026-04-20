@@ -39,7 +39,7 @@ const router = createHashRouter(
       <Route
         path="chords/:moduleId"
         handle={{
-          title: (params: Params) => `Chord Display (${params.moduleId})`,
+          title: 'nav.chordDisplayWithId',
           icon: <Icon name="music" />,
           hasSettings: true,
         }}
@@ -54,7 +54,7 @@ const router = createHashRouter(
       <Route
         path="circle-of-fifths"
         handle={{
-          title: 'Circle of Fifths',
+          title: 'nav.circleOfFifths',
           icon: <Icon name="circle-of-fifths" />,
           hasSettings: true,
         }}
@@ -69,7 +69,7 @@ const router = createHashRouter(
       </Route>
       <Route
         path="quiz"
-        handle={{ title: 'Chord Quiz', icon: <Icon name="quiz" />, hasSettings: true }}
+        handle={{ title: 'nav.chordQuiz', icon: <Icon name="quiz" />, hasSettings: true }}
         element={
           <MidiMessageManagerProvider namespace="chord-quiz" source="internal">
             <ChordQuiz />
@@ -82,7 +82,7 @@ const router = createHashRouter(
       <Route
         path="chord-dictionary"
         handle={{
-          title: 'Chord Dictionary',
+          title: 'nav.chordDictionary',
           icon: <Icon name="dictionary" />,
           hasSettings: false,
         }}
