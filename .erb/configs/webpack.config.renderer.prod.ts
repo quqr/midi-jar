@@ -59,7 +59,11 @@ const configuration: webpack.Configuration = {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                includePaths: [webpackPaths.srcStylePath, webpackPaths.ljasUiThemePath],
+                includePaths: [
+                  webpackPaths.srcStylePath,
+                  webpackPaths.ljasUiThemePath,
+                  webpackPaths.ljasUiStylePath,
+                ],
               },
             },
           },

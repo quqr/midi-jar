@@ -3,11 +3,11 @@ $font-path: '../assets/fonts';
 
 
 @import '../renderer/style/fonts.scss';
-@import '@la-jarre-a-son/ui/lib/theme/jar/tokens';
-@import '@la-jarre-a-son/ui/lib/style/normalize';
-@import '@la-jarre-a-son/ui/lib/theme/jar/global';
-@import '@la-jarre-a-son/ui/lib/theme/jar/fonts';
-@import '@la-jarre-a-son/ui/lib/theme/jar/dark';
+@import 'tokens';
+@import 'normalize';
+@import 'global';
+@import 'fonts';
+@import 'dark';
 
 
 :global {

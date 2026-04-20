@@ -1,0 +1,53 @@
+import React from 'react';
+import { CloseReason } from '../../hooks/usePopover';
+import { AnimationDurationOptions } from '../../hooks/useAnimationDuration';
+export declare const DrawerSizes: readonly ["xs", "sm", "md", "lg", "xl"];
+export type DrawerSize = (typeof DrawerSizes)[number];
+export type DrawerPlacement = 'top' | 'bottom' | 'left' | 'right';
+export type DrawerProps = {
+    /**
+     * The size of the drawer (in teeeshirt size)
+     */
+    size?: DrawerSize;
+    /**
+     * The placement of the drawer
+     */
+    placement?: DrawerPlacement;
+    /**
+     * Mandatory aria label for the dialog container
+     */
+    'aria-label': string;
+    /**
+     * Callbacks when the drawer is closed.
+     *
+     * NOTE: component must be controller externally
+     */
+    onClose?: (reason?: CloseReason) => void;
+    /**
+     * Opens the drawer
+     */
+    open?: boolean;
+    /**
+     * Props to pass to the backdrop element
+     */
+    overlayProps?: React.ComponentProps<'div'>;
+    /**
+     * Hides the backdrop when drawer is open
+     */
+    noOverlay?: boolean;
+    /**
+     * The drawer content
+     */
+    children?: React.ReactNode;
+    /**
+     * Props to pass to the `useAnimationDuration` hook
+     */
+    animationProps?: AnimationDurationOptions;
+};
+/**
+ * Wraps any content in a floating Box attached to one side of the application, conditionally mounted & displayed.
+ *
+ * The open state must be controlled externally.
+ */
+export declare const Drawer: import("../../utils/forwardRef").FunctionComponentWithAs<"div", DrawerProps>;
+export default Drawer;

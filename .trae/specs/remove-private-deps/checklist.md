@@ -1,0 +1,15 @@
+- [x] package.json 中不再包含 `@la-jarre-a-son` 作用域的任何依赖
+- [x] .npmrc 中不再包含 GitHub Packages 注册表配置
+- [x] npm install 无需认证即可成功完成，无依赖冲突或错误
+- [x] src/main/store/migrations.ts 中 conf 的 Migrations 和 Conf 类型导入正常工作
+- [x] electron-store 配置读写功能正常
+- [x] npm run licenses 命令正常生成 ThirdPartyLicenses.json
+- [x] 所有 UI 组件从项目内联路径（src/shared/ui 或 webpack 别名）正常导入
+- [x] jar-ui-overrides.ts 中的组件补丁（Icon、ModalHeader、Switch、SelectTrigger、StateButton、TreeViewItem）正常工作
+- [x] ThemeProvider 在 renderer 和 overlay 进程中正常工作
+- [x] npx tsc --noEmit TypeScript 编译零错误
+- [x] npm run build 构建成功无错误
+- [x] ESLint 检查无新增错误
+- [x] 开发服务器正常启动，控制台无与依赖替换相关的错误或警告
+- [x] 设置页面（通用、和弦显示、和弦测验、和弦词典、五度圈、记谱法、路由、调试器、关于、许可证）正常显示和交互
+- [x] 核心功能模块（和弦显示、和弦词典、和弦测验、五度圈、路由、调试器）正常工作

@@ -22,8 +22,9 @@ const distMainPath = path.join(distPath, 'main');
 const distRendererPath = distPath;
 const distOverlayPath = distPath;
 
-const ljasUiSrcPath = path.join(nodeModulesPath, '@la-jarre-a-son/ui/lib');
+const ljasUiSrcPath = path.join(srcPath, 'shared/ui');
 const ljasUiThemePath = path.join(ljasUiSrcPath, 'theme/jar');
+const ljasUiStylePath = path.join(ljasUiSrcPath, 'style');
 
 const yalcPath = path.join(rootPath, '.yalc');
 const buildPath = path.join(releasePath, 'build');
@@ -50,4 +51,5 @@ export default {
   buildPath,
   ljasUiSrcPath,
   ljasUiThemePath,
+  ljasUiStylePath,
 };

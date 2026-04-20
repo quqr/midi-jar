@@ -1,5 +1,4 @@
 const esModules = [
-  '@la-jarre-a-son/ui',
   'react-markdown',
   'vfile',
   'unist-.+',
@@ -31,6 +30,7 @@ module.exports = {
   },
   transform: { '\\.[jt]sx?$': 'babel-jest' },
   moduleNameMapper: {
+    '@la-jarre-a-son/ui(.*)$': '<rootDir>/src/shared/ui$1',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|md)$':
       '<rootDir>/.erb/mocks/fileMock.js',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',

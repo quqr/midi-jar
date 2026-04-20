@@ -1,0 +1,17 @@
+{
+  "name": "jar-ui",
+  "version": "1.4.0",
+  "description": "La Jarre a Son UI kit",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "sideEffects": ["**/*.scss"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19",
+    "sass": "^1.51.0"
+  },
+  "dependencies": {
+    "@floating-ui/react-dom": "^2.1.6"
+  }
+}

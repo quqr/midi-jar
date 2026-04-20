@@ -8,6 +8,10 @@
     "strict": true,
     "sourceMap": true,
     "baseUrl": "./src",
+    "paths": {
+      "@la-jarre-a-son/ui": ["shared/ui"],
+      "@la-jarre-a-son/ui/*": ["shared/ui/*"]
+    },
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
