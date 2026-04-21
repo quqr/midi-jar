@@ -2,7 +2,6 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { Note } from 'tonal';
-import { Tab, TabList } from '@la-jarre-a-son/ui';
 
 import {
   KeySignatureConfig,
@@ -31,30 +30,31 @@ const ChordDictionaryChromaMenu: React.FC<Props> = ({
   const { t } = useTranslation();
 
   return (
-    <TabList
+    <div
       className={cx('chromanav')}
+      role="tablist"
       aria-label={t('chordDictionary.chromaNavigation')}
-      direction="vertical"
-      variant="ghost"
-      block
     >
       {(filterChordsInKey ? keySignature.scale : NOTE_NAMES).map((note) => {
         const chroma = Note.chroma(note) as number;
+        const isSelected = selected === chroma;
 
         return (
-          <Tab
+          <button
             key={note}
-            className={cx('tab')}
+            type="button"
+            className={cx('tab', { 'btn-active': isSelected }, 'btn btn-ghost btn-block')}
+            role="tab"
+            aria-selected={isSelected}
             onClick={() => onSelect(chroma)}
-            selected={selected === chroma}
           >
             <span className={cx('label')}>
               {formatSharpsFlats(getNoteInKeySignature(note, keySignature.notes))}
             </span>
-          </Tab>
+          </button>
         );
       })}
-    </TabList>
+    </div>
   );
 };
 

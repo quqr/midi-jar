@@ -1,0 +1,58 @@
+@import 'tokens';
+
+$scrollbar_width: $space-md !default;
+$scrollbar_padding: $space-xs !default;
+$scrollbar_radius: $radius-md !default;
+$scrollbar-track_color: transparent !default;
+$scrollbar-thumb_color: $color-neutral-600 !default;
+
+$Theme_selector: '.theme-jar' !default;
+
+#{$Theme_selector} {
+  &, * {
+    &::-webkit-scrollbar {
+      width: $scrollbar_width;
+      height: $scrollbar_width;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $scrollbar-thumb_color;
+      border-radius: $scrollbar_radius;
+      transition: background-color $transition_fast;
+
+      &:hover {
+        background-color: $color-neutral-500;
+      }
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $scrollbar-track_color;
+    }
+
+    ::-webkit-scrollbar-button {
+      display: none;
+    }
+  }
+
+  // Smooth scrolling
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+body.ljas-hide-scroll {
+  overflow: hidden;
+  padding-right: var(--ljas-scrollbarWidth, 0px) !important;
+}
+
+// Global focus styles for accessibility
+*:focus-visible {
+  outline: 2px solid $color-primary-500;
+  outline-offset: 2px;
+}
+
+// Selection color
+::selection {
+  background-color: rgba($color-primary-500, 0.3);
+  color: $color-neutral-1000;
+}

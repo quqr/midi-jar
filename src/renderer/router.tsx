@@ -45,7 +45,7 @@ const router = createHashRouter(
         }}
         element={
           <ChordDisplay source="internal">
-            <DrawerOutlet aria-label="Chord Display Settings" placement="right" size="lg" />
+            <DrawerOutlet aria-label="Chord Display Settings" />
           </ChordDisplay>
         }
       >
@@ -61,7 +61,7 @@ const router = createHashRouter(
         element={
           <MidiMessageManagerProvider namespace="circle-of-fifths" source="internal">
             <CircleOfFifths />
-            <DrawerOutlet aria-label="Circle of fifths Settings" placement="right" size="lg" />
+            <DrawerOutlet aria-label="Circle of fifths Settings" />
           </MidiMessageManagerProvider>
         }
       >
@@ -73,7 +73,7 @@ const router = createHashRouter(
         element={
           <MidiMessageManagerProvider namespace="chord-quiz" source="internal">
             <ChordQuiz />
-            <DrawerOutlet aria-label="Chord Quiz Settings" placement="right" size="lg" />
+            <DrawerOutlet aria-label="Chord Quiz Settings" />
           </MidiMessageManagerProvider>
         }
       >

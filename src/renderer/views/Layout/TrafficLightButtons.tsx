@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Button, ButtonGroup } from '@la-jarre-a-son/ui';
+import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Icon } from 'renderer/components';
 
@@ -24,41 +23,43 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <ButtonGroup className={className}>
-      <Button
+    <div className={classnames('join', className)}>
+      <button
+        type="button"
+        className="join-item btn btn-warning btn-ghost btn-sm"
         aria-label={t('layout.minimize')}
         onClick={handleEvent(minimize)}
-        intent="warning"
-        hoverIntent
-        icon
       >
         <Icon name="minimize" />
-      </Button>
+      </button>
       {windowState.maximized ? (
-        <Button
+        <button
+          type="button"
+          className="join-item btn btn-success btn-ghost btn-sm"
           aria-label={t('layout.unmaximize')}
           onClick={handleEvent(unmaximize)}
-          intent="success"
-          hoverIntent
-          icon
         >
           <Icon name="unmaximize" />
-        </Button>
+        </button>
       ) : (
-        <Button
+        <button
+          type="button"
+          className="join-item btn btn-success btn-ghost btn-sm"
           aria-label={t('layout.maximize')}
           onClick={handleEvent(maximize)}
-          intent="success"
-          hoverIntent
-          icon
         >
           <Icon name="maximize" />
-        </Button>
+        </button>
       )}
-      <Button aria-label={t('common.close')} onClick={close} intent="danger" hoverIntent icon>
+      <button
+        type="button"
+        className="join-item btn btn-error btn-ghost btn-sm"
+        aria-label={t('common.close')}
+        onClick={close}
+      >
         <Icon name="cross" />
-      </Button>
-    </ButtonGroup>
+      </button>
+    </div>
   );
 };
 

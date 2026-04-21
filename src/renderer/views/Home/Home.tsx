@@ -1,17 +1,7 @@
 import React from 'react';
-import classnames from 'classnames/bind';
+import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import {
-  Button,
-  Grid,
-  Card,
-  CardThumbnail,
-  CardThumbnailOverlay,
-  CardThumbnailItem,
-  CardHeader,
-  Container,
-} from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { ServerState } from 'main/types';
@@ -40,172 +30,219 @@ const Home: React.FC = () => {
   const overlayEnabled = state.started && !!state.addresses.length;
 
   return (
-    <Container size="xl" className={cx('base')}>
-      <Grid size="md" gap="md">
+    <div className={classnames('container mx-auto max-w-7xl', styles.base)}>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
         {settings.chordDisplay.map((module) => (
-          <Card key={`chord-display/${module.id}`} outlined elevation={1}>
-            <CardThumbnail alt={t('home.chordDisplayPreview')} src={ThumbnaildChordDisplay}>
-              <CardThumbnailOverlay as={NavLink} to={`/chords/${module.id}`} interactive />
+          <div
+            key={`chord-display/${module.id}`}
+            className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden"
+          >
+            <figure className="relative aspect-[640/429]">
+              <img
+                src={ThumbnaildChordDisplay}
+                alt={t('home.chordDisplayPreview')}
+                className="w-full h-full object-cover"
+              />
+              <NavLink to={`/chords/${module.id}`} className="absolute inset-0" />
               {overlayEnabled && (
-                <CardThumbnailItem position="top-left">
-                  <Button
-                    as="a"
+                <div className="absolute top-2 left-2 z-10">
+                  <a
                     href={getOverlayUrl(state, `/chords/${module.id}`)}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-ghost btn-sm"
                     aria-label={t('common.overlay')}
-                    icon
-                    intent="primary"
-                    variant="ghost"
-                    hoverIntent
                   >
                     <Icon name="overlay" />
-                  </Button>
-                </CardThumbnailItem>
+                  </a>
+                </div>
               )}
-            </CardThumbnail>
-            <CardHeader
-              left={<Icon name="piano" />}
-              right={
+            </figure>
+            <div className="card-body p-5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Icon name="piano" />
+                  <h3 className="card-title text-lg font-semibold">
+                    {t('nav.chordDisplayWithId', { moduleId: module.id })}
+                  </h3>
+                </div>
                 <NavButton
                   aria-label={t('common.settings')}
-                  icon
-                  variant="ghost"
-                  intent="neutral"
+                  className="btn btn-ghost btn-sm hover:bg-base-200"
                   to={`/settings/chords/${module.id}`}
                 >
                   <Icon name="settings" />
                 </NavButton>
-              }
-            >
-              {t('nav.chordDisplayWithId', { moduleId: module.id })}
-            </CardHeader>
-          </Card>
+              </div>
+            </div>
+          </div>
         ))}
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.chordQuizPreview')} src={ThumbnaildChordQuiz}>
-            <CardThumbnailOverlay as={NavLink} to="/quiz" interactive />
+        <div className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden">
+          <figure className="relative aspect-[640/429]">
+            <img
+              src={ThumbnaildChordQuiz}
+              alt={t('home.chordQuizPreview')}
+              className="w-full h-full object-cover"
+            />
+            <NavLink to="/quiz" className="absolute inset-0" />
             {overlayEnabled && (
-              <CardThumbnailItem position="top-left">
-                <Button
-                  as="a"
+              <div className="absolute top-2 left-2 z-10">
+                <a
                   href={getOverlayUrl(state, '/quiz')}
                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-ghost btn-sm"
                   aria-label={t('common.overlay')}
-                  icon
-                  intent="primary"
-                  variant="ghost"
-                  hoverIntent
                 >
                   <Icon name="overlay" />
-                </Button>
-              </CardThumbnailItem>
+                </a>
+              </div>
             )}
-          </CardThumbnail>
-          <CardHeader
-            left={<Icon name="quiz" />}
-            right={
+          </figure>
+          <div className="card-body p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Icon name="quiz" />
+                <h3 className="card-title text-lg font-semibold">{t('nav.chordQuiz')}</h3>
+              </div>
               <NavButton
                 aria-label={t('common.settings')}
-                icon
-                variant="ghost"
-                intent="neutral"
+                className="btn btn-ghost btn-sm hover:bg-base-200"
                 to="/settings/quiz"
               >
                 <Icon name="settings" />
               </NavButton>
-            }
-          >
-            {t('nav.chordQuiz')}
-          </CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.circleOfFifthsPreview')} src={ThumbnaildCircleOfFifths}>
-            <CardThumbnailOverlay as={NavLink} to="/circle-of-fifths" interactive />
+            </div>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden">
+          <figure className="relative aspect-[640/429]">
+            <img
+              src={ThumbnaildCircleOfFifths}
+              alt={t('home.circleOfFifthsPreview')}
+              className="w-full h-full object-cover"
+            />
+            <NavLink to="/circle-of-fifths" className="absolute inset-0" />
             {overlayEnabled && (
-              <CardThumbnailItem position="top-left">
-                <Button
-                  as="a"
+              <div className="absolute top-2 left-2 z-10">
+                <a
                   href={getOverlayUrl(state, '/circle-of-fifths')}
                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-ghost btn-sm"
                   aria-label={t('common.overlay')}
-                  icon
-                  intent="primary"
-                  variant="ghost"
-                  hoverIntent
                 >
                   <Icon name="overlay" />
-                </Button>
-              </CardThumbnailItem>
+                </a>
+              </div>
             )}
-          </CardThumbnail>
-          <CardHeader
-            left={<Icon name="circle-of-fifths" />}
-            right={
+          </figure>
+          <div className="card-body p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Icon name="circle-of-fifths" />
+                <h3 className="card-title text-lg font-semibold">{t('nav.circleOfFifths')}</h3>
+              </div>
               <NavButton
                 aria-label={t('common.settings')}
-                icon
-                variant="ghost"
-                intent="neutral"
+                className="btn btn-ghost btn-sm hover:bg-base-200"
                 to="/settings/circle-of-fifths"
               >
                 <Icon name="settings" />
               </NavButton>
-            }
-          >
-            {t('nav.circleOfFifths')}
-          </CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.chordDictionaryPreview')} src={ThumbnaildChordDictionary}>
-            <CardThumbnailOverlay as={NavLink} to="/chord-dictionary" interactive />
+            </div>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden">
+          <figure className="relative aspect-[640/429]">
+            <img
+              src={ThumbnaildChordDictionary}
+              alt={t('home.chordDictionaryPreview')}
+              className="w-full h-full object-cover"
+            />
+            <NavLink to="/chord-dictionary" className="absolute inset-0" />
             {overlayEnabled && (
-              <CardThumbnailItem position="top-left">
-                <Button
-                  as="a"
+              <div className="absolute top-2 left-2 z-10">
+                <a
                   href={getOverlayUrl(state, '/chord-dictionary')}
                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-ghost btn-sm"
                   aria-label={t('common.overlay')}
-                  icon
-                  intent="primary"
-                  variant="ghost"
-                  hoverIntent
                 >
                   <Icon name="overlay" />
-                </Button>
-              </CardThumbnailItem>
+                </a>
+              </div>
             )}
-          </CardThumbnail>
-          <CardHeader
-            left={<Icon name="dictionary" />}
-            right={
+          </figure>
+          <div className="card-body p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Icon name="dictionary" />
+                <h3 className="card-title text-lg font-semibold">{t('nav.chordDictionary')}</h3>
+              </div>
               <NavButton
                 aria-label={t('common.settings')}
-                icon
-                variant="ghost"
-                intent="neutral"
+                className="btn btn-ghost btn-sm hover:bg-base-200"
                 to="/settings/chord-dictionary"
               >
                 <Icon name="settings" />
               </NavButton>
-            }
-          >
-            {t('nav.chordDictionary')}
-          </CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.settingsPreview')} src={ThumbnailRouting}>
-            <CardThumbnailOverlay as={NavLink} to="/settings/routing" interactive />
-          </CardThumbnail>
-          <CardHeader left={<Icon name="routing" />}>{t('nav.routing')}</CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.debuggerPreview')} src={ThumbnailDebugger}>
-            <CardThumbnailOverlay as={NavLink} to="/settings/debug" interactive />
-          </CardThumbnail>
-          <CardHeader left={<Icon name="bug" />}>{t('nav.debugger')}</CardHeader>
-        </Card>
-      </Grid>
-    </Container>
+            </div>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden">
+          <figure className="relative aspect-[640/429]">
+            <img
+              src={ThumbnailRouting}
+              alt={t('home.settingsPreview')}
+              className="w-full h-full object-cover"
+            />
+            <NavLink to="/settings/routing" className="absolute inset-0" />
+          </figure>
+          <div className="card-body p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Icon name="routing" />
+                <h3 className="card-title text-lg font-semibold">{t('nav.routing')}</h3>
+              </div>
+              <NavButton
+                aria-label={t('common.settings')}
+                className="btn btn-ghost btn-sm hover:bg-base-200"
+                to="/settings/routing"
+              >
+                <Icon name="settings" />
+              </NavButton>
+            </div>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 rounded-xl border border-base-300 overflow-hidden">
+          <figure className="relative aspect-[640/429]">
+            <img
+              src={ThumbnailDebugger}
+              alt={t('home.debuggerPreview')}
+              className="w-full h-full object-cover"
+            />
+            <NavLink to="/settings/debug" className="absolute inset-0" />
+          </figure>
+          <div className="card-body p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Icon name="bug" />
+                <h3 className="card-title text-lg font-semibold">{t('nav.debugger')}</h3>
+              </div>
+              <NavButton
+                aria-label={t('common.settings')}
+                className="btn btn-ghost btn-sm hover:bg-base-200"
+                to="/settings/debug"
+              >
+                <Icon name="settings" />
+              </NavButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

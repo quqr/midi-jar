@@ -67,8 +67,41 @@ const configuration: webpack.Configuration = {
 
   module: {
     rules: [
+      // Plain CSS files (for Tailwind CSS v4 / daisyUI)
       {
-        test: /\.s?(c|a)ss$/,
+        test: /\.css$/i,
+        exclude: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
+      },
+      // CSS Modules
+      {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
+      },
+      // SCSS/SASS files
+      {
+        test: /\.s(a|c)ss$/,
         use: [
           'style-loader',
           {
@@ -82,16 +115,11 @@ const configuration: webpack.Configuration = {
               importLoaders: 1,
             },
           },
-          'resolve-url-loader',
           {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                includePaths: [
-                  webpackPaths.srcStylePath,
-                  webpackPaths.ljasUiThemePath,
-                  webpackPaths.ljasUiStylePath,
-                ],
+                includePaths: [webpackPaths.srcStylePath],
               },
             },
           },

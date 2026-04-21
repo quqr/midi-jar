@@ -105,8 +105,8 @@ function closeHttpServer(): Promise<void> {
 export function getAddresses(): string[] {
   const nets = os.networkInterfaces();
 
-  const ips = Object.keys(nets).map((name) =>
-    nets[name]?.map((net) => (net.family === 'IPv4' ? net.address : null))
+  const ips = Object.keys(nets).map(
+    (name) => nets[name]?.map((net) => (net.family === 'IPv4' ? net.address : null))
   );
   ips.unshift(['localhost']);
 

@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { ListItem, bindClassNames, forwardRefWithAs, SelectOption } from '@la-jarre-a-son/ui';
+import classnames from 'classnames/bind';
 
 import { ChordName } from 'renderer/components';
 
@@ -8,30 +7,29 @@ import { ChordSearchOptionProps } from './types';
 
 import styles from './ChordSearch.module.scss';
 
-const cx = bindClassNames(styles);
+const cx = classnames.bind(styles);
 
-export const ChordSearchOption = forwardRefWithAs<ChordSearchOptionProps, typeof ListItem>(
+export const ChordSearchOption = React.forwardRef<HTMLLIElement, ChordSearchOptionProps>(
   (props, ref) => {
     const { chord, parts, onSelect, selected, className, ...otherProps } = props;
     const value = chord.tonic + chord.aliases[0];
 
     return (
-      <SelectOption
-        ref={ref}
-        className={cx(parts ? 'option' : 'history', className)}
-        value={value}
-        onSelect={onSelect}
-        selected={selected}
-        {...otherProps}
-      >
-        <ChordName chord={chord} />
-        {parts && (
-          <div className={cx('resultParts')}>
-            <span className={cx('resultMatch')}>{parts[0]}</span>
-            <span className={cx('resultRest')}>{parts[1]}</span>
-          </div>
-        )}
-      </SelectOption>
+      <li ref={ref} className={cx(parts ? 'option' : 'history', className)} {...otherProps}>
+        <button
+          type="button"
+          className={`btn btn-ghost btn-block justify-start ${selected ? 'btn-active' : ''}`}
+          onClick={() => onSelect?.(value)}
+        >
+          <ChordName chord={chord} />
+          {parts && (
+            <div className={cx('resultParts')}>
+              <span className={cx('resultMatch')}>{parts[0]}</span>
+              <span className={cx('resultRest')}>{parts[1]}</span>
+            </div>
+          )}
+        </button>
+      </li>
     );
   }
 );

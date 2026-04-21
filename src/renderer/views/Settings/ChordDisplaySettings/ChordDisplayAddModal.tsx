@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Button,
-  FormField,
-  Modal,
-  ModalHeader,
-  ModalContent,
-  ModalActions,
-  ModalActionsSeparator,
-  Input,
-  StateButton,
-} from '@la-jarre-a-son/ui';
 import { FieldError } from './utils';
 
 type Props = {
@@ -32,23 +21,44 @@ const ChordDisplayAddModal: React.FC<Props> = ({ open, onCancel, onSave }) => {
   };
 
   return (
-    <Modal open={open} onClose={onCancel} size="sm">
-      <ModalHeader title={t('settings.chordDisplaySettings.newModule')} />
-      <ModalContent>
-        <FormField label={t('common.name')} error={errors.name}>
-          <Input value={name} onChange={setName} autoFocus />
-        </FormField>
-      </ModalContent>
-      <ModalActions>
-        <Button variant="ghost" intent="neutral" onClick={onCancel}>
-          {t('common.cancel')}
-        </Button>
-        <ModalActionsSeparator />
-        <StateButton intent="success" onClick={handleSave}>
-          {t('common.add')}
-        </StateButton>
-      </ModalActions>
-    </Modal>
+    <dialog className={`modal ${open ? 'modal-open' : ''}`} open={open}>
+      <div className="modal-box modal-sm">
+        <h3 className="font-bold text-lg">{t('settings.chordDisplaySettings.newModule')}</h3>
+        <div className="modal-content py-4">
+          <div className="form-control w-full">
+            <label htmlFor="newModuleName" className="label">
+              <span className="label-text">{t('common.name')}</span>
+            </label>
+            <input
+              id="newModuleName"
+              type="text"
+              className={`input input-bordered w-full ${errors.name ? 'input-error' : ''}`}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {errors.name && (
+              <label htmlFor="newModuleName" className="label">
+                <span className="label-text-alt text-error">{errors.name}</span>
+              </label>
+            )}
+          </div>
+        </div>
+        <div className="modal-action">
+          <button type="button" className="btn btn-ghost btn-neutral" onClick={onCancel}>
+            {t('common.cancel')}
+          </button>
+          <div className="divider divider-horizontal mx-1" />
+          <button type="button" className="btn btn-success" onClick={handleSave}>
+            {t('common.add')}
+          </button>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button type="button" onClick={onCancel}>
+          close
+        </button>
+      </form>
+    </dialog>
   );
 };
 

@@ -1,21 +1,9 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useModuleSettings } from 'renderer/contexts/Settings';
-
-import {
-  Container,
-  Button,
-  Select,
-  Switch,
-  FormFieldset,
-  FormControlLabel,
-  Toolbar,
-  StackSeparator,
-  Slider,
-  FormField,
-} from '@la-jarre-a-son/ui';
 
 import { Icon, InputColor, InputNote, ScrollContainer } from 'renderer/components';
 
@@ -39,390 +27,614 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
 
   return (
     <>
-      <ScrollContainer pad="md">
-        <Container size="md">
-          <FormFieldset label={t('settings.chordDisplaySettings.chords')}>
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayChord')}
-              hint={t('settings.chordDisplaySettings.displayChordHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayChord', value)}
-                checked={moduleSettings.displayChord}
-              />
-            </FormControlLabel>
+      <ScrollContainer className="p-4">
+        <div className="max-w-7xl mx-auto px-4 space-y-6">
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">{t('settings.chordDisplaySettings.chords')}</legend>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayAltChords')}
-              hint={t('settings.chordDisplaySettings.displayAltChordsHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayAltChords', value)}
-                checked={moduleSettings.displayAltChords}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="displayChord"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayChord')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayChordHint')}
+                </span>
+                <input
+                  id="displayChord"
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayChord', e.target.checked)}
+                  checked={moduleSettings.displayChord}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayChordName')}
-              hint={t('settings.chordDisplaySettings.displayChordNameHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayName', value)}
-                checked={moduleSettings.displayName}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="displayAltChords"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayAltChords')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayAltChordsHint')}
+                </span>
+                <input
+                  id="displayAltChords"
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayAltChords', e.target.checked)}
+                  checked={moduleSettings.displayAltChords}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.chordNotation')}
-              hint={t('settings.chordDisplaySettings.chordNotationHint')}
-              reverse
-            >
-              <Select
-                value={moduleSettings.chordNotation}
-                onChange={(value) => updateModuleSetting('chordNotation', value)}
-                options={fields.chordNotation.choices}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="displayName"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayChordName')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayChordNameHint')}
+                </span>
+                <input
+                  id="displayName"
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayName', e.target.checked)}
+                  checked={moduleSettings.displayName}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.highlightAlterations')}
-              hint={t('settings.chordDisplaySettings.highlightAlterationsHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('highlightAlterations', value)}
-                checked={moduleSettings.highlightAlterations}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="chordNotation"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.chordNotation')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.chordNotationHint')}
+                </span>
+                <select
+                  id="chordNotation"
+                  className="select select-bordered w-full"
+                  value={moduleSettings.chordNotation}
+                  onChange={(e) => updateModuleSetting('chordNotation', e.target.value)}
+                >
+                  {fields.chordNotation.choices.map((c: { value: string; label: string }) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.allowOmissions')}
-              hint={t('settings.chordDisplaySettings.allowOmissionsHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('allowOmissions', value)}
-                checked={moduleSettings.allowOmissions}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="highlightAlterations"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.highlightAlterations')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.highlightAlterationsHint')}
+                </span>
+                <input
+                  id="highlightAlterations"
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('highlightAlterations', e.target.checked)}
+                  checked={moduleSettings.highlightAlterations}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.useSustainPedal')}
-              hint={t('settings.chordDisplaySettings.useSustainPedalHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('useSustain', value)}
-                checked={moduleSettings.useSustain}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label
+                htmlFor="allowOmissions"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.allowOmissions')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.allowOmissionsHint')}
+                </span>
+                <input
+                  id="allowOmissions"
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('allowOmissions', e.target.checked)}
+                  checked={moduleSettings.allowOmissions}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.detectOnRelease')}
-              hint={t('settings.chordDisplaySettings.detectOnReleaseHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('detectOnRelease', value)}
-                checked={moduleSettings.detectOnRelease}
-              />
-            </FormControlLabel>
-          </FormFieldset>
+            <div className="form-control w-full">
+              <label
+                htmlFor="useSustainPedal"
+                className="label cursor-pointer flex-row-reverse justify-between"
+              >
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.useSustainPedal')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.useSustainPedalHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('useSustain', e.target.checked)}
+                  checked={moduleSettings.useSustain}
+                />
+              </label>
+            </div>
 
-          <FormFieldset label={t('settings.chordDisplaySettings.additionalInfo')}>
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayNotation')}
-              hint={t('settings.chordDisplaySettings.displayNotationHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayNotation', value)}
-                checked={moduleSettings.displayNotation}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.detectOnRelease')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.detectOnReleaseHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('detectOnRelease', e.target.checked)}
+                  checked={moduleSettings.detectOnRelease}
+                />
+              </label>
+            </div>
+          </fieldset>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayIntervals')}
-              hint={t('settings.chordDisplaySettings.displayIntervalsHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayIntervals', value)}
-                checked={moduleSettings.displayIntervals}
-              />
-            </FormControlLabel>
-          </FormFieldset>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">
+              {t('settings.chordDisplaySettings.additionalInfo')}
+            </legend>
 
-          <FormFieldset label={t('settings.chordDisplaySettings.keyboard')}>
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displayKeyboard')}
-              hint={t('settings.chordDisplaySettings.displayKeyboardHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('displayKeyboard', value)}
-                checked={moduleSettings.displayKeyboard}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayNotation')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayNotationHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayNotation', e.target.checked)}
+                  checked={moduleSettings.displayNotation}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.noteStart')}
-              hint={t('settings.chordDisplaySettings.noteStartHint')}
-              reverse
-            >
-              <InputNote
-                onChange={(value) => updateModuleSetting('keyboard.from', value)}
-                value={moduleSettings.keyboard.from}
-                withOctave
-                learn
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayIntervals')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayIntervalsHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayIntervals', e.target.checked)}
+                  checked={moduleSettings.displayIntervals}
+                />
+              </label>
+            </div>
+          </fieldset>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.noteEnd')}
-              hint={t('settings.chordDisplaySettings.noteEndHint')}
-              reverse
-            >
-              <InputNote
-                onChange={(value) => updateModuleSetting('keyboard.to', value)}
-                value={moduleSettings.keyboard.to}
-                withOctave
-                learn
-              />
-            </FormControlLabel>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">
+              {t('settings.chordDisplaySettings.keyboard')}
+            </legend>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.wrapKeyboard')}
-              hint={t('settings.chordDisplaySettings.wrapKeyboardHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('keyboard.wrap', value)}
-                checked={moduleSettings.keyboard.wrap}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displayKeyboard')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displayKeyboardHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('displayKeyboard', e.target.checked)}
+                  checked={moduleSettings.displayKeyboard}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.displaySustainedNotes')}
-              hint={t('settings.chordDisplaySettings.displaySustainedNotesHint')}
-              reverse
-            >
-              <Switch
-                onChange={(value) => updateModuleSetting('keyboard.displaySustained', value)}
-                checked={moduleSettings.keyboard.displaySustained}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.noteStart')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.noteStartHint')}
+                </span>
+                <InputNote
+                  onChange={(value) => updateModuleSetting('keyboard.from', value)}
+                  value={moduleSettings.keyboard.from}
+                  withOctave
+                  learn
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.keyNames')}
-              hint={t('settings.chordDisplaySettings.keyNamesHint')}
-              reverse
-            >
-              <Select
-                value={moduleSettings.keyboard.keyName}
-                onChange={(value) => updateModuleSetting('keyboard.keyName', value)}
-                options={fields.keyboard.keyName.choices}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.noteEnd')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.noteEndHint')}
+                </span>
+                <InputNote
+                  onChange={(value) => updateModuleSetting('keyboard.to', value)}
+                  value={moduleSettings.keyboard.to}
+                  withOctave
+                  learn
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.playedKeyInfo')}
-              hint={t('settings.chordDisplaySettings.playedKeyInfoHint')}
-              reverse
-            >
-              <Select
-                value={moduleSettings.keyboard.keyInfo}
-                onChange={(value) => updateModuleSetting('keyboard.keyInfo', value)}
-                options={fields.keyboard.keyInfo.choices}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.wrapKeyboard')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.wrapKeyboardHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) => updateModuleSetting('keyboard.wrap', e.target.checked)}
+                  checked={moduleSettings.keyboard.wrap}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.playedKeyLabel')}
-              hint={t('settings.chordDisplaySettings.playedKeyLabelHint')}
-              reverse
-            >
-              <Select
-                value={moduleSettings.keyboard.label}
-                onChange={(value) => updateModuleSetting('keyboard.label', value)}
-                options={fields.keyboard.label.choices}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.displaySustainedNotes')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.displaySustainedNotesHint')}
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  onChange={(e) =>
+                    updateModuleSetting('keyboard.displaySustained', e.target.checked)
+                  }
+                  checked={moduleSettings.keyboard.displaySustained}
+                />
+              </label>
+            </div>
 
-            <FormField
-              label={t('settings.chordDisplaySettings.fadeOutDuration')}
-              hint={t('settings.chordDisplaySettings.fadeOutDurationHint')}
-            >
-              <Slider
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.keyNames')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.keyNamesHint')}
+                </span>
+                <select
+                  className="select select-bordered w-full"
+                  value={moduleSettings.keyboard.keyName}
+                  onChange={(e) => updateModuleSetting('keyboard.keyName', e.target.value)}
+                >
+                  {fields.keyboard.keyName.choices.map((c: { value: string; label: string }) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.playedKeyInfo')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.playedKeyInfoHint')}
+                </span>
+                <select
+                  className="select select-bordered w-full"
+                  value={moduleSettings.keyboard.keyInfo}
+                  onChange={(e) => updateModuleSetting('keyboard.keyInfo', e.target.value)}
+                >
+                  {fields.keyboard.keyInfo.choices.map((c: { value: string; label: string }) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.playedKeyLabel')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.playedKeyLabelHint')}
+                </span>
+                <select
+                  className="select select-bordered w-full"
+                  value={moduleSettings.keyboard.label}
+                  onChange={(e) => updateModuleSetting('keyboard.label', e.target.value)}
+                >
+                  {fields.keyboard.label.choices.map((c: { value: string; label: string }) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-medium">
+                  {t('settings.chordDisplaySettings.fadeOutDuration')}
+                </span>
+              </label>
+              <label className="label">
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.fadeOutDurationHint')}
+                </span>
+              </label>
+              <input
+                type="range"
+                className="range"
                 value={moduleSettings.keyboard.fadeOutDuration}
-                onChange={(value) =>
-                  updateModuleSetting(
-                    'keyboard.fadeOutDuration',
-                    Array.isArray(value) ? value[0] : value
-                  )
+                onChange={(e) =>
+                  updateModuleSetting('keyboard.fadeOutDuration', Number(e.target.value))
                 }
                 min={0}
                 max={1}
                 step={0.1}
-                valueText={`${moduleSettings.keyboard.fadeOutDuration.toFixed(1)}s`}
               />
-            </FormField>
-          </FormFieldset>
+              <p className="text-sm mt-1">{`${moduleSettings.keyboard.fadeOutDuration.toFixed(
+                1
+              )}s`}</p>
+            </div>
+          </fieldset>
 
-          <FormFieldset label={t('settings.chordDisplaySettings.keyboardSkin')}>
-            <FormControlLabel
-              label={t('settings.chordDisplaySettings.skin')}
-              hint={t('settings.chordDisplaySettings.skinHint')}
-              reverse
-            >
-              <Select
-                value={moduleSettings.keyboard.skin}
-                onChange={(value) => updateModuleSetting('keyboard.skin', value)}
-                options={fields.keyboard.skin.choices}
-              />
-            </FormControlLabel>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">
+              {t('settings.chordDisplaySettings.keyboardSkin')}
+            </legend>
 
-            <FormField
-              label={t('settings.chordDisplaySettings.textOpacity')}
-              hint={t('settings.chordDisplaySettings.textOpacityHint')}
-            >
-              <Slider
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.skin')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.skinHint')}
+                </span>
+                <select
+                  className="select select-bordered w-full"
+                  value={moduleSettings.keyboard.skin}
+                  onChange={(e) => updateModuleSetting('keyboard.skin', e.target.value)}
+                >
+                  {fields.keyboard.skin.choices.map((c: { value: string; label: string }) => (
+                    <option key={c.value} value={c.value}>
+                      {c.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-medium">
+                  {t('settings.chordDisplaySettings.textOpacity')}
+                </span>
+              </label>
+              <label className="label">
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.textOpacityHint')}
+                </span>
+              </label>
+              <input
+                type="range"
+                className="range"
                 value={moduleSettings.keyboard.textOpacity}
-                onChange={(value) =>
-                  updateModuleSetting(
-                    'keyboard.textOpacity',
-                    Array.isArray(value) ? value[0] : value
-                  )
+                onChange={(e) =>
+                  updateModuleSetting('keyboard.textOpacity', Number(e.target.value))
                 }
                 min={0}
                 max={1}
                 step={0.1}
-                valueText={`${moduleSettings.keyboard.textOpacity}`}
               />
-            </FormField>
+              <p className="text-sm mt-1">{`${moduleSettings.keyboard.textOpacity}`}</p>
+            </div>
 
-            <FormField
-              label={t('settings.chordDisplaySettings.keyHeight')}
-              hint={t('settings.chordDisplaySettings.keyHeightHint')}
-            >
-              <Slider
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-medium">
+                  {t('settings.chordDisplaySettings.keyHeight')}
+                </span>
+              </label>
+              <label className="label">
+                <span className="label-text-alt">
+                  {t('settings.chordDisplaySettings.keyHeightHint')}
+                </span>
+              </label>
+              <input
+                type="range"
+                className="range"
                 value={moduleSettings.keyboard.sizes.height}
-                onChange={(value) =>
-                  updateModuleSetting(
-                    'keyboard.sizes.height',
-                    Array.isArray(value) ? value[0] : value
-                  )
+                onChange={(e) =>
+                  updateModuleSetting('keyboard.sizes.height', Number(e.target.value))
                 }
                 min={1}
                 max={16}
                 step={0.1}
-                valueText={`${moduleSettings.keyboard.sizes.height}`}
               />
-            </FormField>
+              <p className="text-sm mt-1">{`${moduleSettings.keyboard.sizes.height}`}</p>
+            </div>
 
             {moduleSettings.keyboard.skin === 'classic' && (
-              <FormField
-                label={t('settings.chordDisplaySettings.blackKeyRatio')}
-                hint={t('settings.chordDisplaySettings.blackKeyRatioHint')}
-              >
-                <Slider
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-medium">
+                    {t('settings.chordDisplaySettings.blackKeyRatio')}
+                  </span>
+                </label>
+                <label className="label">
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.blackKeyRatioHint')}
+                  </span>
+                </label>
+                <input
+                  type="range"
+                  className="range"
                   value={moduleSettings.keyboard.sizes.ratio}
-                  onChange={(value) =>
-                    updateModuleSetting(
-                      'keyboard.sizes.ratio',
-                      Array.isArray(value) ? value[0] : value
-                    )
+                  onChange={(e) =>
+                    updateModuleSetting('keyboard.sizes.ratio', Number(e.target.value))
                   }
                   min={0.1}
                   max={0.9}
                   step={0.025}
-                  valueText={`${(moduleSettings.keyboard.sizes.ratio * 100).toFixed(1)}%`}
                 />
-              </FormField>
+                <p className="text-sm mt-1">{`${(moduleSettings.keyboard.sizes.ratio * 100).toFixed(
+                  1
+                )}%`}</p>
+              </div>
             )}
             {moduleSettings.keyboard.skin === 'classic' && (
-              <FormField label={t('settings.chordDisplaySettings.keyBorderRadius')}>
-                <Slider
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-medium">
+                    {t('settings.chordDisplaySettings.keyBorderRadius')}
+                  </span>
+                </label>
+                <input
+                  type="range"
+                  className="range"
                   value={moduleSettings.keyboard.sizes.radius}
-                  onChange={(value) =>
-                    updateModuleSetting(
-                      'keyboard.sizes.radius',
-                      Array.isArray(value) ? value[0] : value
-                    )
+                  onChange={(e) =>
+                    updateModuleSetting('keyboard.sizes.radius', Number(e.target.value))
                   }
                   min={0}
                   max={1}
                   step={0.05}
-                  valueText={`${Math.round(moduleSettings.keyboard.sizes.radius * 100)}%`}
                 />
-              </FormField>
+                <p className="text-sm mt-1">{`${Math.round(
+                  moduleSettings.keyboard.sizes.radius * 100
+                )}%`}</p>
+              </div>
             )}
             {moduleSettings.keyboard.skin === 'classic' && (
-              <FormControlLabel
-                label={t('settings.chordDisplaySettings.keyBevel')}
-                hint={t('settings.chordDisplaySettings.keyBevelHint')}
-                reverse
-              >
-                <Switch
-                  onChange={(value) => updateModuleSetting('keyboard.sizes.bevel', value)}
-                  checked={moduleSettings.keyboard.sizes.bevel}
-                />
-              </FormControlLabel>
+              <div className="form-control w-full">
+                <label className="label cursor-pointer flex-row-reverse justify-between">
+                  <span className="label-text">{t('settings.chordDisplaySettings.keyBevel')}</span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.keyBevelHint')}
+                  </span>
+                  <input
+                    type="checkbox"
+                    className="toggle"
+                    onChange={(e) => updateModuleSetting('keyboard.sizes.bevel', e.target.checked)}
+                    checked={moduleSettings.keyboard.sizes.bevel}
+                  />
+                </label>
+              </div>
             )}
-          </FormFieldset>
+          </fieldset>
 
-          <FormFieldset label={t('settings.chordDisplaySettings.keyboardColors')}>
-            <FormControlLabel label={t('settings.chordDisplaySettings.blackKeys')} reverse>
-              <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.black', value)}
-                value={moduleSettings.keyboard.colors.black}
-              />
-            </FormControlLabel>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">
+              {t('settings.chordDisplaySettings.keyboardColors')}
+            </legend>
 
-            <FormControlLabel label={t('settings.chordDisplaySettings.whiteKeys')} reverse>
-              <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.white', value)}
-                value={moduleSettings.keyboard.colors.white}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.blackKeys')}</span>
+                <InputColor
+                  onChange={(value) => updateModuleSetting('keyboard.colors.black', value)}
+                  value={moduleSettings.keyboard.colors.black}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel label={t('settings.chordDisplaySettings.playedKeys')} reverse>
-              <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.played', value)}
-                value={moduleSettings.keyboard.colors.played}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.whiteKeys')}</span>
+                <InputColor
+                  onChange={(value) => updateModuleSetting('keyboard.colors.white', value)}
+                  value={moduleSettings.keyboard.colors.white}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel label={t('settings.chordDisplaySettings.wrappedKeys')} reverse>
-              <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.wrapped', value)}
-                value={moduleSettings.keyboard.colors.wrapped}
-              />
-            </FormControlLabel>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.playedKeys')}</span>
+                <InputColor
+                  onChange={(value) => updateModuleSetting('keyboard.colors.played', value)}
+                  value={moduleSettings.keyboard.colors.played}
+                />
+              </label>
+            </div>
 
-            <FormControlLabel label={t('settings.chordDisplaySettings.sustainedKeys')} reverse>
-              <InputColor
-                onChange={(value) => updateModuleSetting('keyboard.colors.sustained', value)}
-                value={moduleSettings.keyboard.colors.sustained}
-              />
-            </FormControlLabel>
-          </FormFieldset>
-        </Container>
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">{t('settings.chordDisplaySettings.wrappedKeys')}</span>
+                <InputColor
+                  onChange={(value) => updateModuleSetting('keyboard.colors.wrapped', value)}
+                  value={moduleSettings.keyboard.colors.wrapped}
+                />
+              </label>
+            </div>
+
+            <div className="form-control w-full">
+              <label className="label cursor-pointer flex-row-reverse justify-between">
+                <span className="label-text">
+                  {t('settings.chordDisplaySettings.sustainedKeys')}
+                </span>
+                <InputColor
+                  onChange={(value) => updateModuleSetting('keyboard.colors.sustained', value)}
+                  value={moduleSettings.keyboard.colors.sustained}
+                />
+              </label>
+            </div>
+          </fieldset>
+        </div>
       </ScrollContainer>
-      <Toolbar elevation={2} placement="bottom">
-        <Button onClick={() => resetModuleSettings()} intent="neutral">
+      <div className="flex items-center gap-2 p-2 fixed bottom-0 left-0 right-0 z-10 bg-base-100 shadow-[0_-2px_8px_rgba(0,0,0,0.15)]">
+        <button type="button" className="btn btn-neutral" onClick={() => resetModuleSettings()}>
           <Icon name="reset" />
           {t('common.resetToDefaults')}
-        </Button>
-        <StackSeparator />
-        <Button onClick={handleDeleteModule} intent="neutral">
+        </button>
+        <div className="border-t border-base-300 my-0 mx-2" />
+        <button type="button" className="btn btn-neutral" onClick={handleDeleteModule}>
           <Icon name="trash" />
           {t('common.delete')}
-        </Button>
-      </Toolbar>
+        </button>
+      </div>
     </>
   );
 };

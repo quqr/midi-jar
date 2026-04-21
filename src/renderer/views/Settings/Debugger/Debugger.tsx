@@ -2,8 +2,6 @@ import React, { useRef, useCallback, useState } from 'react';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ToggleButton, Box, Toolbar } from '@la-jarre-a-son/ui';
-
 import { MidiMessage } from 'main/types';
 
 import { getMidiCommand } from 'renderer/helpers';
@@ -11,7 +9,7 @@ import useMidiMessages from 'renderer/hooks/useMidiMessages';
 import { Icon } from 'renderer/components';
 
 import { formatMidiMessage } from './utils';
-import { MIDI_CMD, MIDI_CLOCK_CMD, MIDI_SYSEX_CMD } from './constants';
+import { MIDI_CLOCK_CMD, MIDI_SYSEX_CMD } from './constants';
 
 import styles from './Debugger.module.scss';
 
@@ -28,9 +26,7 @@ const Debugger: React.FC = () => {
       const cmd = getMidiCommand(m);
 
       if (cmd === MIDI_SYSEX_CMD) {
-        const fCmd = m[0] as keyof typeof MIDI_CMD;
-
-        if (!displayTimingClock && fCmd === MIDI_CLOCK_CMD) {
+        if (!displayTimingClock && m[0] === MIDI_CLOCK_CMD) {
           return false;
         }
       }
@@ -75,29 +71,27 @@ const Debugger: React.FC = () => {
   useMidiMessages(onMessages);
 
   return (
-    <>
-      <Toolbar elevation={2}>
-        <ToggleButton onClick={toggleTimingClock} selected={displayTimingClock}>
+    <div className={cx('base')}>
+      <div className={cx('toolbar')}>
+        <button
+          type="button"
+          className={`btn ${displayTimingClock ? 'btn-active' : ''} btn-sm`}
+          onClick={toggleTimingClock}
+        >
           <Icon name="clock" />
           {t('settings.debuggerSettings.midiClock')}
-        </ToggleButton>
-      </Toolbar>
-      <Box pad="md" className={cx('container')}>
-        <Box
-          as="pre"
-          elevation={1}
-          pad="md"
-          className={cx('output')}
-          ref={preElementRef}
-          outlined
-        />
-      </Box>
-      <Toolbar elevation={2} placement="bottom">
-        <Button onClick={clearMessages} intent="neutral" left={<Icon name="trash" />}>
+        </button>
+      </div>
+      <div className={cx('container')}>
+        <pre ref={preElementRef} className={cx('output')} />
+      </div>
+      <div className={cx('footer')}>
+        <button type="button" className="btn btn-neutral btn-sm" onClick={clearMessages}>
+          <Icon name="trash" />
           {t('settings.debuggerSettings.clearMessages')}
-        </Button>
-      </Toolbar>
-    </>
+        </button>
+      </div>
+    </div>
   );
 };
 

@@ -6,30 +6,59 @@
 }
 
 .sidebar {
-  --Sidebar_minSize: 210px;
+  width: 280px;
+  min-width: 280px;
+  background-color: $color-neutral-100;
+  border-right: 1px solid $color-neutral-300;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.navigation {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.navigation {
-  flex-grow: 1;
-  --Button_textAlign: left;
+.tab {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $color-neutral-700;
+
+  &:hover {
+    background-color: $color-neutral-300;
+    color: $color-neutral-900;
+  }
+
+  &.active {
+    background-color: $color-primary-500;
+    color: $color-white;
+    font-weight: 600;
+    box-shadow: $shadow-sm;
+  }
 }
 
 .footer {
-  flex-shrink: 0;
-  margin-top: auto;
-  justify-content: center;
-  font-size: 0.8em;
+  padding: $space-sm $space-md;
+  border-top: 1px solid $color-neutral-300;
+  font-size: $font-size-xs;
   color: $color-neutral-normal;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .content {
   flex-grow: 1;
-  flex-shrink: 1;
   overflow: auto;
-  display: flex;
-  flex-direction: column;
+  padding: $space-lg;
 }
 
 .label {
@@ -38,10 +67,16 @@
 
 @media #{$breakpoint-md} {
   .sidebar {
-    --Sidebar_minSize: $size-md;
+    width: 72px;
+    min-width: 72px;
   }
 
   .label {
     display: none;
+  }
+
+  .tab {
+    justify-content: center;
+    padding: $space-sm;
   }
 }

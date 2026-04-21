@@ -1,5 +1,4 @@
 import { RouterProvider } from 'react-router-dom';
-import { ThemeProvider } from '@la-jarre-a-son/ui';
 
 import '../locales/i18n';
 
@@ -11,11 +10,12 @@ import SettingsProvider from './contexts/Settings';
 
 import router from './router';
 
+import './tailwind.css';
 import './App.scss';
 import ChordDictionaryProvider from './contexts/ChordDictionary';
 
 const App: React.FC = () => (
-  <ThemeProvider theme="jar" variant="dark">
+  <div data-theme="dark">
     <SettingsManagerProvider source="internal">
       <ServerStateProvider>
         <MidiRoutingProvider>
@@ -29,7 +29,7 @@ const App: React.FC = () => (
         </MidiRoutingProvider>
       </ServerStateProvider>
     </SettingsManagerProvider>
-  </ThemeProvider>
+  </div>
 );
 
 export default App;

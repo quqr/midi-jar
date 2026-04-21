@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container, Select, Slider, FormControlLabel, FormField } from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -12,54 +11,99 @@ const NotationSettings: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Container size="md">
-      <FormControlLabel label={t('settings.notationSettings.keySignature')} reverse>
-        <InputNote
-          onChange={(value: string) => updateSetting('notation.key', value)}
-          value={settings.notation.key}
-          type="text"
-          learn
-        />
-      </FormControlLabel>
+    <div className="max-w-7xl mx-auto px-4 space-y-6">
+      <div className="form-control w-full">
+        <label
+          htmlFor="keySignature"
+          className="label cursor-pointer flex-row-reverse justify-between"
+        >
+          <span className="label-text">{t('settings.notationSettings.keySignature')}</span>
+          <InputNote
+            id="keySignature"
+            onChange={(value: string) => updateSetting('notation.key', value)}
+            value={settings.notation.key}
+            type="text"
+            learn
+          />
+        </label>
+      </div>
 
-      <FormControlLabel label={t('settings.notationSettings.accidentalsInC')} reverse>
-        <Select
-          options={fields.accidentals.choices.map((c: { value: string; labelKey: string }) => ({
-            value: c.value,
-            label: t(`settings.notationSettings.${c.labelKey}`),
-          }))}
-          onChange={(value) => updateSetting('notation.accidentals', value)}
-          value={settings.notation.accidentals}
-          disabled={settings.notation.key !== 'C'}
-        />
-      </FormControlLabel>
+      <div className="form-control w-full">
+        <label
+          htmlFor="accidentalsInC"
+          className="label cursor-pointer flex-row-reverse justify-between"
+        >
+          <span className="label-text">{t('settings.notationSettings.accidentalsInC')}</span>
+          <select
+            id="accidentalsInC"
+            className="select select-bordered w-full"
+            onChange={(e) => updateSetting('notation.accidentals', e.target.value)}
+            value={settings.notation.accidentals}
+            disabled={settings.notation.key !== 'C'}
+          >
+            {fields.accidentals.choices.map((c: { value: string; labelKey: string }) => (
+              <option key={c.value} value={c.value}>
+                {t(`settings.notationSettings.${c.labelKey}`)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
-      <FormControlLabel label={t('settings.notationSettings.staffClef')} reverse>
-        <Select
-          options={fields.staffClef.choices.map((c: { value: string; labelKey: string }) => ({
-            value: c.value,
-            label: t(`settings.notationSettings.${c.labelKey}`),
-          }))}
-          onChange={(value) => updateSetting('notation.staffClef', value)}
-          value={settings.notation.staffClef}
-        />
-      </FormControlLabel>
+      <div className="form-control w-full">
+        <label
+          htmlFor="staffClef"
+          className="label cursor-pointer flex-row-reverse justify-between"
+        >
+          <span className="label-text">{t('settings.notationSettings.staffClef')}</span>
+          <select
+            id="staffClef"
+            className="select select-bordered w-full"
+            onChange={(e) => updateSetting('notation.staffClef', e.target.value)}
+            value={settings.notation.staffClef}
+          >
+            {fields.staffClef.choices.map((c: { value: string; labelKey: string }) => (
+              <option key={c.value} value={c.value}>
+                {t(`settings.notationSettings.${c.labelKey}`)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
-      <FormField
-        label={t('settings.notationSettings.staffTranspose')}
-        hint={t('settings.notationSettings.staffTransposeHint')}
-      >
-        <Slider
+      <div className="form-control w-full">
+        <label htmlFor="staffTranspose" className="label">
+          <span className="label-text font-medium">
+            {t('settings.notationSettings.staffTranspose')}
+          </span>
+        </label>
+        <label htmlFor="staffTranspose" className="label">
+          <span className="label-text-alt">
+            {t('settings.notationSettings.staffTransposeHint')}
+          </span>
+        </label>
+        <input
+          id="staffTranspose"
+          type="range"
+          className="range range-xs"
           value={settings.notation.staffTranspose}
-          onChange={(value: number | number[]) => updateSetting('notation.staffTranspose', value)}
+          onChange={(e) => updateSetting('notation.staffTranspose', Number(e.target.value))}
           min={-24}
           max={24}
           step={1}
-          marks={[-24, -12, 0, 12, 24]}
-          valueText={`${settings.notation.staffTranspose.toFixed()} ${t('notation.semitone')}`}
         />
-      </FormField>
-    </Container>
+        <div className="flex justify-between px-2 text-xs mt-2">
+          <span>-24</span>
+          <span>-12</span>
+          <span>0</span>
+          <span>12</span>
+          <span>24</span>
+        </div>
+        <p className="text-sm mt-1">
+          {`${settings.notation.staffTranspose.toFixed()} ${t('notation.semitone')}`}
+        </p>
+      </div>
+    </div>
   );
 };
 

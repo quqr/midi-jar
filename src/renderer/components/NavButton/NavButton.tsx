@@ -7,8 +7,6 @@ import {
   UNSAFE_NavigationContext as NavigationContext,
 } from 'react-router-dom';
 
-import { ToggleButton } from '@la-jarre-a-son/ui';
-
 import { NavButtonProps } from './types';
 
 export const NavButton = React.forwardRef<HTMLAnchorElement, LinkProps & NavButtonProps>(
@@ -46,16 +44,15 @@ export const NavButton = React.forwardRef<HTMLAnchorElement, LinkProps & NavButt
     const ariaCurrent = isActive ? ariaCurrentProp : undefined;
 
     return (
-      <ToggleButton
-        as={Link}
-        {...rest}
+      <Link
+        className={`btn ${isActive ? 'btn-active' : ''}`}
         aria-current={ariaCurrent}
         ref={ref}
         to={to}
-        selected={isActive}
+        {...rest}
       >
         {children}
-      </ToggleButton>
+      </Link>
     );
   }
 );

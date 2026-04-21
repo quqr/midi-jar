@@ -4,16 +4,6 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { Chord, Note } from 'tonal';
-import {
-  Badge,
-  Button,
-  Container,
-  Link,
-  List,
-  ListItem,
-  Switch,
-  Tooltip,
-} from '@la-jarre-a-son/ui';
 
 import { KeyboardSettings } from 'main/types';
 import { defaultKeyboardSettings } from 'main/store/defaults';
@@ -153,23 +143,24 @@ const ChordDetail: React.FC = () => {
   };
 
   return (
-    <Container ref={ref} className={cx('base')} size="xl">
+    <div ref={ref} className={cx('base', 'max-w-7xl mx-auto px-4')}>
       <h1 className={cx('header')}>
         <ChordName
-          className={cx('chordName', isDisabled && 'chordName--isDisabled')}
+          className={cx('chordName', { 'chordName--isDisabled': isDisabled })}
           chord={chord}
         />
         {!disableUpdate && (
-          <Tooltip
-            title={t('chordDictionary.disableEnableChord')}
-            placement="left"
-            describeAs="label"
-            disablePortal
-          >
+          <div className="tooltip tooltip-left" data-tip={t('chordDictionary.disableEnableChord')}>
             <label>
-              <Switch id="toggleChord" checked={!isDisabled} onChange={toggleDisabled} />
+              <input
+                type="checkbox"
+                className="toggle"
+                id="toggleChord"
+                checked={!isDisabled}
+                onChange={(e) => toggleDisabled(e.target.checked)}
+              />
             </label>
-          </Tooltip>
+          </div>
         )}
       </h1>
       <div className={cx('name')}>{chord.name}</div>
@@ -208,7 +199,7 @@ const ChordDetail: React.FC = () => {
       <div className={cx('columns')}>
         <section className={cx('column')}>
           <h2 className={cx('title')}>{t('chordDictionary.aliases')}</h2>
-          <List className={cx('list')}>
+          <ul className={cx('list')}>
             {chord.aliases.map((alias, index) => {
               const isPreferred = preferredAlias === alias;
               const isDefault =
@@ -216,31 +207,34 @@ const ChordDetail: React.FC = () => {
                 index === ALIAS_NOTATION[settings.chordDictionary.defaultNotation || 0];
 
               return (
-                <ListItem
-                  className={cx('alias', (isPreferred || isDefault) && 'alias--preferred')}
+                <li
+                  className={cx('alias', {
+                    'alias--preferred': isPreferred || isDefault,
+                  })}
                   key={index}
-                  left={
-                    index < NOTATION_LABELS.length && (
-                      <Badge intent="primary" size="sm">
-                        {NOTATION_LABELS[index]}
-                      </Badge>
-                    )
-                  }
-                  right={
-                    disableUpdate ? (
-                      <Icon
-                        intent={isPreferred ? 'warning' : 'neutral'}
-                        name={isPreferred || isDefault ? 'star-filled' : 'star'}
-                      />
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-2">
+                      {index < NOTATION_LABELS.length && (
+                        <span className="badge badge-primary badge-sm">
+                          {NOTATION_LABELS[index]}
+                        </span>
+                      )}
+                      <ChordName chord={chord} notation={index} />
+                    </div>
+                    {disableUpdate ? (
+                      <Icon name={isPreferred || isDefault ? 'star-filled' : 'star'} />
                     ) : (
-                      <Tooltip
-                        title={
+                      <div
+                        className="tooltip"
+                        data-tip={
                           isPreferred
                             ? t('chordDictionary.unsetAsPreferred')
                             : t('chordDictionary.setAsPreferred')
                         }
                       >
-                        <Button
+                        <button
+                          type="button"
                           aria-label={
                             isPreferred
                               ? t('chordDictionary.unsetAsPreferredAlias', {
@@ -250,39 +244,37 @@ const ChordDetail: React.FC = () => {
                                   alias: chord.aliases[index],
                                 })
                           }
-                          icon
-                          rounded
-                          size="sm"
-                          variant={isPreferred ? 'filled' : 'ghost'}
-                          intent="warning"
+                          className={`btn btn-sm btn-circle ${
+                            isPreferred ? 'btn-warning' : 'btn-ghost'
+                          }`}
                           onClick={() => toggleAlias(isPreferred, chord.aliases[index])}
                         >
                           <Icon name={isPreferred || isDefault ? 'star-filled' : 'star'} />
-                        </Button>
-                      </Tooltip>
-                    )
-                  }
-                >
-                  <ChordName chord={chord} notation={index} />
-                </ListItem>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </li>
               );
             })}
-          </List>
+          </ul>
         </section>
         {!!alternativeChords.length && (
           <section className={cx('column')}>
             <h2 className={cx('title')}>{t('chordDictionary.otherInterpretations')}</h2>
-            <List className={cx('list')}>
+            <ul className={cx('list')}>
               {alternativeChords.map((altChord) => (
-                <ListItem
-                  key={altChord.symbol}
-                  interactive
-                  onClick={() => goToChordDetail(`${altChord.tonic + altChord.aliases[0]}`)}
-                >
-                  <ChordName chord={altChord} />
-                </ListItem>
+                <li key={altChord.symbol}>
+                  <button
+                    type="button"
+                    className="btn btn-ghost w-full justify-start"
+                    onClick={() => goToChordDetail(`${altChord.tonic + altChord.aliases[0]}`)}
+                  >
+                    <ChordName chord={altChord} />
+                  </button>
+                </li>
               ))}
-            </List>
+            </ul>
           </section>
         )}
       </div>
@@ -314,12 +306,12 @@ const ChordDetail: React.FC = () => {
                   {altChord && (
                     <div className={cx('inversionAltChord')}>
                       {t('chordDictionary.seeAlso')}
-                      <Link
-                        as={NavLink}
+                      <NavLink
                         to={`../${encodeURIComponent(altChord.tonic + altChord.aliases[0])}`}
+                        className="link link-primary"
                       >
                         {altChordName}
-                      </Link>
+                      </NavLink>
                     </div>
                   )}
                 </div>
@@ -350,11 +342,7 @@ const ChordDetail: React.FC = () => {
               {subsetChords.map((c, index) => (
                 <NavButton
                   key={index}
-                  className={cx('chordButton')}
-                  intent="primary"
-                  size="sm"
-                  hoverIntent
-                  rounded
+                  className={`btn-primary btn-sm rounded-full ${cx('chordButton')}`}
                   to={`../${encodeURIComponent(c.tonic + c.aliases[0])}`}
                 >
                   <ChordName chord={c} />
@@ -370,11 +358,7 @@ const ChordDetail: React.FC = () => {
               {supersetChords.map((c, index) => (
                 <NavButton
                   key={index}
-                  className={cx('chordButton')}
-                  intent="primary"
-                  size="sm"
-                  hoverIntent
-                  rounded
+                  className={`btn-primary btn-sm rounded-full ${cx('chordButton')}`}
                   to={`../${encodeURIComponent(c.tonic + c.aliases[0])}`}
                 >
                   <ChordName chord={c} />
@@ -384,7 +368,7 @@ const ChordDetail: React.FC = () => {
           </section>
         )}
       </div>
-    </Container>
+    </div>
   );
 };
 

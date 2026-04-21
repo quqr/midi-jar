@@ -1,20 +1,20 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { Drawer, DrawerProps } from '@la-jarre-a-son/ui';
 import { useOutlet, useNavigate } from 'react-router-dom';
 
 import styles from './DrawerOutlet.module.scss';
 
 const cx = classNames.bind(styles);
 
-type Props = Omit<DrawerProps, 'open' | 'onClose'> & {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   context?: unknown;
 };
 
-export const DrawerOutlet: React.FC<Props> = ({ context, ...rest }) => {
-  const children = useOutlet(context);
-  const [_hadChildren, setHadChildren] = useState(!!children);
-  const [open, setOpen] = useState(!!children);
+export const DrawerOutlet: React.FC<Props> = ({ context, className, ...rest }) => {
+  const outletChildren = useOutlet(context);
+  const [_hadChildren, setHadChildren] = useState(!!outletChildren);
+  const [open, setOpen] = useState(!!outletChildren);
 
   const navigate = useNavigate();
 
@@ -24,9 +24,7 @@ export const DrawerOutlet: React.FC<Props> = ({ context, ...rest }) => {
   };
 
   useEffect(() => {
-    if (children) {
-      // For some reason, children changes when closing, triggering a reopen.
-      // So now we only reopen if children was empty at some point
+    if (outletChildren) {
       setHadChildren((already) => {
         if (!already) {
           setOpen(true);
@@ -36,18 +34,38 @@ export const DrawerOutlet: React.FC<Props> = ({ context, ...rest }) => {
     } else {
       setHadChildren(false);
     }
-  }, [children]);
+  }, [outletChildren]);
+
+  if (!open || !outletChildren) {
+    return null;
+  }
 
   return (
-    <Drawer
-      {...rest}
-      open={open}
-      onClose={handleClose}
-      className={cx('base')}
-      animationProps={{ onExited: handleClosed }}
-    >
-      {children}
-    </Drawer>
+    <div {...rest} className={cx('base', 'drawer', 'drawer-end', className)}>
+      <input
+        id="drawer-toggle"
+        type="checkbox"
+        checked={open}
+        onChange={handleClose}
+        className="drawer-toggle"
+      />
+      <div className="drawer-content">{outletChildren}</div>
+      <div className="drawer-side">
+        <div
+          role="button"
+          tabIndex={0}
+          className="drawer-overlay"
+          aria-hidden="true"
+          onClick={handleClose}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              handleClose();
+            }
+          }}
+        />
+        <div className="bg-base-100 p-4 min-h-full w-80">{outletChildren}</div>
+      </div>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box, InputContainerLabel, InputGroup, Select } from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -10,19 +9,25 @@ export const QuickChangeKeyToolbar: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Box elevation={2}>
-      <InputGroup as="label" block>
-        <InputContainerLabel>{t('settings.notationSettings.key')}</InputContainerLabel>
-        <Select
-          onChange={(value: string) => updateSetting('notation.key', value)}
+    <div className="flex items-center gap-2 p-2 bg-base-100 shadow-md">
+      <label htmlFor="keySignature" className="form-control w-full">
+        <div className="label">
+          <span className="label-text">{t('settings.notationSettings.key')}</span>
+        </div>
+        <select
+          id="keySignature"
+          className="select select-bordered w-full"
+          onChange={(e) => updateSetting('notation.key', e.target.value)}
           value={settings.notation.key}
-          options={fields.keySignature.choices.map((c: { value: string; labelKey: string }) => ({
-            value: c.value,
-            label: t(`settings.notationSettings.keySignatures.${c.labelKey}`),
-          }))}
-        />
-      </InputGroup>
-    </Box>
+        >
+          {fields.keySignature.choices.map((c: { value: string; labelKey: string }) => (
+            <option key={c.value} value={c.value}>
+              {t(`settings.notationSettings.keySignatures.${c.labelKey}`)}
+            </option>
+          ))}
+        </select>
+      </label>
+    </div>
   );
 };
 

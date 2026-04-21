@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import useEvent from 'renderer/hooks/useEvent';
 
-import { Input, Button, InputGroup } from '@la-jarre-a-son/ui';
 import { Icon } from '../Icon';
 
 import { InputNumberProps } from './types';
@@ -34,32 +33,32 @@ export const InputNumber: React.FC<InputNumberProps> = ({
   });
 
   return (
-    <InputGroup>
-      <Input
-        className={cx('base', className)}
+    <div className="join">
+      <input
+        className={cx('base', 'input', 'input-bordered', 'w-full', 'join-item', className)}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.value)}
         type="number"
         step={step}
         {...rest}
       />
-      <Button
-        className={cx('decrement')}
+      <button
+        type="button"
+        className={cx('decrement', 'btn', 'join-item')}
         onClick={decrement}
-        icon
         aria-label={t('common.decrement')}
       >
         <Icon name="minus" />
-      </Button>
-      <Button
-        className={cx('increment')}
+      </button>
+      <button
+        type="button"
+        className={cx('increment', 'btn', 'join-item')}
         onClick={increment}
-        icon
         aria-label={t('common.increment')}
       >
         <Icon name="plus" />
-      </Button>
-    </InputGroup>
+      </button>
+    </div>
   );
 };
 

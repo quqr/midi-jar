@@ -2,8 +2,6 @@ import React from 'react';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
-import { Badge, Box, Button, Container, Link, Stack } from '@la-jarre-a-son/ui';
-
 import logo from 'renderer/assets/logo.svg';
 import { Icon } from 'renderer/components';
 
@@ -19,48 +17,48 @@ const About: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Container className={cx('base')} size="xl">
+    <div
+      className={cx('base')}
+      style={{ maxWidth: '80rem', marginLeft: 'auto', marginRight: 'auto', padding: '16px' }}
+    >
       <div className={cx('header')}>
         <img className={cx('logo')} src={logo} alt="" />
         <h1 className={cx('appname')}>
-          MIDI Jar <Badge className={cx('version')}>{process.env.APP_VERSION}</Badge>
+          MIDI Jar <span className={`badge ${cx('version')}`}>{process.env.APP_VERSION}</span>
         </h1>
         <div className={cx('author')}>
           {t('settings.aboutSettings.byAuthor')}
-          <Link href="https://ljas.fr" target="_blank" rel="noreferrer">
+          <a href="https://ljas.fr" target="_blank" rel="noreferrer" className="link">
             {t('settings.aboutSettings.laJarreASon')}
-          </Link>
+          </a>
         </div>
       </div>
       {window.os.isWindows ? (
-        <Box
-          as={Stack}
-          elevation={1}
-          pad="md"
-          className={cx('loopMidi')}
-          outlined
-          gap="md"
-          direction="vertical"
-        >
+        <div className={cx('loopMidi')}>
           <p>
             {t('settings.aboutSettings.windowsNote')}
-            <Link href="https://www.tobias-erichsen.de/software/loopmidi.html" target="_blank">
+            <a
+              href="https://www.tobias-erichsen.de/software/loopmidi.html"
+              target="_blank"
+              className="link"
+              rel="noreferrer"
+            >
               {t('settings.aboutSettings.loopMidi')}
-            </Link>
+            </a>
             {t('settings.aboutSettings.loopMidiNote')}
           </p>
-          <Stack justify="end">
-            <Button
-              as="a"
+          <div className="flex justify-end">
+            <a
+              className="btn btn-neutral"
               target="_blank"
               rel="noreferrer"
               href="https://www.tobias-erichsen.de/software/loopmidi.html"
             >
               <Icon name="midi" />
               {t('settings.aboutSettings.downloadLoopMidi')}
-            </Button>
-          </Stack>
-        </Box>
+            </a>
+          </div>
+        </div>
       ) : null}
       <h2 className={cx('title')}>{t('settings.aboutSettings.features')}</h2>
       <div className={cx('description')}>
@@ -73,29 +71,25 @@ const About: React.FC = () => {
         </ul>
         <p>
           {t('settings.aboutSettings.planToAdd')}
-          <Button
-            size="sm"
-            intent="neutral"
-            as="a"
+          <a
+            className="btn btn-sm btn-neutral"
             target="_blank"
             rel="noreferrer"
             href="https://github.com/la-jarre-a-son/midi-jar/issues/new?labels=bug&template=1-Bug_report.md"
           >
             <Icon name="github" />
             {t('settings.aboutSettings.reportBug')}
-          </Button>
+          </a>
           {t('settings.aboutSettings.or')}
-          <Button
-            size="sm"
-            intent="neutral"
-            as="a"
+          <a
+            className="btn btn-sm btn-neutral"
             target="_blank"
             rel="noreferrer"
             href="https://github.com/la-jarre-a-son/midi-jar/issues/new?labels=enhancement&template=2-Feature_request.md"
           >
             <Icon name="github" />
             {t('settings.aboutSettings.requestFeature')}
-          </Button>
+          </a>
         </p>
       </div>
       <h2 className={cx('title')}>{t('settings.aboutSettings.changelog')}</h2>
@@ -105,7 +99,7 @@ const About: React.FC = () => {
         <p>{t('settings.aboutSettings.specialMentionsDescription')}</p>
       </div>
       <Credits items={CREDIT_ITEMS} />
-    </Container>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
-import { TreeView, TreeViewItem } from '@la-jarre-a-son/ui';
 
 import { ChordDictionarySettings } from 'main/types';
 
@@ -52,29 +51,38 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
 
   const renderTreeViewGroup = (item: ChordGroup | ChordItem) => {
     return item.type === 'item' ? (
-      <TreeViewItem
+      <li
         key={item.chordType.aliases[0]}
-        className={cx('item', item.isDisabled && 'item--isDisabled')}
-        onClick={() => onSelect(item.chordType.aliases[0])}
-        title={item.chordType.aliases[0]}
-        current={selected === item.chordType.aliases[0]}
-        left={item.isDisabled ? <Icon name="hidden" /> : null}
-      />
+        className={cx('item', { 'item--isDisabled': item.isDisabled })}
+      >
+        <button
+          type="button"
+          className={cx('btn btn-ghost btn-block justify-start', {
+            'btn-active': selected === item.chordType.aliases[0],
+          })}
+          onClick={() => onSelect(item.chordType.aliases[0])}
+          title={item.chordType.aliases[0]}
+        >
+          {item.isDisabled && <Icon name="hidden" />}
+          <span className="truncate">{item.chordType.aliases[0]}</span>
+        </button>
+      </li>
     ) : (
-      <TreeViewItem key={item.value} className={cx('group')} title={item.label}>
-        {item.items.map((i) => renderTreeViewGroup(i))}
-      </TreeViewItem>
+      <li key={item.value} className={cx('group')}>
+        <details open>
+          <summary className="font-semibold px-3 py-2 sticky top-0 bg-base-100 z-10">
+            {item.label}
+          </summary>
+          <ul className="pl-2">{item.items.map((i) => renderTreeViewGroup(i))}</ul>
+        </details>
+      </li>
     );
   };
 
   return (
-    <TreeView
-      className={cx('chordnav')}
-      aria-label={t('chordDictionary.chordTypesNavigation')}
-      sticky={groupBy !== 'none'}
-    >
-      {groups.map((item) => renderTreeViewGroup(item))}
-    </TreeView>
+    <nav className={cx('chordnav')} aria-label={t('chordDictionary.chordTypesNavigation')}>
+      <ul>{groups.map((item) => renderTreeViewGroup(item))}</ul>
+    </nav>
   );
 };
 

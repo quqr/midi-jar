@@ -4,7 +4,6 @@ import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { useMidiRouting } from 'renderer/contexts/MidiRouting';
-import { Box, Toolbar, Button, StackSeparator } from '@la-jarre-a-son/ui';
 import { Icon } from 'renderer/components';
 
 import Graph from './Graph';
@@ -20,7 +19,7 @@ const Routing: React.FC = () => {
 
   return (
     <div className={cx('base')}>
-      <Box pad="md" className={cx('container')}>
+      <div className={cx('container')}>
         <Graph
           inputs={inputs}
           outputs={outputs}
@@ -28,18 +27,18 @@ const Routing: React.FC = () => {
           onAddRoute={addRoute}
           onDeleteRoute={deleteRoute}
         />
-      </Box>
-      <Toolbar elevation={2} placement="bottom">
-        <Button onClick={refreshDevices} intent="neutral">
+      </div>
+      <div className={cx('toolbar')}>
+        <button type="button" className="btn btn-neutral btn-sm" onClick={refreshDevices}>
           <Icon name="refresh" />
           {t('settings.routingSettings.refreshDevices')}
-        </Button>
-        <StackSeparator />
-        <Button onClick={clearRoutes} intent="danger" hoverIntent>
+        </button>
+        <div className={cx('divider')} />
+        <button type="button" className="btn btn-error btn-sm" onClick={clearRoutes}>
           <Icon name="trash" />
           {t('settings.routingSettings.clearAll')}
-        </Button>
-      </Toolbar>
+        </button>
+      </div>
     </div>
   );
 };

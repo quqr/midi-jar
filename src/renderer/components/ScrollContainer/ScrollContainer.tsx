@@ -1,18 +1,17 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import { Box } from '@la-jarre-a-son/ui';
 
 import styles from './ScrollContainer.module.scss';
 
 const cx = classNames.bind(styles);
 
-type Props = React.ComponentProps<typeof Box> & { className?: string };
+type Props = React.HTMLAttributes<HTMLDivElement> & { className?: string };
 
 export const ScrollContainer: React.FC<Props> = ({ className, children, ...rest }) => {
   return (
-    <Box className={cx('base', className)} {...rest}>
+    <div className={cx('base', 'bg-base-200', 'rounded-box', 'p-4', className)} {...rest}>
       {children}
-    </Box>
+    </div>
   );
 };
 

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Chord, Note } from 'tonal';
-import { SidebarContainer } from '@la-jarre-a-son/ui';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import useNotes from 'renderer/hooks/useNotes';
@@ -103,45 +102,35 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
       disableUpdate={disableUpdate}
     >
       <ChordDictionaryToolbar disableUpdate={disableUpdate} />
-      <SidebarContainer
-        className={cx('container')}
-        sidebar={
+      <div className={cx('container', 'sidebar-layout')}>
+        <div className={cx('pitchbar')}>
           <ChordDictionaryChromaMenu
             keySignature={keySignature}
             selected={chroma}
             onSelect={handleChromaChange}
             filterChordsInKey={settings.chordDictionary.filterInKey}
           />
-        }
-        sidebarProps={{ className: cx('pitchbar') }}
-        contentProps={{ className: cx('content') }}
-        size="xs"
-        open
-        inset
-      >
-        <SidebarContainer
-          className={cx('container')}
-          sidebar={
-            <ChordDictionaryChordMenu
-              keySignature={keySignature}
-              selected={chordType}
-              onSelect={handleChordTypeChange}
-              chroma={chroma}
-              groupBy={settings.chordDictionary.groupBy}
-              disabledChords={settings.chordDictionary.disabled}
-              hideDisabled={settings.chordDictionary.hideDisabled}
-              filterChordsInKey={settings.chordDictionary.filterInKey}
-            />
-          }
-          sidebarProps={{ className: cx('chordbar') }}
-          contentProps={{ className: cx('content') }}
-          size="sm"
-          open
-          inset
-        >
-          <Outlet />
-        </SidebarContainer>
-      </SidebarContainer>
+        </div>
+        <div className={cx('content', 'main-content')}>
+          <div className={cx('container', 'sidebar-layout-inner')}>
+            <div className={cx('chordbar')}>
+              <ChordDictionaryChordMenu
+                keySignature={keySignature}
+                selected={chordType}
+                onSelect={handleChordTypeChange}
+                chroma={chroma}
+                groupBy={settings.chordDictionary.groupBy}
+                disabledChords={settings.chordDictionary.disabled}
+                hideDisabled={settings.chordDictionary.hideDisabled}
+                filterChordsInKey={settings.chordDictionary.filterInKey}
+              />
+            </div>
+            <div className={cx('content', 'inner-content')}>
+              <Outlet />
+            </div>
+          </div>
+        </div>
+      </div>
     </ChordDictionaryModuleProvider>
   );
 };

@@ -1,6 +1,6 @@
-import { TabProps } from '@la-jarre-a-son/ui';
+import React from 'react';
 
 export type NavTabProps = {
   caseSensitive?: boolean;
   end?: boolean;
-} & TabProps;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;

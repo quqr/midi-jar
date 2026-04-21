@@ -1,6 +1,6 @@
 @import 'tokens';
 
-$View_CircleOfFifths_padding: $space-lg !default;
+$View_CircleOfFifths_padding: $space-xl !default;
 $View_CircleOfFifths_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
 
 .base {
@@ -13,15 +13,18 @@ $View_CircleOfFifths_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default
   align-items: center;
   overflow: hidden;
   padding: $View_CircleOfFifths_padding;
+  gap: $space-md;
 }
 
 .chord {
   display: flex;
-  font-size: min(3vh, 3vw);
+  font-size: $font-size-xl;
   overflow: hidden;
   width: 100%;
   height: 100%;
   align-items: center;
   justify-content: center;
   text-shadow: $View_CircleOfFifths_textShadow;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }

@@ -15,6 +15,10 @@ export type ChordSearchOptionProps = {
    */
   focused?: boolean;
   /**
+   * Optional CSS class name
+   */
+  className?: string;
+  /**
    * Callback fired when the option is selected
    */
   onSelect?: (value: string | null) => void;

@@ -1,6 +1,9 @@
-import { InputProps } from '@la-jarre-a-son/ui';
+import React from 'react';
 
-export type InputColorProps = Omit<InputProps, 'onChange' | 'value'> & {
+export type InputColorProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange' | 'value'
+> & {
   className?: string;
   value: string | null;
   onChange: (value: string) => unknown;

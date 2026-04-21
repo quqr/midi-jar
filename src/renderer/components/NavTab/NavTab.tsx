@@ -7,8 +7,6 @@ import {
   UNSAFE_NavigationContext as NavigationContext,
 } from 'react-router-dom';
 
-import { Tab } from '@la-jarre-a-son/ui';
-
 import { NavTabProps } from './types';
 
 export const NavTab = React.forwardRef<HTMLAnchorElement, LinkProps & NavTabProps>(
@@ -46,9 +44,15 @@ export const NavTab = React.forwardRef<HTMLAnchorElement, LinkProps & NavTabProp
     const ariaCurrent = isActive ? ariaCurrentProp : undefined;
 
     return (
-      <Tab as={Link} {...rest} aria-current={ariaCurrent} ref={ref} to={to} selected={isActive}>
+      <Link
+        className={`tab ${isActive ? 'tab-active' : ''}`}
+        aria-current={ariaCurrent}
+        ref={ref}
+        to={to}
+        {...rest}
+      >
         {children}
-      </Tab>
+      </Link>
     );
   }
 );

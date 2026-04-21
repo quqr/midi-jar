@@ -2,19 +2,99 @@
 
 .state {
   width: 100%;
-  font-weight: bold;
   background: $color-neutral-dark;
+  border-radius: $radius-md $radius-md 0 0;
+  padding: $space-md;
+  margin-bottom: $space-md;
+  box-shadow: $shadow-sm;
 
   &.isError {
-    background: $color-danger-normal;
+    background: $color-danger-dark;
   }
 
   &.isStarted {
-    background: $color-success-normal;
+    background: $color-success-dark;
   }
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: $color-neutral-normal;
+  flex-shrink: 0;
+  transition: background-color $transition-fast;
+
+  .isStarted & {
+    background: $color-success-lighter;
+    box-shadow: 0 0 6px rgba($color-success-lighter, 0.6);
+  }
+
+  .isError & {
+    background: $color-danger-lighter;
+    box-shadow: 0 0 6px rgba($color-danger-lighter, 0.6);
+  }
+}
+
+.statusText {
+  font-weight: 600;
+  font-size: $font-size-sm;
+  color: $color-white;
+}
+
+.serverUrlContainer {
+  margin-top: $space-sm;
+  font-size: $font-size-sm;
+  color: $color-white;
+
+  span {
+    display: block;
+    margin-bottom: $space-xs;
+    font-size: $font-size-xs;
+    opacity: 0.8;
+  }
+}
+
+.urlList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
 
   a {
     text-decoration: underline;
     color: $color-white;
+    font-weight: 500;
+    padding: $space-xs $space-sm;
+    border-radius: $radius-sm;
+    background: rgba($color-white, 0.1);
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background: rgba($color-white, 0.2);
+    }
   }
+}
+
+.fieldset {
+  margin-bottom: $space-lg;
+  background: $color-neutral-100;
+  border-radius: $radius-md;
+  padding: $space-lg;
+  border: 1px solid $color-neutral-300;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.toggle {
+  min-width: 44px;
+  min-height: 44px;
+  transition: background-color $transition-fast;
 }

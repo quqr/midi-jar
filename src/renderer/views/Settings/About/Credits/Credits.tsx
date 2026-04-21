@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
-import { Box, List } from '@la-jarre-a-son/ui';
 
 import { CreditsProps } from './types';
 import CreditItem from './CreditItem';
@@ -14,8 +13,15 @@ const Credits: React.FC<CreditsProps> = ({ items }) => {
   const { t } = useTranslation();
 
   return (
-    <Box className={cx('base')} outlined elevation={1}>
-      <List as="table" className={cx('table')}>
+    <div
+      className={cx('base')}
+      style={{
+        border: '1px solid var(--fallback-bc, oklch(var(--bc)/0.1))',
+        borderRadius: '0.5rem',
+        backgroundColor: 'var(--fallback-b2, oklch(var(--b2)))',
+      }}
+    >
+      <table className={cx('table')}>
         <thead>
           <tr>
             <th>{t('settings.aboutSettings.credits.name')}</th>
@@ -28,8 +34,8 @@ const Credits: React.FC<CreditsProps> = ({ items }) => {
             <CreditItem key={credit.name} {...credit} />
           ))}
         </tbody>
-      </List>
-    </Box>
+      </table>
+    </div>
   );
 };
 

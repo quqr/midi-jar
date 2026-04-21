@@ -1,13 +1,4 @@
 import React from 'react';
-import {
-  Button,
-  Container,
-  Switch,
-  FormField,
-  FormControlLabel,
-  Select,
-  Toolbar,
-} from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -22,158 +13,288 @@ const CircleOfFifthsSettings: React.FC = () => {
 
   return (
     <>
-      <ScrollContainer pad="md">
-        <Container size="md">
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayMajor')}
-            hint={t('settings.circleOfFifthsSettings.displayMajorHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayMajor', value)}
-              checked={settings.circleOfFifths.displayMajor}
-            />
-          </FormControlLabel>
+      <ScrollContainer className="p-4">
+        <div className="max-w-7xl mx-auto px-4 space-y-4">
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayMajor"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayMajor')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayMajorHint')}
+              </span>
+              <input
+                id="displayMajor"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displayMajor', e.target.checked)}
+                checked={settings.circleOfFifths.displayMajor}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayMinor')}
-            hint={t('settings.circleOfFifthsSettings.displayMinorHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayMinor', value)}
-              checked={settings.circleOfFifths.displayMinor}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayMinor"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayMinor')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayMinorHint')}
+              </span>
+              <input
+                id="displayMinor"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displayMinor', e.target.checked)}
+                checked={settings.circleOfFifths.displayMinor}
+              />
+            </label>
+          </div>
 
-          <FormField
-            label={t('settings.circleOfFifthsSettings.mainScale')}
-            hint={t('settings.circleOfFifthsSettings.mainScaleHint')}
-          >
-            <Select
-              options={fields.scale.choices.map((c: { value: string; labelKey: string }) => ({
-                value: c.value,
-                label: t(c.labelKey),
-              }))}
-              onChange={(value) => updateSetting('circleOfFifths.scale', value)}
+          <div className="form-control w-full">
+            <label htmlFor="mainScale-label" className="label">
+              <span className="label-text font-medium">
+                {t('settings.circleOfFifthsSettings.mainScale')}
+              </span>
+            </label>
+            <label htmlFor="mainScale" className="label">
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.mainScaleHint')}
+              </span>
+            </label>
+            <select
+              id="mainScale"
+              className="select select-bordered w-full"
+              onChange={(e) => updateSetting('circleOfFifths.scale', e.target.value)}
               value={settings.circleOfFifths.scale}
               disabled={
                 !(settings.circleOfFifths.displayMajor && settings.circleOfFifths.displayMinor)
               }
-            />
-          </FormField>
+            >
+              {fields.scale.choices.map((c: { value: string; labelKey: string }) => (
+                <option key={c.value} value={c.value}>
+                  {t(c.labelKey)}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayDiminished')}
-            hint={t('settings.circleOfFifthsSettings.displayDiminishedHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayDiminished', value)}
-              checked={settings.circleOfFifths.displayDiminished}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayDiminished"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayDiminished')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayDiminishedHint')}
+              </span>
+              <input
+                id="displayDiminished"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) =>
+                  updateSetting('circleOfFifths.displayDiminished', e.target.checked)
+                }
+                checked={settings.circleOfFifths.displayDiminished}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayDominantChords')}
-            hint={t('settings.circleOfFifthsSettings.displayDominantChordsHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayDominants', value)}
-              checked={settings.circleOfFifths.displayDominants}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayDominants"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayDominantChords')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayDominantChordsHint')}
+              </span>
+              <input
+                id="displayDominants"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displayDominants', e.target.checked)}
+                checked={settings.circleOfFifths.displayDominants}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displaySuspendedChords')}
-            hint={t('settings.circleOfFifthsSettings.displaySuspendedChordsHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displaySuspended', value)}
-              checked={settings.circleOfFifths.displaySuspended}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displaySuspended"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displaySuspendedChords')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displaySuspendedChordsHint')}
+              </span>
+              <input
+                id="displaySuspended"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displaySuspended', e.target.checked)}
+                checked={settings.circleOfFifths.displaySuspended}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayAlterations')}
-            hint={t('settings.circleOfFifthsSettings.displayAlterationsHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayAlterations', value)}
-              checked={settings.circleOfFifths.displayAlterations}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayAlterations"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayAlterations')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayAlterationsHint')}
+              </span>
+              <input
+                id="displayAlterations"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) =>
+                  updateSetting('circleOfFifths.displayAlterations', e.target.checked)
+                }
+                checked={settings.circleOfFifths.displayAlterations}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayModes')}
-            hint={t('settings.circleOfFifthsSettings.displayModesHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayModes', value)}
-              checked={settings.circleOfFifths.displayModes}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayModes"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayModes')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayModesHint')}
+              </span>
+              <input
+                id="displayModes"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displayModes', e.target.checked)}
+                checked={settings.circleOfFifths.displayModes}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayDegrees')}
-            hint={t('settings.circleOfFifthsSettings.displayDegreesHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayDegrees', value)}
-              checked={settings.circleOfFifths.displayDegrees}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayDegrees"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayDegrees')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayDegreesHint')}
+              </span>
+              <input
+                id="displayDegrees"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.displayDegrees', e.target.checked)}
+                checked={settings.circleOfFifths.displayDegrees}
+              />
+            </label>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.displayDegreeLabels')}
-            hint={t('settings.circleOfFifthsSettings.displayDegreeLabelsHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.displayDegreeLabels', value)}
-              checked={settings.circleOfFifths.displayDegreeLabels}
-            />
-          </FormControlLabel>
+          <div className="form-control w-full">
+            <label
+              htmlFor="displayDegreeLabels"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.displayDegreeLabels')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.displayDegreeLabelsHint')}
+              </span>
+              <input
+                id="displayDegreeLabels"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) =>
+                  updateSetting('circleOfFifths.displayDegreeLabels', e.target.checked)
+                }
+                checked={settings.circleOfFifths.displayDegreeLabels}
+              />
+            </label>
+          </div>
 
-          <FormField
-            label={t('settings.circleOfFifthsSettings.highlightSectors')}
-            hint={t('settings.circleOfFifthsSettings.highlightSectorsHint')}
-          >
-            <Select
-              options={fields.highlightSector.choices.map(
-                (c: { value: string; labelKey: string }) => ({
-                  value: c.value,
-                  label: t(c.labelKey),
-                })
-              )}
-              onChange={(value) => updateSetting('circleOfFifths.highlightSector', value)}
+          <div className="form-control w-full">
+            <label htmlFor="highlightSectors-label" className="label">
+              <span className="label-text font-medium">
+                {t('settings.circleOfFifthsSettings.highlightSectors')}
+              </span>
+            </label>
+            <label htmlFor="highlightSectors" className="label">
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.highlightSectorsHint')}
+              </span>
+            </label>
+            <select
+              id="highlightSectors"
+              className="select select-bordered w-full"
+              onChange={(e) => updateSetting('circleOfFifths.highlightSector', e.target.value)}
               value={settings.circleOfFifths.highlightSector}
-            />
-          </FormField>
+            >
+              {fields.highlightSector.choices.map((c: { value: string; labelKey: string }) => (
+                <option key={c.value} value={c.value}>
+                  {t(c.labelKey)}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <FormControlLabel
-            label={t('settings.circleOfFifthsSettings.highlightSectorsInKey')}
-            hint={t('settings.circleOfFifthsSettings.highlightSectorsInKeyHint')}
-            reverse
-          >
-            <Switch
-              onChange={(value) => updateSetting('circleOfFifths.highlightInScale', value)}
-              checked={settings.circleOfFifths.highlightInScale}
-            />
-          </FormControlLabel>
-        </Container>
+          <div className="form-control w-full">
+            <label
+              htmlFor="highlightInScale"
+              className="label cursor-pointer flex-row-reverse justify-between"
+            >
+              <span className="label-text">
+                {t('settings.circleOfFifthsSettings.highlightSectorsInKey')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.circleOfFifthsSettings.highlightSectorsInKeyHint')}
+              </span>
+              <input
+                id="highlightInScale"
+                type="checkbox"
+                className="toggle"
+                onChange={(e) => updateSetting('circleOfFifths.highlightInScale', e.target.checked)}
+                checked={settings.circleOfFifths.highlightInScale}
+              />
+            </label>
+          </div>
+        </div>
       </ScrollContainer>
-      <Toolbar elevation={2} placement="bottom">
-        <Button onClick={() => resetSettings('circleOfFifths')} intent="neutral">
+      <div className="flex items-center gap-2 p-2 fixed bottom-0 left-0 right-0 z-10 bg-base-100 shadow-[0_-2px_8px_rgba(0,0,0,0.15)]">
+        <button
+          type="button"
+          className="btn btn-neutral"
+          onClick={() => resetSettings('circleOfFifths')}
+        >
           <Icon name="reset" />
           {t('common.resetToDefaults')}
-        </Button>
-      </Toolbar>
+        </button>
+      </div>
     </>
   );
 };

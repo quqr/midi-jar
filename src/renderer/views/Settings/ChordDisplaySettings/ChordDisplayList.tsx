@@ -3,8 +3,6 @@ import classnames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Stack, TabList, Toolbar } from '@la-jarre-a-son/ui';
-
 import { useSettings } from 'renderer/contexts/Settings';
 import { Icon, NavTab } from 'renderer/components';
 
@@ -41,27 +39,26 @@ const ChordDisplayList: React.FC = () => {
 
   return (
     <>
-      <Toolbar as={Stack} className={cx('header')} elevation={2}>
-        <TabList
-          className={cx('list')}
+      <div className={`flex items-center gap-2 p-2 bg-base-100 shadow-lg ${cx('header')}`}>
+        <div
+          className={`tabs tabs-boxed ${cx('list')}`}
           aria-label={t('settings.chordDisplaySettings.chordDisplayList')}
-          justify="center"
         >
           {moduleIds.map((moduleId) => (
             <NavTab key={moduleId} to={`/settings/chords/${moduleId}`}>
               {moduleId}
             </NavTab>
           ))}
-        </TabList>
-        <Button
+        </div>
+        <button
+          type="button"
+          className="btn btn-success"
           aria-label={t('settings.chordDisplaySettings.addSession')}
-          intent="success"
-          hoverIntent
-          left={<Icon name="plus" />}
-          icon
           onClick={handleAdd}
-        />
-      </Toolbar>
+        >
+          <Icon name="plus" />
+        </button>
+      </div>
       <ChordDisplayAddModal open={addModalOpen} onSave={handleSave} onCancel={handleCancel} />
     </>
   );

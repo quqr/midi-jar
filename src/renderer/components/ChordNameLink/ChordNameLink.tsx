@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import classnames from 'classnames/bind';
 
 import { NavLink } from 'react-router-dom';
-import { Link } from '@la-jarre-a-son/ui';
 import { ChordNameLinkProps } from './types';
 
 import { ChordName } from '../ChordName/ChordName';
@@ -25,9 +24,9 @@ export const ChordNameLink: React.FC<ChordNameLinkProps> = ({
   if (!chord) return null;
 
   return (
-    <Link as={NavLink} className={cx('base', className)} to={to}>
+    <NavLink className={cx('base', 'link', className)} to={to}>
       <ChordName chord={chord} {...rest} />
-    </Link>
+    </NavLink>
   );
 };
 

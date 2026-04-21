@@ -7,12 +7,11 @@ import SettingsProvider from 'renderer/contexts/Settings';
 import SettingsManagerProvider from 'renderer/contexts/SettingsManager';
 import ChordDictionaryProvider from 'renderer/contexts/ChordDictionary';
 
-import { ThemeProvider } from '@la-jarre-a-son/ui';
-
 import ChordDisplay from 'renderer/views/ChordDisplay';
 import ChordQuiz from 'renderer/views/ChordQuiz/ChordQuiz';
 import CircleOfFifths from 'renderer/views/CircleOfFifths';
 
+import '../renderer/tailwind.css';
 import './App.scss';
 
 import ChordDictionary from 'renderer/views/ChordDictionary';
@@ -21,7 +20,7 @@ import Home from './Home';
 
 export default function App() {
   return (
-    <ThemeProvider theme="jar" variant="dark">
+    <div data-theme="dark">
       <SettingsManagerProvider source="websocket">
         <SettingsProvider>
           <ChordDictionaryProvider>
@@ -63,6 +62,6 @@ export default function App() {
           </ChordDictionaryProvider>
         </SettingsProvider>
       </SettingsManagerProvider>
-    </ThemeProvider>
+    </div>
   );
 }

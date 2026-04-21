@@ -2,15 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Grid,
-  Card,
-  CardThumbnail,
-  CardThumbnailOverlay,
-  CardHeader,
-  Container,
-} from '@la-jarre-a-son/ui';
-
 import logo from 'renderer/assets/logo.svg';
 import { Icon } from 'renderer/components';
 import ThumbnaildChordDisplay from 'renderer/assets/thumbnails/chord-display.jpg';
@@ -24,41 +15,71 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Container size="xl" className="Home">
+    <div className="container container-xl mx-auto Home">
       <img className="Home-logo" src={logo} alt={t('overlay.midiJar')} />
       <h1>{t('overlay.midiJarOverlay')}</h1>
       <p>{t('overlay.description')}</p>
-      <Grid size="md" gap="md">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {settings.chordDisplay.map((module) => (
-          <Card outlined elevation={1}>
-            <CardThumbnail alt={t('home.chordDisplayPreview')} src={ThumbnaildChordDisplay}>
-              <CardThumbnailOverlay as={NavLink} to={`/chords/${module.id}`} interactive />
-            </CardThumbnail>
-            <CardHeader left={<Icon name="music" />}>
-              {t('nav.chordDisplayWithId', { moduleId: module.id })}
-            </CardHeader>
-          </Card>
+          <div key={module.id} className="card bg-base-100 shadow-sm border border-base-300">
+            <figure className="relative">
+              <img src={ThumbnaildChordDisplay} alt={t('home.chordDisplayPreview')} />
+              <div className="absolute inset-0">
+                <NavLink to={`/chords/${module.id}`} className="block w-full h-full" />
+              </div>
+            </figure>
+            <div className="card-body p-4">
+              <h2 className="card-title">
+                <Icon name="music" />
+                {t('nav.chordDisplayWithId', { moduleId: module.id })}
+              </h2>
+            </div>
+          </div>
         ))}
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.chordQuizPreview')} src={ThumbnaildChordQuiz}>
-            <CardThumbnailOverlay as={NavLink} to="/quiz" interactive />
-          </CardThumbnail>
-          <CardHeader left={<Icon name="quiz" />}>{t('nav.chordQuiz')}</CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.circleOfFifthsPreview')} src={ThumbnaildCircleOfFifths}>
-            <CardThumbnailOverlay as={NavLink} to="/circle-of-fifths" interactive />
-          </CardThumbnail>
-          <CardHeader left={<Icon name="circle-of-fifths" />}>{t('nav.circleOfFifths')}</CardHeader>
-        </Card>
-        <Card outlined elevation={1}>
-          <CardThumbnail alt={t('home.chordDictionaryPreview')} src={ThumbnaildChordDictionary}>
-            <CardThumbnailOverlay as={NavLink} to="/chord-dictionary" interactive />
-          </CardThumbnail>
-          <CardHeader left={<Icon name="dictionary" />}>{t('nav.chordDictionary')}</CardHeader>
-        </Card>
-      </Grid>
-    </Container>
+        <div className="card bg-base-100 shadow-sm border border-base-300">
+          <figure className="relative">
+            <img src={ThumbnaildChordQuiz} alt={t('home.chordQuizPreview')} />
+            <div className="absolute inset-0">
+              <NavLink to="/quiz" className="block w-full h-full" />
+            </div>
+          </figure>
+          <div className="card-body p-4">
+            <h2 className="card-title">
+              <Icon name="quiz" />
+              {t('nav.chordQuiz')}
+            </h2>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-sm border border-base-300">
+          <figure className="relative">
+            <img src={ThumbnaildCircleOfFifths} alt={t('home.circleOfFifthsPreview')} />
+            <div className="absolute inset-0">
+              <NavLink to="/circle-of-fifths" className="block w-full h-full" />
+            </div>
+          </figure>
+          <div className="card-body p-4">
+            <h2 className="card-title">
+              <Icon name="circle-of-fifths" />
+              {t('nav.circleOfFifths')}
+            </h2>
+          </div>
+        </div>
+        <div className="card bg-base-100 shadow-sm border border-base-300">
+          <figure className="relative">
+            <img src={ThumbnaildChordDictionary} alt={t('home.chordDictionaryPreview')} />
+            <div className="absolute inset-0">
+              <NavLink to="/chord-dictionary" className="block w-full h-full" />
+            </div>
+          </figure>
+          <div className="card-body p-4">
+            <h2 className="card-title">
+              <Icon name="dictionary" />
+              {t('nav.chordDictionary')}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

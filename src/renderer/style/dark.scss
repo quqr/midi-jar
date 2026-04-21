@@ -1,0 +1,9 @@
+@import 'tokens';
+
+$body_background: $color-neutral-100;
+$body_color: $color-white;
+
+:global(.theme-jar--dark) {
+    background: var(--body_background, $body_background);
+    color: var(--body_color, $body_color);
+}

@@ -21,6 +21,8 @@ $View_ChordQuiz_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  padding: $space-md;
+  gap: $space-sm;
 }
 
 /** Containers **/
@@ -42,6 +44,8 @@ $View_ChordQuiz_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: $space-xs;
+  padding: $space-sm 0;
 
   > * {
     height: 2em;
@@ -58,10 +62,13 @@ $View_ChordQuiz_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  padding: $space-sm;
 }
 
 .intervalsContainer {
   font-size: min(3vw, 3vh);
+  font-weight: 500;
+  letter-spacing: 0.05em;
 }
 
 /** Top Section **/
@@ -105,6 +112,8 @@ $View_ChordQuiz_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   font-size: min(20vh, 10vw);
   opacity: 1;
   transform: perspective(3em) rotateY(0deg);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .nextChord {
@@ -149,19 +158,31 @@ $View_ChordQuiz_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
 .progress {
   font-size: min(2vh, 2vw);
   font-weight: bold;
+  padding: $space-xs $space-sm;
+  border-radius: $radius-md;
+  background: rgba($color-neutral-100, 0.5);
+  box-shadow: $shadow-sm;
 }
 
 .chordName {
-  font-size: min(3vh, 3vw);
+  font-size: $font-size-lg;
+  font-weight: 600;
+  padding: $space-xs 0;
+  letter-spacing: 0.03em;
 }
 
 /** Played Section **/
 
 .score {
-  font-size: min(3vh, 3vw);
+  font-size: $font-size-xl;
   font-family: 'Rocher';
   font-variation-settings: 'BVEL' 50, 'SHDW' 50;
   font-palette: --Rocher--white;
+  font-weight: 700;
+  padding: $space-xs $space-sm;
+  border-radius: $radius-md;
+  background: rgba($color-primary-500, 0.15);
+  box-shadow: $shadow-sm;
 }
 
 .playedChord {

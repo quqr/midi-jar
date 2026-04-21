@@ -1,6 +1,6 @@
-import { ToggleButtonProps } from '@la-jarre-a-son/ui';
+import React from 'react';
 
 export type NavButtonProps = {
   caseSensitive?: boolean;
   end?: boolean;
-} & ToggleButtonProps;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;

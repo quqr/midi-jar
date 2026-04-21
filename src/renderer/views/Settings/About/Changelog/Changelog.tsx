@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import { Box } from '@la-jarre-a-son/ui';
 import ReactMarkdown from 'react-markdown';
 
 import styles from './Changelog.module.scss';
@@ -10,11 +9,18 @@ import ChangelogMD from '../../../../../../CHANGELOG.md';
 const cx = classNames.bind(styles);
 
 const Changelog: React.FC = () => (
-  <Box className={cx('base')} outlined elevation={1}>
+  <div
+    className={cx('base')}
+    style={{
+      border: '1px solid var(--fallback-bc, oklch(var(--bc)/0.1))',
+      borderRadius: '0.5rem',
+      backgroundColor: 'var(--fallback-b2, oklch(var(--b2)))',
+    }}
+  >
     <ReactMarkdown linkTarget="_blank" skipHtml>
       {ChangelogMD}
     </ReactMarkdown>
-  </Box>
+  </div>
 );
 
 export default Changelog;

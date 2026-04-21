@@ -16,7 +16,7 @@ const configuration: webpack.Configuration = {
     rules: [
       {
         test: /\.[jt]sx?$/,
-        include: [webpackPaths.srcPath, webpackPaths.yalcPath, webpackPaths.ljasUiSrcPath],
+        include: [webpackPaths.srcPath, webpackPaths.yalcPath],
         use: {
           loader: 'ts-loader',
           options: {
@@ -45,9 +45,6 @@ const configuration: webpack.Configuration = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [webpackPaths.srcPath, 'node_modules'],
-    alias: {
-      '@la-jarre-a-son/ui': webpackPaths.ljasUiSrcPath,
-    },
     plugins: [new TsconfigPathsPlugins()],
   },
 

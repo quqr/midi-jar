@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import classnames from 'classnames/bind';
-import { Breadcrumb, BreadcrumbItem } from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { NavLink, Params, useMatches } from 'react-router-dom';
@@ -51,25 +50,27 @@ const AppBreadcrumb: React.FC = () => {
     .filter((crumb) => Boolean(crumb.title));
 
   return (
-    <Breadcrumb>
-      {crumbs.map(({ title, icon, path, hasSettings }, index) => (
-        <Fragment key={index}>
-          <BreadcrumbItem
-            as={NavLink}
-            to={path}
-            aria-label={typeof title === 'string' ? title : ''}
-          >
-            {icon}
-            <span className={cx('label')}>{title}</span>
-          </BreadcrumbItem>
-          {hasSettings && (
-            <BreadcrumbItem as={NavLink} to={`${path}/settings`} aria-label={t('common.settings')}>
-              <Icon name="settings" />
-            </BreadcrumbItem>
-          )}
-        </Fragment>
-      ))}
-    </Breadcrumb>
+    <div className="breadcrumbs text-sm">
+      <ul>
+        {crumbs.map(({ title, icon, path, hasSettings }, index) => (
+          <Fragment key={index}>
+            <li>
+              <NavLink to={path} aria-label={typeof title === 'string' ? title : ''}>
+                {icon}
+                <span className={cx('label')}>{title}</span>
+              </NavLink>
+            </li>
+            {hasSettings && (
+              <li>
+                <NavLink to={`${path}/settings`} aria-label={t('common.settings')}>
+                  <Icon name="settings" />
+                </NavLink>
+              </li>
+            )}
+          </Fragment>
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
-import { Box, Container } from '@la-jarre-a-son/ui';
 import styles from './ChordDetail.module.scss';
 
 const cx = classnames.bind(styles);
@@ -14,17 +13,15 @@ export const EmptyChordDetail: React.FC<Props> = ({ chordName }) => {
   const { t } = useTranslation();
 
   return (
-    <Container className={cx('empty')} size="sm">
+    <div className={cx('empty', 'max-w-sm mx-auto px-4')}>
       {chordName ? (
-        <Box elevation={2} pad="lg">
+        <div className="card bg-base-100 shadow-lg p-6">
           {t('chordDictionary.cannotFindChord', { chordName })}
-        </Box>
+        </div>
       ) : (
-        <Box elevation={2} pad="lg">
-          {t('chordDictionary.emptyHelp')}
-        </Box>
+        <div className="card bg-base-100 shadow-lg p-6">{t('chordDictionary.emptyHelp')}</div>
       )}
-    </Container>
+    </div>
   );
 };
 

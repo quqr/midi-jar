@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import classNames from 'classnames/bind';
 
-import { Input } from '@la-jarre-a-son/ui';
-
 import { InputColorProps } from './types';
 
 import styles from './InputColor.module.scss';
@@ -45,23 +43,31 @@ export const InputColor: React.FC<InputColorProps> = ({ className, value, onChan
   );
 
   return (
-    <Input
-      className={cx('base', className)}
-      value={value ?? ''}
-      onKeyPress={handleKeyPress}
-      onChange={handleTextChange}
-      left={
-        <input
-          className={cx('color')}
-          type="color"
-          onChange={handleColorChange}
-          value={value ?? ''}
-        />
-      }
-      type="text"
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...rest}
-    />
+    <div className="relative">
+      <input
+        className={cx(
+          'color',
+          'absolute',
+          'top-0',
+          'left-0',
+          'w-8',
+          'h-full',
+          'opacity-0',
+          'cursor-pointer'
+        )}
+        type="color"
+        onChange={handleColorChange}
+        value={value ?? ''}
+      />
+      <input
+        className={cx('base', 'input', 'input-bordered', 'w-full', 'pl-10', className)}
+        value={value ?? ''}
+        onKeyPress={handleKeyPress}
+        onChange={(e) => handleTextChange(e.target.value)}
+        type="text"
+        {...rest}
+      />
+    </div>
   );
 };
 

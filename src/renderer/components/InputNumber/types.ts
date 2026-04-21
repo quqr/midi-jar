@@ -1,6 +1,9 @@
-import { InputProps } from '@la-jarre-a-son/ui';
+import React from 'react';
 
-export type InputNumberProps = Omit<InputProps, 'onChange' | 'value'> & {
+export type InputNumberProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange' | 'value'
+> & {
   className?: string;
   value: string | number;
   onChange: (value: number) => unknown;

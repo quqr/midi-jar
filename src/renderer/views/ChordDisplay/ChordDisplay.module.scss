@@ -12,6 +12,8 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
+  padding: $space-md;
+  gap: $space-sm;
 }
 
 .container {
@@ -28,8 +30,10 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
 .notation {
   flex-grow: 0;
   flex-shrink: 0;
-  padding: 16px;
+  padding: $space-md;
   height: 60vh;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
 
   &--withChord {
     max-width: 30vw;
@@ -47,6 +51,7 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   justify-content: center;
   height: 100%;
   text-shadow: $View_ChordDisplay_textShadow;
+  gap: $space-sm;
 }
 
 .chord {
@@ -60,6 +65,8 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   overflow: hidden;
   flex-grow: 1;
   flex-shrink: 1;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 
   &--withNotation {
     font-size: 8vw;
@@ -71,23 +78,24 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   z-index: 2;
   top: 0;
   right: 0;
-  padding: 1vw;
+  padding: $space-sm;
   font-size: 4vh;
   display: flex;
   flex-direction: column;
   text-shadow: $View_ChordDisplay_textShadow;
+  gap: $space-xs;
 }
 
 .name {
-  font-size: 3vh;
-  line-height: 2vh;
-  height: 6vh;
-  padding: 0 5vw;
+  font-size: $font-size-xl;
+  line-height: $leading-tight;
+  min-height: 3vh;
+  padding: 0 $space-md;
   word-wrap: break-word;
   text-align: center;
+  font-weight: 600;
+  opacity: 0.9;
 }
-
-
 
 .note {
   margin: 0 0.25em;
@@ -102,8 +110,7 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
 
 .notes {
   text-align: center;
-
-  font-size: 3vh;
+  font-size: $font-size-lg;
   margin-top: 0;
   margin-bottom: 0;
   flex-grow: 0;
@@ -116,6 +123,8 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
   flex-shrink: 0;
   flex-grow: 0;
   max-height: 100%;
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
 
   &--withChord,
   &--withNotation {
@@ -125,4 +134,7 @@ $View_ChordDisplay_textShadow: 0 0.05em 0.1em rgba($color-black, 0.6) !default;
 
 .intervals {
   font-size: min(2vh, 3vw);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: opacity $transition-fast;
 }

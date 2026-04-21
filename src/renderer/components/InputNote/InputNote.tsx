@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { Note } from 'tonal';
-import { Input, Button, InputGroup } from '@la-jarre-a-son/ui';
 import { MidiLearn } from '../MidiLearn';
 
 import { InputNoteProps } from './types';
@@ -79,26 +78,26 @@ export const InputNote: React.FC<InputNoteProps> = ({
   );
 
   return (
-    <InputGroup>
-      <Input
-        className={cx('base', className)}
+    <div className="join">
+      <input
+        className={cx('base', 'input', 'input-bordered', 'w-full', 'join-item', className)}
         value={value ?? ''}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value)}
         onKeyPress={handleKeyPress}
         type="text"
         {...rest}
       />
       {learn ? (
-        <Button
-          className={cx('learn')}
+        <button
+          type="button"
+          className={cx('learn', 'btn', 'join-item', learning ? 'btn-success' : 'btn-neutral')}
           onClick={toggleLearning}
-          intent={learning ? 'success' : 'neutral'}
         >
           {learning ? '...' : t('common.learn')}
-        </Button>
+        </button>
       ) : null}
       {learning ? <MidiLearn type="note" onLearn={handleLearn} /> : null}
-    </InputGroup>
+    </div>
   );
 };
 

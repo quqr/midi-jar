@@ -1,7 +1,6 @@
 import React from 'react';
-import classnames from 'classnames/bind';
+import classnames from 'classnames';
 
-import { Button, ButtonGroup, Stack, ToggleButton, Toolbar } from '@la-jarre-a-son/ui';
 import { useTranslation } from 'react-i18next';
 
 import { useWindowState } from 'renderer/contexts/WindowState';
@@ -12,8 +11,6 @@ import TrafficLightButtons from './TrafficLightButtons';
 
 import styles from './Layout.module.scss';
 
-const cx = classnames.bind(styles);
-
 const TopBar: React.FC = () => {
   const { windowState, titleBarDoubleClick, setAlwaysOnTop } = useWindowState();
   const { t } = useTranslation();
@@ -23,38 +20,47 @@ const TopBar: React.FC = () => {
   };
 
   return (
-    <Toolbar
-      as={Stack}
-      elevation={3}
-      className={cx('topbar', { 'topbar--isMac': window.os?.isMac })}
+    <div
+      className={classnames(
+        'flex items-center gap-3 bg-base-200 py-3 px-3 border-b border-base-300 shadow-sm',
+        styles.topbar,
+        {
+          'topbar--isMac': window.os?.isMac,
+        }
+      )}
     >
       <AppBreadcrumb />
-      <div className={cx('titlebar')} onDoubleClick={titleBarDoubleClick} />
-      <ButtonGroup>
-        <NavButton to="/settings" aria-label={t('common.settings')} icon>
+      <div className={styles.titlebar} onDoubleClick={titleBarDoubleClick} />
+      <div className="join">
+        <NavButton
+          to="/settings"
+          aria-label={t('common.settings')}
+          className="join-item btn btn-sm"
+        >
           <Icon name="settings" />
         </NavButton>
-        <ToggleButton
-          selectedIntent="warning"
+        <button
+          type="button"
+          className={classnames('join-item btn btn-sm', {
+            'btn-active': windowState.alwaysOnTop,
+            'btn-warning': windowState.alwaysOnTop,
+          })}
           onClick={toggleAlwaysOnTop}
-          selected={windowState.alwaysOnTop}
           aria-label={t('layout.alwaysOnTop')}
-          icon
         >
           <Icon name="pin" />
-        </ToggleButton>
-        <Button
+        </button>
+        <button
+          type="button"
+          className="join-item btn btn-error btn-ghost btn-sm"
           aria-label={t('layout.quitApp')}
           onClick={window.app.quit}
-          intent="danger"
-          icon
-          hoverIntent
         >
           <Icon name="power" />
-        </Button>
-      </ButtonGroup>
-      {window.os?.isWindows && <TrafficLightButtons className={cx('trafficLights')} />}
-    </Toolbar>
+        </button>
+      </div>
+      {window.os?.isWindows && <TrafficLightButtons className={styles.trafficLights} />}
+    </div>
   );
 };
 
