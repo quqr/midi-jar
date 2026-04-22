@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { Chord } from 'tonal';
 import { Chord as TChord } from '@tonaljs/chord';
@@ -11,10 +10,6 @@ import { Icon } from 'renderer/components';
 import { ChordSearchProps } from './types';
 import { searchChords } from './utils';
 import { ChordSearchOption } from './ChordSearchOption';
-
-import styles from './ChordSearch.module.scss';
-
-const cx = classNames.bind(styles);
 
 export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect }) => {
   const [search, setSearch] = useState<string>('');
@@ -37,14 +32,14 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
   );
 
   return (
-    <div className={cx('trigger', className)}>
+    <div className={className}>
       <details className="dropdown dropdown-end">
         <summary className="input input-bordered w-full flex items-center gap-2 cursor-pointer">
           <Icon name="search" />
           <span className="truncate">{search || t('chordDictionary.searchChord')}</span>
         </summary>
         <ul className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded-box w-64 mt-1">
-          <li className={cx('searchContainer')}>
+          <li className="p-3">
             <label
               htmlFor="chordSearchInput"
               className="input input-bordered input-sm flex items-center gap-2 w-full"
@@ -77,7 +72,7 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
                     />
                   ))}
                   {!options.length && (
-                    <li className={cx('empty')}>
+                    <li>
                       <span className="text-base-content/50">
                         {t('chordDictionary.noChordsFound')}
                       </span>
@@ -95,7 +90,7 @@ export const ChordSearch: React.FC<ChordSearchProps> = ({ className, onSelect })
                       />
                     ))}
                   {(!previousChords || !previousChords.length) && (
-                    <li className={cx('empty')}>
+                    <li>
                       <span className="text-base-content/50">
                         {t('chordDictionary.noChordsInHistory')}
                       </span>

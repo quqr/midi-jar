@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { Note } from 'tonal';
 
@@ -9,10 +8,6 @@ import {
   formatSharpsFlats,
   getNoteInKeySignature,
 } from 'renderer/helpers';
-
-import styles from './ChordDictionary.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   keySignature: KeySignatureConfig;
@@ -31,7 +26,7 @@ const ChordDictionaryChromaMenu: React.FC<Props> = ({
 
   return (
     <div
-      className={cx('chromanav')}
+      className="flex flex-col gap-2 p-3"
       role="tablist"
       aria-label={t('chordDictionary.chromaNavigation')}
     >
@@ -43,12 +38,14 @@ const ChordDictionaryChromaMenu: React.FC<Props> = ({
           <button
             key={note}
             type="button"
-            className={cx('tab', { 'btn-active': isSelected }, 'btn btn-ghost btn-block')}
+            className={`btn btn-ghost btn-block rounded-md p-2 px-4 mb-1 transition-colors duration-150 hover:bg-white/10 ${
+              isSelected ? 'bg-primary-500 text-white shadow-md' : ''
+            }`}
             role="tab"
             aria-selected={isSelected}
             onClick={() => onSelect(chroma)}
           >
-            <span className={cx('label')}>
+            <span className="font-medium">
               {formatSharpsFlats(getNoteInKeySignature(note, keySignature.notes))}
             </span>
           </button>

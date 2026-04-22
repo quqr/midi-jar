@@ -5,7 +5,7 @@ import { KeyboardSettings } from 'main/types';
 import { NoteDef } from './types';
 import Note from './Note';
 
-import styles from './flat.module.scss';
+import './flat.css';
 import { KeyboardSizes } from './constants';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 
 const Board: React.FC<Props> = ({ keyboard, notes, sizes }) => (
   <g
-    className={styles.board}
+    className="board"
     transform={`translate(0,${keyboard.label === 'none' ? 0 : sizes.LABEL_HEIGHT})`}
   >
     {notes.map(({ displayName, note, isBlack, offset }) => (

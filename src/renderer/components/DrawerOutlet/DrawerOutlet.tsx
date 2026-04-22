@@ -1,11 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
 import { useOutlet, useNavigate } from 'react-router-dom';
-
-import styles from './DrawerOutlet.module.scss';
-
-const cx = classNames.bind(styles);
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   context?: unknown;
@@ -41,7 +36,7 @@ export const DrawerOutlet: React.FC<Props> = ({ context, className, ...rest }) =
   }
 
   return (
-    <div {...rest} className={cx('base', 'drawer', 'drawer-end', className)}>
+    <div {...rest} className={`drawer drawer-end flex flex-col overflow-auto ${className ?? ''}`}>
       <input
         id="drawer-toggle"
         type="checkbox"

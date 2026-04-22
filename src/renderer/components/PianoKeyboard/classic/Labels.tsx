@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { KeyboardKeys } from './types';
 
-import styles from './classic.module.scss';
+import './classic.css';
 import { KeyboardSizes } from './constants';
 
 type Props = {
@@ -12,11 +12,11 @@ type Props = {
 };
 
 const Board: React.FC<Props> = ({ keys, sizes }) => (
-  <g className={styles.labels} transform="translate(0,0)">
+  <g className="labels" transform="translate(0,0)">
     {keys.labels.map(({ note, labelOffset }) => (
       <text
         key={note.midi}
-        className={classNames([styles.pianoLabel, `label-${note.midi}`])}
+        className={classNames(['pianoLabel', `label-${note.midi}`])}
         x={labelOffset}
         y={sizes.LABEL_HEIGHT - sizes.LABEL_OFFSET}
         textAnchor="middle"

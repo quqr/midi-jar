@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useMemo, useRef } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import { Chord, Note } from 'tonal';
 
@@ -28,10 +27,6 @@ import {
   getSupersetChords,
 } from './utils';
 import { EmptyChordDetail } from './EmptyChordDetail';
-
-import styles from './ChordDetail.module.scss';
-
-const cx = classnames.bind(styles);
 
 const KEYBOARD_SETTINGS: KeyboardSettings = {
   ...defaultKeyboardSettings,
@@ -143,10 +138,12 @@ const ChordDetail: React.FC = () => {
   };
 
   return (
-    <div ref={ref} className={cx('base', 'max-w-7xl mx-auto px-4')}>
-      <h1 className={cx('header')}>
+    <div ref={ref} className="flex flex-col items-center px-4 max-w-7xl mx-auto lg:px-6">
+      <h1 className="flex justify-center items-center border-b-2 border-neutral-300 mx-0 mb-2 px-0 py-2 w-full flex-wrap gap-2 sm:gap-3">
         <ChordName
-          className={cx('chordName', { 'chordName--isDisabled': isDisabled })}
+          className={`text-[min(64px,6vw)] flex-grow flex-shrink-0 justify-center font-bold leading-tight text-neutral-1000 ${
+            isDisabled ? 'opacity-50' : ''
+          }`}
           chord={chord}
         />
         {!disableUpdate && (
@@ -163,9 +160,11 @@ const ChordDetail: React.FC = () => {
           </div>
         )}
       </h1>
-      <div className={cx('name')}>{chord.name}</div>
+      <div className="text-center text-[min(24px,4vw)] font-normal text-neutral-700 leading-snug">
+        {chord.name}
+      </div>
       <PianoKeyboard
-        className={cx('keyboard')}
+        className="w-full my-6 p-4 bg-neutral-100 rounded-lg shadow-sm"
         targets={midi}
         played={playedMidiNotes}
         sustained={sustainedMidiNotes}
@@ -173,21 +172,25 @@ const ChordDetail: React.FC = () => {
         chord={chord}
         keyboard={KEYBOARD_SETTINGS}
       />
-      <div className={cx('columns')}>
-        <section className={cx('column')}>
-          <h2 className={cx('title')}>{t('chordDictionary.intervals')}</h2>
+      <div className="flex flex-row flex-wrap gap-6 w-full mb-4">
+        <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+          <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+            {t('chordDictionary.intervals')}
+          </h2>
           <ChordIntervals
-            className={cx('intervals')}
+            className="text-[min(1.15em,1.75vw)] justify-center"
             intervals={playedIntervals}
             targets={chord.intervals}
             pitchClasses={pitchClasses}
             tonic={chord.tonic}
           />
         </section>
-        <section className={cx('column')}>
-          <h2 className={cx('title')}>{t('chordDictionary.notation')}</h2>
+        <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+          <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+            {t('chordDictionary.notation')}
+          </h2>
           <Notation
-            className={cx('notation')}
+            className="mx-auto w-48 text-center p-2 bg-neutral-100 rounded-md shadow-sm"
             midiNotes={midi}
             keySignature={keySignature}
             staffClef={staffClef}
@@ -196,10 +199,12 @@ const ChordDetail: React.FC = () => {
         </section>
       </div>
 
-      <div className={cx('columns')}>
-        <section className={cx('column')}>
-          <h2 className={cx('title')}>{t('chordDictionary.aliases')}</h2>
-          <ul className={cx('list')}>
+      <div className="flex flex-row flex-wrap gap-6 w-full mb-4">
+        <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+          <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+            {t('chordDictionary.aliases')}
+          </h2>
+          <ul>
             {chord.aliases.map((alias, index) => {
               const isPreferred = preferredAlias === alias;
               const isDefault =
@@ -208,9 +213,9 @@ const ChordDetail: React.FC = () => {
 
               return (
                 <li
-                  className={cx('alias', {
-                    'alias--preferred': isPreferred || isDefault,
-                  })}
+                  className={`p-2 px-4 mb-1 rounded-md transition-colors duration-150 hover:bg-white/5 ${
+                    isPreferred || isDefault ? 'bg-white/10 border-l-[3px] border-warning-400' : ''
+                  }`}
                   key={index}
                 >
                   <div className="flex items-center justify-between w-full">
@@ -260,9 +265,11 @@ const ChordDetail: React.FC = () => {
           </ul>
         </section>
         {!!alternativeChords.length && (
-          <section className={cx('column')}>
-            <h2 className={cx('title')}>{t('chordDictionary.otherInterpretations')}</h2>
-            <ul className={cx('list')}>
+          <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+            <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+              {t('chordDictionary.otherInterpretations')}
+            </h2>
+            <ul>
               {alternativeChords.map((altChord) => (
                 <li key={altChord.symbol}>
                   <button
@@ -278,9 +285,11 @@ const ChordDetail: React.FC = () => {
           </section>
         )}
       </div>
-      <div className={cx('columns')}>
-        <section className={cx('column')}>
-          <h2 className={cx('title')}>{t('chordDictionary.inversions')}</h2>
+      <div className="flex flex-row flex-wrap gap-6 w-full mb-4">
+        <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+          <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+            {t('chordDictionary.inversions')}
+          </h2>
           {chord.intervals.map((_, index) => {
             if (!index) return null;
 
@@ -297,14 +306,20 @@ const ChordDetail: React.FC = () => {
                 : '';
 
             return (
-              <div key={index} className={cx('inversion')}>
-                <div className={cx('inversionInfo')}>
-                  <ChordName className={cx('inversionChord')} chord={slashChord} />
-                  <div className={cx('inversionInterval')}>
+              <div
+                key={index}
+                className="flex flex-row items-center flex-wrap w-full gap-4 p-4 mb-2 bg-neutral-100 rounded-md shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="flex-basis-[200px] flex-grow-0">
+                  <ChordName
+                    className="text-2xl font-semibold text-neutral-1000"
+                    chord={slashChord}
+                  />
+                  <div className="italic text-neutral-600 mt-1">
                     {t('chordDictionary.inversionOn', { interval })}
                   </div>
                   {altChord && (
-                    <div className={cx('inversionAltChord')}>
+                    <div className="mt-4 text-sm">
                       {t('chordDictionary.seeAlso')}
                       <NavLink
                         to={`../${encodeURIComponent(altChord.tonic + altChord.aliases[0])}`}
@@ -316,14 +331,14 @@ const ChordDetail: React.FC = () => {
                   )}
                 </div>
                 <PianoKeyboard
-                  className={cx('inversionKeyboard')}
+                  className="flex-grow flex-basis-[400px]"
                   played={inversionMidi}
                   midi={inversionMidi}
                   chord={slashChord}
                   keyboard={KEYBOARD_SETTINGS}
                 />
                 <Notation
-                  className={cx('inversionNotation')}
+                  className="w-24 mx-auto p-1 bg-neutral-200 rounded-sm"
                   midiNotes={inversionMidi}
                   keySignature={keySignature}
                   staffClef={staffClef}
@@ -334,15 +349,17 @@ const ChordDetail: React.FC = () => {
           })}
         </section>
       </div>
-      <div className={cx('columns')}>
+      <div className="flex flex-row flex-wrap gap-6 w-full mb-4">
         {!!subsetChords.length && (
-          <section className={cx('column')}>
-            <h2 className={cx('title')}>{t('chordDictionary.simplified')}</h2>
-            <div className={cx('chordSet')}>
+          <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+            <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+              {t('chordDictionary.simplified')}
+            </h2>
+            <div className="flex flex-row flex-wrap gap-2">
               {subsetChords.map((c, index) => (
                 <NavButton
                   key={index}
-                  className={`btn-primary btn-sm rounded-full ${cx('chordButton')}`}
+                  className="btn-primary btn-sm rounded-full [--Button_textTransform:none]"
                   to={`../${encodeURIComponent(c.tonic + c.aliases[0])}`}
                 >
                   <ChordName chord={c} />
@@ -352,13 +369,15 @@ const ChordDetail: React.FC = () => {
           </section>
         )}
         {!!supersetChords.length && (
-          <section className={cx('column')}>
-            <h2 className={cx('title')}>{t('chordDictionary.extended')}</h2>
-            <div className={cx('chordSet')}>
+          <section className="flex-basis-[320px] flex-grow items-center justify-center min-w-[280px] p-4 bg-neutral-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+            <h2 className="flex my-0 mt-8 mb-4 uppercase w-full items-center gap-4 font-semibold text-sm text-neutral-700 tracking-wider [&::before]:[content:' '] [&::before]:flex-grow [&::before]:flex-basis-0 [&::before]:border-b [&::before]:border-neutral-300 [&::after]:[content:' '] [&::after]:flex-grow [&::after]:flex-basis-0 [&::after]:border-b [&::after]:border-neutral-300">
+              {t('chordDictionary.extended')}
+            </h2>
+            <div className="flex flex-row flex-wrap gap-2">
               {supersetChords.map((c, index) => (
                 <NavButton
                   key={index}
-                  className={`btn-primary btn-sm rounded-full ${cx('chordButton')}`}
+                  className="btn-primary btn-sm rounded-full [--Button_textTransform:none]"
                   to={`../${encodeURIComponent(c.tonic + c.aliases[0])}`}
                 >
                   <ChordName chord={c} />

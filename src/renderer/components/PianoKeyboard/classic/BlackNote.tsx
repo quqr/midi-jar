@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { KeyboardSizes } from './constants';
 
-import styles from './classic.module.scss';
+import './classic.css';
 
 type BlackNoteProps = {
   name: string;
@@ -26,17 +26,11 @@ const BlackNote: React.FC<BlackNoteProps> = ({
 }) => {
   return (
     <g
-      className={classNames([
-        styles.note,
-        styles.black,
-        `note-${name}`,
-        `chroma-${chroma}`,
-        `midi-${midi}`,
-      ])}
+      className={classNames('note', 'black', `note-${name}`, `chroma-${chroma}`, `midi-${midi}`)}
       transform={`translate(${offset},0)`}
     >
       <rect
-        className={styles.pianoKeyBackground}
+        className="pianoKeyBackground"
         width={sizes.BLACK_WIDTH}
         height={sizes.BLACK_HEIGHT + sizes.RADIUS}
         x="0"
@@ -45,7 +39,7 @@ const BlackNote: React.FC<BlackNoteProps> = ({
         ry={sizes.RADIUS}
       />
       <rect
-        className={styles.pianoKey}
+        className="pianoKey"
         width={sizes.BLACK_WIDTH}
         height={sizes.BLACK_HEIGHT + sizes.RADIUS}
         x="0"
@@ -54,13 +48,13 @@ const BlackNote: React.FC<BlackNoteProps> = ({
         ry={sizes.RADIUS}
       />
       <circle
-        className={styles.pianoTonic}
+        className="pianoTonic"
         cx={sizes.BLACK_WIDTH / 2}
         cy={sizes.BLACK_HEIGHT - sizes.BLACK_INFO_OFFSET}
         r={sizes.TONIC_RADIUS}
       />
       <text
-        className={classNames([styles.pianoInfo, 'pianoInfo'])}
+        className={classNames(['pianoInfo', 'pianoInfo'])}
         x={sizes.BLACK_WIDTH / 2}
         y={sizes.BLACK_HEIGHT - sizes.BLACK_INFO_OFFSET}
         textAnchor="middle"
@@ -68,7 +62,7 @@ const BlackNote: React.FC<BlackNoteProps> = ({
       />
       {keyName !== 'none' && (
         <text
-          className={styles.pianoKeyName}
+          className="pianoKeyName"
           x={sizes.BLACK_WIDTH / 2}
           y={sizes.BLACK_HEIGHT - sizes.BLACK_NAME_OFFSET}
           textAnchor="middle"

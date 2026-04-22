@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { Section } from '../types';
 import {
@@ -15,10 +14,6 @@ import {
   drawArc,
 } from '../utils';
 
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
-
 type DegreesProps = {
   scale: 'major' | 'minor';
   section: Section;
@@ -31,15 +26,15 @@ const Degrees: React.FC<DegreesProps> = ({ scale, section }) => {
   const titleOffset = scale === 'minor' ? 2.5 : 5.5;
 
   return (
-    <g className={cx('degrees')}>
-      <g className={cx('degreeTitle')}>
+    <g className="degrees">
+      <g className="degreeTitle">
         <path
           id={`degree_${scale}_title_followpath`}
-          className={cx('followPath')}
+          className="followPath"
           d={drawArc(CX, CY, section.middle, titleOffset / 12, (titleOffset + 5) / 12)}
         />
         <path
-          className={cx('degreeSection')}
+          className="degreeSection"
           d={drawSection(
             CX,
             CY,
@@ -57,14 +52,14 @@ const Degrees: React.FC<DegreesProps> = ({ scale, section }) => {
       </g>
       {offsets.map((offset, index) => {
         return (
-          <g className={cx('degree')} key={index}>
+          <g className="degree" key={index}>
             <path
               id={`degree_${scale}_${index}_followpath`}
-              className={cx('followPath')}
+              className="followPath"
               d={drawArc(CX, CY, section.middle, (offset - 0.5) / 12, (offset + 0.5) / 12)}
             />
             <path
-              className={cx('degreeSection')}
+              className="degreeSection"
               d={drawSection(
                 CX,
                 CY,

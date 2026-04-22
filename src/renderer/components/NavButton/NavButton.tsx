@@ -45,7 +45,7 @@ export const NavButton = React.forwardRef<HTMLAnchorElement, LinkProps & NavButt
 
     return (
       <Link
-        className={`btn ${isActive ? 'btn-active' : ''}`}
+        className={`btn transition-all duration-200 ease-in-out ${isActive ? 'btn-active' : ''}`}
         aria-current={ariaCurrent}
         ref={ref}
         to={to}

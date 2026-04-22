@@ -1,5 +1,4 @@
 import React, { memo, useCallback } from 'react';
-import classnames from 'classnames/bind';
 import { Chord } from '@tonaljs/chord';
 
 import { KeySignatureConfig } from 'renderer/helpers/note';
@@ -7,11 +6,7 @@ import { KeySignatureConfig } from 'renderer/helpers/note';
 import { Section, CircleOfFifthsConfig } from '../types';
 import { CX, CY, polar, drawSection, isChordPressed, isNotePressed } from '../utils';
 
-import styles from '../CircleFifths.module.scss';
-
 import SectionLabel from './Label';
-
-const cx = classnames.bind(styles);
 
 type SectionDiminishedProps = {
   label: string[];
@@ -43,23 +38,22 @@ const SectionDiminished: React.FC<SectionDiminishedProps> = ({
   return (
     <g
       key={`dim_${value}`}
-      className={cx('key', 'key--diminished', {
-        'key--selected': value === current,
-        'key--active':
-          config.highlightSector === 'notes'
-            ? isNotePressed(label[0], notes)
-            : isChordPressed(label[0], 'dim', chord, config),
-        'key--multiple': label.length > 1,
-      })}
+      className={`key key--diminished ${value === current ? 'key--selected' : ''} ${
+        config.highlightSector === 'notes'
+          ? isNotePressed(label[0], notes)
+          : isChordPressed(label[0], 'dim', chord, config)
+          ? 'key--active'
+          : ''
+      } ${label.length > 1 ? 'key--multiple' : ''}`}
       onClick={handleClick}
     >
       <path
-        className={cx('sector')}
+        className="sector"
         d={drawSection(CX, CY, section.start, section.end, (value - 0.5) / 12, (value + 0.5) / 12)}
         strokeWidth="0.5"
       />
       <circle
-        className={cx('badge')}
+        className="badge"
         cx={polar(CX, CY, section.middle, value / 12)[0]}
         cy={polar(CX, CY, section.middle, value / 12)[1]}
         r="3"

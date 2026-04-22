@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -10,9 +9,13 @@ import { ChordIntervals, ChordName } from 'renderer/components';
 import Reaction from './Reaction';
 import GameList from './GameList';
 
-import styles from './ChordQuiz.module.scss';
-
-const cx = classnames.bind(styles);
+const statusColors: Record<string, string> = {
+  none: 'text-white',
+  different: 'text-[#6241bc]',
+  subset: 'text-[#d89845]',
+  equal: 'text-[#19a86c]',
+  superset: 'text-[#648bf4]',
+};
 
 const ChordQuiz: React.FC = () => {
   const { settings } = useSettings();
@@ -73,45 +76,65 @@ const ChordQuiz: React.FC = () => {
 
   if (!games.length)
     return (
-      <div id="ChordQuiz" className={cx('base')}>
+      <div
+        id="ChordQuiz"
+        className="relative flex w-full h-full flex-col justify-center items-center overflow-hidden p-4 gap-2"
+      >
         {t('chordQuiz.gameWillStart')}
       </div>
     );
 
   return (
-    <div id="ChordQuiz" className={cx('base')}>
-      <div className={cx('topContainer')}>
+    <div
+      id="ChordQuiz"
+      className="relative flex w-full h-full flex-col justify-center items-center overflow-hidden p-4 gap-2"
+    >
+      <div className="relative w-full flex-[0_0_0px] flex-grow flex-shrink-0">
         {quizSettings.displayReaction && (
-          <div className={cx('reactionContainer')}>
+          <div className="absolute inset-0 flex items-center justify-center">
             <Reaction gameState={gameState} />
           </div>
         )}
         {quizSettings.gamification && (
-          <GameList className={cx('gameList')} games={games} gameIndex={gameState.gameIndex} />
+          <GameList
+            className="absolute top-0 left-0 w-auto"
+            games={games}
+            gameIndex={gameState.gameIndex}
+          />
         )}
       </div>
 
-      <div className={cx('chordContainer')}>
+      <div className="relative h-[min(20vw,50vh)] w-full overflow-hidden flex-shrink-0 flex flex-col justify-end items-center p-2">
         {chordElements.map((c) => (
           <div
             key={c.index}
-            className={cx(
-              'chord',
-              c.type === 'targetChord' && `status--${STATUSES[gameState.status]}`,
-              c.type
-            )}
+            className={`absolute top-0 bottom-0 flex items-center justify-center transition-all duration-500 ease [transition-property:color,transform] ${
+              c.type === 'targetChord'
+                ? `w-full right-0 text-[min(20vh,10vw)] opacity-100 font-bold tracking-[0.02em] [transform:perspective(3em)_rotateY(0deg)] [text-shadow:0_0.05em_0.1em_rgba(0,0,0,0.6)] ${
+                    statusColors[`status--${STATUSES[gameState.status]}`] ?? ''
+                  }`
+                : ''
+            }${
+              c.type === 'nextChord'
+                ? ' w-[15%] right-[5%] text-[3vw] opacity-80 [transform:perspective(3em)_rotateY(-36deg)] [text-shadow:0_0.05em_0.1em_rgba(0,0,0,0.6)] animate-[swipe_0.3s_ease_1]'
+                : ''
+            }${
+              c.type === 'prevChord'
+                ? ' w-[15%] left-0 right-auto text-[2vw] opacity-0 [transform:perspective(3em)_rotateY(36deg)] [text-shadow:0_0.05em_0.1em_rgba(0,0,0,0.6)] [transition-delay:0s,0s,0.1s]'
+                : ''
+            }`}
           >
             <ChordName chord={c.chord} notation={quizSettings.chordNotation} />
           </div>
         ))}
       </div>
       {quizSettings.displayName && (
-        <div className={cx('chordName')}>
+        <div className="text-[18px] font-semibold px-0 py-1 tracking-[0.03em]">
           {games[gameState.gameIndex].chords[gameState.index].name}
         </div>
       )}
       {quizSettings.displayIntervals && (
-        <div className={cx('intervalsContainer')}>
+        <div className="text-[min(3vw,3vh)] font-medium tracking-[0.05em]">
           <ChordIntervals
             targets={games[gameState.gameIndex].chords[gameState.index].intervals}
             intervals={gameState.status > 0 ? gameState.chord?.intervals : []}
@@ -121,16 +144,28 @@ const ChordQuiz: React.FC = () => {
           />
         </div>
       )}
-      <div className={cx('playedContainer')}>
-        <div className={cx('progress')}>
+      <div className="flex flex-col flex-[0_0_0px] flex-grow flex-shrink-0 w-full items-center justify-center gap-[4px] pt-[8px] pb-[8px] [&>*]:h-[2em]">
+        <div className="text-[min(2vh,2vw)] font-bold px-[8px] py-[4px] rounded-lg bg-white/5 shadow-sm">
           {gameState.index + 1} / {games[gameState.gameIndex].chords.length}
         </div>
         {quizSettings.gamification && (
-          <div className={cx('score')}>
+          <div
+            className="text-[20px] font-bold px-[8px] py-[4px] rounded-lg bg-primary-500/15 shadow-sm"
+            style={
+              {
+                fontFamily: "'Rocher'",
+                fontVariationSettings: "'BVEL' 50, 'SHDW' 50",
+                '--font-palette': '--Rocher--white',
+              } as React.CSSProperties
+            }
+          >
             {gameState.score} {t('chordQuiz.pts')}
           </div>
         )}
-        <div className={cx('playedChord')}>
+        <div
+          className="flex text-[min(2vh,2vw)] overflow-hidden flex-grow-0 flex-shrink items-center justify-center"
+          style={{ textShadow: '0 0.05em 0.1em rgba(0, 0, 0, 0.6)' }}
+        >
           <ChordName chord={gameState.chord} notation={quizSettings.chordNotation} />
         </div>
       </div>

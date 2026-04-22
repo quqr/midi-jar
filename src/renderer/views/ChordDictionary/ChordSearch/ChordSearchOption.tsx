@@ -1,13 +1,8 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 
 import { ChordName } from 'renderer/components';
 
 import { ChordSearchOptionProps } from './types';
-
-import styles from './ChordSearch.module.scss';
-
-const cx = classnames.bind(styles);
 
 export const ChordSearchOption = React.forwardRef<HTMLLIElement, ChordSearchOptionProps>(
   (props, ref) => {
@@ -15,7 +10,7 @@ export const ChordSearchOption = React.forwardRef<HTMLLIElement, ChordSearchOpti
     const value = chord.tonic + chord.aliases[0];
 
     return (
-      <li ref={ref} className={cx(parts ? 'option' : 'history', className)} {...otherProps}>
+      <li ref={ref} className={className} {...otherProps}>
         <button
           type="button"
           className={`btn btn-ghost btn-block justify-start ${selected ? 'btn-active' : ''}`}
@@ -23,9 +18,9 @@ export const ChordSearchOption = React.forwardRef<HTMLLIElement, ChordSearchOpti
         >
           <ChordName chord={chord} />
           {parts && (
-            <div className={cx('resultParts')}>
-              <span className={cx('resultMatch')}>{parts[0]}</span>
-              <span className={cx('resultRest')}>{parts[1]}</span>
+            <div className="flex flex-col items-start gap-0">
+              <span className="px-[1px] bg-success-normal rounded-l-[3px]">{parts[0]}</span>
+              <span className="px-[1px] italic">{parts[1]}</span>
             </div>
           )}
         </button>

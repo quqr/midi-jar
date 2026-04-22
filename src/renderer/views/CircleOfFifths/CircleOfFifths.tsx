@@ -1,13 +1,8 @@
 import React, { useCallback } from 'react';
-import classnames from 'classnames/bind';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import useNotes from 'renderer/hooks/useNotes';
 import { CircleFifths, ChordName } from 'renderer/components';
-
-import styles from './CircleOfFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   disableUpdate?: boolean;
@@ -39,7 +34,7 @@ const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
   const config = settings.circleOfFifths;
 
   return (
-    <div className={cx('base')}>
+    <div className="relative flex w-full h-full flex-col justify-center items-center overflow-hidden p-8 gap-4">
       <CircleFifths
         keySignature={keySignature}
         chord={chords[0]}
@@ -47,7 +42,11 @@ const CircleOfFifths: React.FC<Props> = ({ disableUpdate }) => {
         onChange={disableUpdate ? undefined : handleKeyChange}
         config={config}
       >
-        <div id="chord" className={cx('chord')}>
+        <div
+          id="chord"
+          className="flex text-[20px] overflow-hidden w-full h-full items-center justify-center font-semibold tracking-[0.03em]"
+          style={{ textShadow: '0 0.05em 0.1em rgba(0, 0, 0, 0.6)' }}
+        >
           <ChordName chord={chords[0]} hideRoot />
         </div>
       </CircleFifths>

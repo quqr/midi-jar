@@ -1,14 +1,11 @@
 import React, { memo } from 'react';
-import classNames from 'classnames/bind';
 
 import { formatSharpsFlats } from 'renderer/helpers/note';
 
 import { Section } from '../types';
 import { CX, CY, SUSPENDED_OFFSET, polar } from '../utils';
 
-import styles from '../CircleFifths.module.scss';
-
-const cx = classNames.bind(styles);
+import '../CircleFifths.css';
 
 type DegreeLabelProps = {
   offset: number;
@@ -35,7 +32,7 @@ const DegreeLabel: React.FC<DegreeLabelProps> = ({
 
   return (
     <text
-      className={cx('degreeLabel')}
+      className="degreeLabel"
       x={COORDS[0]}
       y={COORDS[1]}
       textAnchor={anchor === 'left' ? 'start' : 'end'}

@@ -5,7 +5,7 @@ import { KeyboardKeys } from './types';
 import WhiteNote from './WhiteNote';
 import BlackNote from './BlackNote';
 
-import styles from './classic.module.scss';
+import './classic.css';
 import { KeyboardSizes } from './constants';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 
 const Board: React.FC<Props> = ({ keys, keyboard, sizes }) => (
   <g
-    className={styles.board}
+    className="board"
     transform={`translate(0,${keyboard.label === 'none' ? 0 : sizes.LABEL_HEIGHT})`}
     mask="url(#boardMask)"
   >

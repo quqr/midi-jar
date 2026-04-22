@@ -1,14 +1,9 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import { Icon, NavButton } from 'renderer/components';
 import { fields } from './constants';
-
-import styles from './ChordDictionarySettings.module.scss';
-
-const cx = classnames.bind(styles);
 
 const ChordDictionarySettings: React.FC = () => {
   const { settings, updateSetting } = useSettings();
@@ -126,17 +121,14 @@ const ChordDictionarySettings: React.FC = () => {
         </div>
 
         <div className="form-control w-full">
-          <label
-            htmlFor="hideDisabledChords"
-            className="label cursor-pointer flex-row-reverse justify-between"
-          >
+          <label htmlFor="hideDisabledChords" className="label cursor-pointer justify-between">
             <span className="label-text">
               {t('settings.chordDictionarySettings.hideDisabledChords')}
             </span>
             <input
               id="hideDisabledChords"
               type="checkbox"
-              className="toggle"
+              className="toggle toggle-primary"
               onChange={(e) => updateSetting('chordDictionary.hideDisabled', e.target.checked)}
               checked={settings.chordDictionary.hideDisabled}
             />
@@ -144,20 +136,19 @@ const ChordDictionarySettings: React.FC = () => {
         </div>
 
         <div className="form-control w-full">
-          <label
-            htmlFor="filterChordsInKey"
-            className="label cursor-pointer flex-row-reverse justify-between"
-          >
-            <span className="label-text">
-              {t('settings.chordDictionarySettings.filterChordsInKey')}
-            </span>
-            <span className="label-text-alt">
-              {t('settings.chordDictionarySettings.filterChordsInKeyHint')}
-            </span>
+          <label htmlFor="filterChordsInKey" className="label cursor-pointer justify-between">
+            <div>
+              <span className="label-text">
+                {t('settings.chordDictionarySettings.filterChordsInKey')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.chordDictionarySettings.filterChordsInKeyHint')}
+              </span>
+            </div>
             <input
               id="filterChordsInKey"
               type="checkbox"
-              className="toggle"
+              className="toggle toggle-primary"
               onChange={(e) => updateSetting('chordDictionary.filterInKey', e.target.checked)}
               checked={settings.chordDictionary.filterInKey}
             />
@@ -169,12 +160,9 @@ const ChordDictionarySettings: React.FC = () => {
         <legend className="fieldset-legend">
           {t('settings.chordDictionarySettings.disabledChords')}
         </legend>
-        <ul className="list bg-base-100 shadow-md divide-y divide-base-300">
+        <ul className="list bg-base-100 rounded-box shadow-md">
           {settings.chordDictionary.disabled.map((disabledChord) => (
-            <li
-              key={disabledChord}
-              className={`flex items-center justify-between p-3 ${cx('disabled')}`}
-            >
+            <li key={disabledChord} className="flex items-center justify-between px-4 py-3">
               <span>{disabledChord}</span>
               <div className="join">
                 <NavButton
@@ -186,7 +174,7 @@ const ChordDictionarySettings: React.FC = () => {
                 </NavButton>
                 <button
                   type="button"
-                  className="join-item btn btn-sm btn-neutral"
+                  className="join-item btn btn-sm btn-error"
                   aria-label={t('common.delete')}
                   onClick={() => deleteDisabled(disabledChord)}
                 >
@@ -208,19 +196,18 @@ const ChordDictionarySettings: React.FC = () => {
           {t('settings.chordDictionarySettings.preferredNotation')}
         </legend>
         <div className="form-control w-full">
-          <label
-            htmlFor="defaultNotation"
-            className="label cursor-pointer flex-row-reverse justify-between"
-          >
-            <span className="label-text">
-              {t('settings.chordDictionarySettings.defaultNotation')}
-            </span>
-            <span className="label-text-alt">
-              {t('settings.chordDictionarySettings.defaultNotationHint')}
-            </span>
+          <label htmlFor="defaultNotation" className="label cursor-pointer justify-between">
+            <div>
+              <span className="label-text">
+                {t('settings.chordDictionarySettings.defaultNotation')}
+              </span>
+              <span className="label-text-alt">
+                {t('settings.chordDictionarySettings.defaultNotationHint')}
+              </span>
+            </div>
             <select
               id="defaultNotation"
-              className="select select-bordered w-full"
+              className="select select-bordered w-full max-w-xs"
               value={settings.chordDictionary.defaultNotation}
               onChange={(e) => updateSetting('chordDictionary.defaultNotation', e.target.value)}
             >
@@ -232,16 +219,20 @@ const ChordDictionarySettings: React.FC = () => {
             </select>
           </label>
         </div>
-        <ul className="list bg-base-100 shadow-md divide-y divide-base-300">
+        <ul className="list bg-base-100 rounded-box shadow-md">
           {settings.chordDictionary.aliases.map(([chordType, alias]) => (
-            <li key={chordType} className={`flex items-center justify-between p-3 ${cx('alias')}`}>
+            <li key={chordType} className="flex items-center justify-between px-4 py-3">
               <div className="flex items-center gap-2">
-                <div className={cx('alias-left')}>
-                  <span>{chordType}</span>
+                <div className="flex-1 basis-1/2">
+                  <span className="px-0.5 py-[2px] bg-neutral-300 rounded-sm shadow-[inset_0_1px_2px_0_rgba(14,14,14,0.6)]">
+                    {chordType}
+                  </span>
                 </div>
-                <Icon className={cx('alias-icon')} name="angle-right" />
-                <div className={cx('alias-right')}>
-                  <span>{alias}</span>
+                <Icon className="shrink-0" name="angle-right" />
+                <div className="flex-1 basis-1/2">
+                  <span className="px-0.5 py-[2px] bg-neutral-300 rounded-sm shadow-[inset_0_1px_2px_0_rgba(14,14,14,0.6)]">
+                    {alias}
+                  </span>
                 </div>
               </div>
               <div className="join">
@@ -254,7 +245,7 @@ const ChordDictionarySettings: React.FC = () => {
                 </NavButton>
                 <button
                   type="button"
-                  className="join-item btn btn-sm btn-neutral"
+                  className="join-item btn btn-sm btn-error"
                   aria-label={t('common.delete')}
                   onClick={() => deleteAlias(chordType)}
                 >

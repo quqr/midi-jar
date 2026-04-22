@@ -32,6 +32,7 @@ const ChordDisplayAddModal: React.FC<Props> = ({ open, onCancel, onSave }) => {
             <input
               id="newModuleName"
               type="text"
+              placeholder={t('common.name')}
               className={`input input-bordered w-full ${errors.name ? 'input-error' : ''}`}
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -44,10 +45,9 @@ const ChordDisplayAddModal: React.FC<Props> = ({ open, onCancel, onSave }) => {
           </div>
         </div>
         <div className="modal-action">
-          <button type="button" className="btn btn-ghost btn-neutral" onClick={onCancel}>
+          <button type="button" className="btn btn-ghost" onClick={onCancel}>
             {t('common.cancel')}
           </button>
-          <div className="divider divider-horizontal mx-1" />
           <button type="button" className="btn btn-success" onClick={handleSave}>
             {t('common.add')}
           </button>

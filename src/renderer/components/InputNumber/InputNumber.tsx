@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import useEvent from 'renderer/hooks/useEvent';
@@ -7,10 +6,6 @@ import useEvent from 'renderer/hooks/useEvent';
 import { Icon } from '../Icon';
 
 import { InputNumberProps } from './types';
-
-import styles from './InputNumber.module.scss';
-
-const cx = classNames.bind(styles);
 
 export const InputNumber: React.FC<InputNumberProps> = ({
   className,
@@ -35,7 +30,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
   return (
     <div className="join">
       <input
-        className={cx('base', 'input', 'input-bordered', 'w-full', 'join-item', className)}
+        className={`input input-bordered w-full join-item ${className ?? ''}`}
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         type="number"
@@ -44,7 +39,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
       />
       <button
         type="button"
-        className={cx('decrement', 'btn', 'join-item')}
+        className="btn join-item"
         onClick={decrement}
         aria-label={t('common.decrement')}
       >
@@ -52,7 +47,7 @@ export const InputNumber: React.FC<InputNumberProps> = ({
       </button>
       <button
         type="button"
-        className={cx('increment', 'btn', 'join-item')}
+        className="btn join-item"
         onClick={increment}
         aria-label={t('common.increment')}
       >

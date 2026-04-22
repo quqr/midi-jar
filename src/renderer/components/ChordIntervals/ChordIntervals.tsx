@@ -1,12 +1,15 @@
 import React, { useMemo } from 'react';
-import classnames from 'classnames/bind';
 
 import { ChordIntervalsProps } from './types';
 import { INTERVALS, getPlayedIntervals, isIncludedAs } from './utils';
 
-import styles from './ChordIntervals.module.scss';
-
-const cx = classnames.bind(styles);
+const PLAYED_HEIGHT_MAP: Record<number, string> = {
+  0: 'h-[50%]',
+  1: 'h-[60%]',
+  2: 'h-[70%]',
+  3: 'h-[80%]',
+  4: 'h-[90%]',
+};
 
 export const ChordIntervals: React.FC<ChordIntervalsProps> = ({
   className,
@@ -21,29 +24,44 @@ export const ChordIntervals: React.FC<ChordIntervalsProps> = ({
     [tonic, pitchClasses]
   );
 
+  const hasTargets = targets && targets.length;
+
   return (
-    <div
-      className={cx(
-        'base',
-        { 'base--quizMode': quizMode, 'base--withTargets': targets && targets.length },
-        className
-      )}
-    >
+    <div className={`flex items-center h-[6em] ${className ?? ''}`}>
       {INTERVALS.BASE.map((i, index) => {
         const activeAs = intervals && isIncludedAs(i, intervals);
         const targetAs = targets && isIncludedAs(i, targets);
 
+        const isPlayed = played[index];
+        const playedLevel = Math.min(4, isPlayed);
+
+        let bgColor = 'bg-[#5c5c5c]';
+
+        if (activeAs || targetAs) {
+          if (hasTargets) {
+            if (targetAs && (activeAs || isPlayed)) {
+              bgColor = 'bg-[#127c4f]';
+            } else if (targetAs) {
+              bgColor = quizMode ? 'bg-[#5c5c5c]' : 'bg-[#3567f0]';
+            } else if (activeAs) {
+              bgColor = 'bg-[#3567f0]';
+            } else if (isPlayed) {
+              bgColor = 'bg-[#ac2426]';
+            }
+          } else {
+            bgColor = 'bg-[#3567f0]';
+          }
+        } else if (isPlayed) {
+          bgColor = hasTargets ? 'bg-[#ac2426]' : 'bg-[#3567f0]';
+        }
+
+        const heightClass = PLAYED_HEIGHT_MAP[playedLevel] || 'h-[50%]';
+
         return (
           <div
-            className={cx(
-              'interval',
-              {
-                'interval--active': activeAs,
-                'interval--target': targetAs,
-                'interval--played': played[index],
-              },
-              `interval--played-${Math.min(4, played[index])}`
-            )}
+            className={`flex flex-col text-center items-center justify-center w-[2.5em] text-[0.8em] ${heightClass} bg-[#303030] transition-[height] duration-200 leading-[1em] gap-y-[0.5em] ${bgColor} ${
+              activeAs || targetAs ? 'font-bold' : ''
+            }`}
             key={i}
           >
             {activeAs || targetAs ? (

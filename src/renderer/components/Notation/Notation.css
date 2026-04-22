@@ -1,0 +1,11 @@
+:root {
+  --notation-min-height: 300px;
+  --notation-width: 100%;
+  --notation-overflow: auto;
+}
+
+.base {
+  width: var(--notation-width);
+  min-height: var(--notation-min-height);
+  overflow: var(--notation-overflow);
+}

@@ -1,7 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
 
-import styles from './flat.module.scss';
 import { KeyboardSizes } from './constants';
 
 type NoteProps = {
@@ -26,24 +24,18 @@ const WhiteNote: React.FC<NoteProps> = ({
   isBlack,
 }) => (
   <g
-    className={classNames([
-      styles.note,
-      isBlack ? styles.black : styles.white,
-      `note-${name}`,
-      `chroma-${chroma}`,
-      `midi-${midi}`,
-    ])}
+    className={`note ${isBlack ? 'black' : 'white'} note-${name} chroma-${chroma} midi-${midi}`}
     transform={`translate(${offset},0)`}
   >
-    <rect className={styles.pianoKey} width={sizes.WIDTH} height={sizes.HEIGHT} x="0" y="0" />
+    <rect className="pianoKey" width={sizes.WIDTH} height={sizes.HEIGHT} x="0" y="0" />
     <circle
-      className={styles.pianoTonic}
+      className="pianoTonic"
       cx={sizes.WIDTH / 2}
       cy={sizes.HEIGHT - sizes.INFO_OFFSET}
       r={sizes.TONIC_RADIUS}
     />
     <text
-      className={classNames([styles.pianoInfo, 'pianoInfo'])}
+      className="pianoInfo"
       x={sizes.WIDTH / 2}
       y={sizes.HEIGHT - sizes.INFO_OFFSET}
       textAnchor="middle"
@@ -51,7 +43,7 @@ const WhiteNote: React.FC<NoteProps> = ({
     />
     {keyName !== 'none' && (
       <text
-        className={styles.pianoKeyName}
+        className="pianoKeyName"
         x={sizes.WIDTH / 2}
         y={sizes.HEIGHT - sizes.NAME_OFFSET}
         textAnchor="middle"

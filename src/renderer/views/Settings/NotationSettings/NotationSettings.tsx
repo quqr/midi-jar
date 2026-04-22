@@ -13,10 +13,7 @@ const NotationSettings: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 space-y-6">
       <div className="form-control w-full">
-        <label
-          htmlFor="keySignature"
-          className="label cursor-pointer flex-row-reverse justify-between"
-        >
+        <label htmlFor="keySignature" className="label cursor-pointer justify-between">
           <span className="label-text">{t('settings.notationSettings.keySignature')}</span>
           <InputNote
             id="keySignature"
@@ -29,14 +26,11 @@ const NotationSettings: React.FC = () => {
       </div>
 
       <div className="form-control w-full">
-        <label
-          htmlFor="accidentalsInC"
-          className="label cursor-pointer flex-row-reverse justify-between"
-        >
+        <label htmlFor="accidentalsInC" className="label cursor-pointer justify-between">
           <span className="label-text">{t('settings.notationSettings.accidentalsInC')}</span>
           <select
             id="accidentalsInC"
-            className="select select-bordered w-full"
+            className="select select-bordered w-full max-w-xs"
             onChange={(e) => updateSetting('notation.accidentals', e.target.value)}
             value={settings.notation.accidentals}
             disabled={settings.notation.key !== 'C'}
@@ -51,14 +45,11 @@ const NotationSettings: React.FC = () => {
       </div>
 
       <div className="form-control w-full">
-        <label
-          htmlFor="staffClef"
-          className="label cursor-pointer flex-row-reverse justify-between"
-        >
+        <label htmlFor="staffClef" className="label cursor-pointer justify-between">
           <span className="label-text">{t('settings.notationSettings.staffClef')}</span>
           <select
             id="staffClef"
-            className="select select-bordered w-full"
+            className="select select-bordered w-full max-w-xs"
             onChange={(e) => updateSetting('notation.staffClef', e.target.value)}
             value={settings.notation.staffClef}
           >
@@ -72,7 +63,7 @@ const NotationSettings: React.FC = () => {
       </div>
 
       <div className="form-control w-full">
-        <label htmlFor="staffTranspose" className="label">
+        <label htmlFor="staffTranspose-label" className="label">
           <span className="label-text font-medium">
             {t('settings.notationSettings.staffTranspose')}
           </span>

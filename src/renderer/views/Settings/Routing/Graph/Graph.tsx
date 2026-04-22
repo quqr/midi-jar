@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import classnames from 'classnames/bind';
 import ReactFlow, {
   ReactFlowProvider,
   useReactFlow,
@@ -19,10 +18,6 @@ import OutputNode from './OutputNode';
 import Wire from './Wire';
 
 import { NODE_VERTICAL_SPACING, mapDevicesToNodes, mapWiresToEdges } from './utils';
-
-import styles from './Graph.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   inputs: ApiMidiInput[];
@@ -136,7 +131,7 @@ const Graph: React.FC<Props> = ({ inputs, outputs, wires, onAddRoute, onDeleteRo
   }, [inputs, outputs, wires, limitViewport, handleWireDelete]);
 
   return (
-    <div ref={containerRef} className={cx('base')}>
+    <div ref={containerRef} className="w-full h-full">
       <ReactFlow
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}

@@ -1,20 +1,13 @@
 import React from 'react';
-import classnames from 'classnames';
 
-import styles from './Layout.module.scss';
 import LatencyMonitor from './LatencyMonitor';
 import { QuickChangeKeyToolbar } from '../Settings/NotationSettings';
 
 const BottomBar: React.FC = () => {
   return (
-    <div
-      className={classnames(
-        'flex items-center gap-3 bg-base-200 py-2 px-3 border-t border-base-300 shadow-sm',
-        styles.bottombar
-      )}
-    >
+    <div className="flex items-center gap-3 bg-base-200 py-2 px-4 border-t border-base-300 shadow-sm">
       <QuickChangeKeyToolbar />
-      <div className="divider divider-horizontal" />
+      <div className="divider divider-horizontal mx-2" />
       <LatencyMonitor />
     </div>
   );

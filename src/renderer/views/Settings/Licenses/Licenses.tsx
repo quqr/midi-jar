@@ -1,14 +1,9 @@
 import React, { Fragment, useState } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { Icon } from 'renderer/components';
 
 import ThirdPartyLicenses from '../../../../../ThirdPartyLicenses.json';
-
-import styles from './Licenses.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Package = {
   id: string;
@@ -43,14 +38,14 @@ const Licenses: React.FC = () => {
               }}
             >
               <div className="flex flex-col gap-2 flex-1">
-                <div className={cx('packageName')}>{p.name}</div>
-                <span className={`badge badge-sm ${cx('packageType')}`}>{p.license}</span>
-                <div className={cx('packageVersion')}>{p.version}</div>
+                <div>{p.name}</div>
+                <span className="badge badge-sm">{p.license}</span>
+                <div className="italic">{p.version}</div>
               </div>
               <div className="flex items-center gap-2">
                 {p.url && (
                   <a
-                    className={`btn btn-sm btn-neutral ${cx('packageUrl')}`}
+                    className="btn btn-sm btn-neutral shrink-0"
                     href={p.url}
                     target="_blank"
                     onClick={stopPropagation}
@@ -60,7 +55,7 @@ const Licenses: React.FC = () => {
                     {t('settings.licensesSettings.github')}
                   </a>
                 )}
-                <span className={cx('itemHandle')}>
+                <span className="w-8">
                   {open === p.id ? <Icon name="angle-up" /> : <Icon name="angle-down" />}
                 </span>
               </div>
@@ -72,9 +67,7 @@ const Licenses: React.FC = () => {
             }`}
           >
             <div className="collapse-content">
-              <pre className={cx('packageText')} style={{ padding: '16px' }}>
-                {p.text}
-              </pre>
+              <pre className="text-xs whitespace-pre-wrap m-0 p-4">{p.text}</pre>
             </div>
           </div>
         </Fragment>

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classnames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -9,11 +8,7 @@ import { Icon } from 'renderer/components';
 
 import { ChordDictionarySettings as TChordDictionarySettings } from 'main/types';
 import { ChordSearch } from './ChordSearch';
-
-import styles from './ChordDictionary.module.scss';
 import ChordDictionarySettings from '../Settings/ChordDictionarySettings';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   disableUpdate?: boolean;
@@ -52,11 +47,9 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
 
   return (
     <>
-      <div
-        className={cx('header', 'flex items-center gap-3 py-3 px-4 border-b border-neutral-300')}
-      >
+      <div className="flex items-center gap-3 py-3 px-4 border-b border-neutral-300">
         {!disableUpdate && (
-          <div className={cx('menu', 'dropdown dropdown-bottom')}>
+          <div className="dropdown dropdown-bottom">
             <button type="button" tabIndex={0} className="btn btn-neutral gap-2">
               {`${getGroupLabel(settings.chordDictionary.groupBy)}${
                 settings.chordDictionary.filterInKey ? t('chordDictionary.inKey') : ''
@@ -194,7 +187,7 @@ const ChordDictionaryToolbar: React.FC<Props> = ({ disableUpdate }) => {
           <Icon name="settings" />
         </button>
       </div>
-      <dialog open={settingsOpen} className={cx('base', 'modal modal-bottom sm:modal-middle')}>
+      <dialog open={settingsOpen} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box max-w-4xl">
           <form method="dialog">
             <button

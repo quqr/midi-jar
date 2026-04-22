@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useWindowState } from 'renderer/contexts/WindowState';
@@ -7,11 +6,7 @@ import { useWindowState } from 'renderer/contexts/WindowState';
 import About from 'renderer/views/Settings/About';
 
 import TopBar from './TopBar';
-
-import styles from './Layout.module.scss';
 import BottomBar from './BottomBar';
-
-const cx = classnames.bind(styles);
 
 const Layout: React.FC = () => {
   const { windowState, updateInfo, dismissChangelog, dismissUpdate } = useWindowState();
@@ -26,12 +21,12 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div className={cx('base')}>
+    <div className="flex flex-col w-full h-full">
       <TopBar />
-      <div className={cx('content')}>
+      <div className="relative flex flex-col w-full h-full p-2 overflow-auto scroll-smooth">
         <Outlet />
       </div>
-      <dialog className={cx('modal', { 'modal-open': !windowState.changelogDismissed })}>
+      <dialog className={`modal ${!windowState.changelogDismissed ? 'modal-open' : ''}`}>
         <div className="modal-box w-11/12 max-w-5xl">
           <h3 className="font-bold text-lg">{t('layout.midiJar')}</h3>
           <div className="py-4">
@@ -52,7 +47,7 @@ const Layout: React.FC = () => {
         </form>
       </dialog>
       {!!updateInfo && (
-        <dialog className={cx('modal', { 'modal-open': !windowState.updateDismissed })}>
+        <dialog className={`modal ${!windowState.updateDismissed ? 'modal-open' : ''}`}>
           <div className="modal-box w-11/12 max-w-sm">
             <h3 className="font-bold text-lg">{t('layout.updateAvailable')}</h3>
             <div className="py-4">{t('layout.updateMessage', { version: updateInfo.version })}</div>

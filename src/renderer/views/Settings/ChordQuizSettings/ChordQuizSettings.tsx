@@ -1,15 +1,10 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { useSettings } from 'renderer/contexts/Settings';
 import { Icon, ScrollContainer } from 'renderer/components';
 
 import { chordsByComplexity, fields } from './constants';
-
-import styles from './ChordQuizSettings.module.scss';
-
-const cx = classnames.bind(styles);
 
 const ChordQuizSettings: React.FC = () => {
   const { settings, updateSetting, resetSettings } = useSettings();
@@ -28,7 +23,7 @@ const ChordQuizSettings: React.FC = () => {
             </label>
             <select
               id="chordQuizMode"
-              className="select select-bordered w-full"
+              className="select select-bordered w-full max-w-xs"
               onChange={(e) => updateSetting('chordQuiz.mode', e.target.value)}
               value={settings.chordQuiz.mode}
             >
@@ -53,7 +48,7 @@ const ChordQuizSettings: React.FC = () => {
             </label>
             <select
               id="chordQuizDifficulty"
-              className="select select-bordered w-full"
+              className="select select-bordered w-full max-w-xs"
               onChange={(e) => updateSetting('chordQuiz.difficulty', Number(e.target.value))}
               value={`${settings.chordQuiz.difficulty}`}
             >
@@ -65,14 +60,14 @@ const ChordQuizSettings: React.FC = () => {
             </select>
           </div>
 
-          <div className={cx('chordList')}>
+          <div className="flex flex-row flex-wrap items-center justify-center gap-[3px]">
             {settings.chordQuiz.difficulty > 0 && (
-              <span className={cx('previousLevel')}>
+              <span className="bg-neutral-300 px-1 py-0.5 rounded-sm">
                 {t('settings.chordQuizSettings.previousLevel')}
               </span>
             )}
             {chordsByComplexity[settings.chordQuiz.difficulty]?.map((chord: string) => (
-              <span className={cx('chord')} key={chord}>
+              <span className="bg-neutral-300 px-1 py-0.5 rounded-sm" key={chord}>
                 {chord}
               </span>
             ))}
@@ -110,18 +105,17 @@ const ChordQuizSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="chordQuizGamification"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">{t('settings.chordQuizSettings.gamification')}</span>
-              <span className="label-text-alt">
-                {t('settings.chordQuizSettings.gamificationHint')}
-              </span>
+            <label htmlFor="chordQuizGamification" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">{t('settings.chordQuizSettings.gamification')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordQuizSettings.gamificationHint')}
+                </span>
+              </div>
               <input
                 id="chordQuizGamification"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('chordQuiz.gamification', e.target.checked)}
                 checked={settings.chordQuiz.gamification}
               />
@@ -131,15 +125,17 @@ const ChordQuizSettings: React.FC = () => {
           <div className="form-control w-full">
             <label
               htmlFor="chordQuizChordNotation"
-              className="label cursor-pointer flex-row-reverse justify-between"
+              className="label cursor-pointer justify-between"
             >
-              <span className="label-text">{t('settings.chordQuizSettings.chordNotation')}</span>
-              <span className="label-text-alt">
-                {t('settings.chordQuizSettings.chordNotationHint')}
-              </span>
+              <div>
+                <span className="label-text">{t('settings.chordQuizSettings.chordNotation')}</span>
+                <span className="label-text-alt">
+                  {t('settings.chordQuizSettings.chordNotationHint')}
+                </span>
+              </div>
               <select
                 id="chordQuizChordNotation"
-                className="select select-bordered w-full"
+                className="select select-bordered w-full max-w-xs"
                 value={settings.chordQuiz.chordNotation}
                 onChange={(e) => updateSetting('chordQuiz.chordNotation', e.target.value)}
               >
@@ -155,16 +151,20 @@ const ChordQuizSettings: React.FC = () => {
           <div className="form-control w-full">
             <label
               htmlFor="chordQuizDisplayReaction"
-              className="label cursor-pointer flex-row-reverse justify-between"
+              className="label cursor-pointer justify-between"
             >
-              <span className="label-text">{t('settings.chordQuizSettings.displayReaction')}</span>
-              <span className="label-text-alt">
-                {t('settings.chordQuizSettings.displayReactionHint')}
-              </span>
+              <div>
+                <span className="label-text">
+                  {t('settings.chordQuizSettings.displayReaction')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordQuizSettings.displayReactionHint')}
+                </span>
+              </div>
               <input
                 id="chordQuizDisplayReaction"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('chordQuiz.displayReaction', e.target.checked)}
                 checked={settings.chordQuiz.displayReaction}
               />
@@ -174,16 +174,20 @@ const ChordQuizSettings: React.FC = () => {
           <div className="form-control w-full">
             <label
               htmlFor="chordQuizDisplayChordName"
-              className="label cursor-pointer flex-row-reverse justify-between"
+              className="label cursor-pointer justify-between"
             >
-              <span className="label-text">{t('settings.chordQuizSettings.displayChordName')}</span>
-              <span className="label-text-alt">
-                {t('settings.chordQuizSettings.displayChordNameHint')}
-              </span>
+              <div>
+                <span className="label-text">
+                  {t('settings.chordQuizSettings.displayChordName')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordQuizSettings.displayChordNameHint')}
+                </span>
+              </div>
               <input
                 id="chordQuizDisplayChordName"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('chordQuiz.displayName', e.target.checked)}
                 checked={settings.chordQuiz.displayName}
               />
@@ -193,16 +197,20 @@ const ChordQuizSettings: React.FC = () => {
           <div className="form-control w-full">
             <label
               htmlFor="chordQuizDisplayIntervals"
-              className="label cursor-pointer flex-row-reverse justify-between"
+              className="label cursor-pointer justify-between"
             >
-              <span className="label-text">{t('settings.chordQuizSettings.displayIntervals')}</span>
-              <span className="label-text-alt">
-                {t('settings.chordQuizSettings.displayIntervalsHint')}
-              </span>
+              <div>
+                <span className="label-text">
+                  {t('settings.chordQuizSettings.displayIntervals')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.chordQuizSettings.displayIntervalsHint')}
+                </span>
+              </div>
               <input
                 id="chordQuizDisplayIntervals"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('chordQuiz.displayIntervals', e.target.checked)}
                 checked={settings.chordQuiz.displayIntervals}
               />

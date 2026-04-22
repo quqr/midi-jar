@@ -16,20 +16,19 @@ const CircleOfFifthsSettings: React.FC = () => {
       <ScrollContainer className="p-4">
         <div className="max-w-7xl mx-auto px-4 space-y-4">
           <div className="form-control w-full">
-            <label
-              htmlFor="displayMajor"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayMajor')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayMajorHint')}
-              </span>
+            <label htmlFor="displayMajor" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayMajor')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayMajorHint')}
+                </span>
+              </div>
               <input
                 id="displayMajor"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displayMajor', e.target.checked)}
                 checked={settings.circleOfFifths.displayMajor}
               />
@@ -37,20 +36,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayMinor"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayMinor')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayMinorHint')}
-              </span>
+            <label htmlFor="displayMinor" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayMinor')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayMinorHint')}
+                </span>
+              </div>
               <input
                 id="displayMinor"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displayMinor', e.target.checked)}
                 checked={settings.circleOfFifths.displayMinor}
               />
@@ -70,7 +68,7 @@ const CircleOfFifthsSettings: React.FC = () => {
             </label>
             <select
               id="mainScale"
-              className="select select-bordered w-full"
+              className="select select-bordered w-full max-w-xs"
               onChange={(e) => updateSetting('circleOfFifths.scale', e.target.value)}
               value={settings.circleOfFifths.scale}
               disabled={
@@ -86,20 +84,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayDiminished"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayDiminished')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayDiminishedHint')}
-              </span>
+            <label htmlFor="displayDiminished" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayDiminished')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayDiminishedHint')}
+                </span>
+              </div>
               <input
                 id="displayDiminished"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) =>
                   updateSetting('circleOfFifths.displayDiminished', e.target.checked)
                 }
@@ -109,20 +106,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayDominants"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayDominantChords')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayDominantChordsHint')}
-              </span>
+            <label htmlFor="displayDominants" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayDominantChords')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayDominantChordsHint')}
+                </span>
+              </div>
               <input
                 id="displayDominants"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displayDominants', e.target.checked)}
                 checked={settings.circleOfFifths.displayDominants}
               />
@@ -130,20 +126,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displaySuspended"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displaySuspendedChords')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displaySuspendedChordsHint')}
-              </span>
+            <label htmlFor="displaySuspended" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displaySuspendedChords')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displaySuspendedChordsHint')}
+                </span>
+              </div>
               <input
                 id="displaySuspended"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displaySuspended', e.target.checked)}
                 checked={settings.circleOfFifths.displaySuspended}
               />
@@ -151,20 +146,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayAlterations"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayAlterations')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayAlterationsHint')}
-              </span>
+            <label htmlFor="displayAlterations" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayAlterations')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayAlterationsHint')}
+                </span>
+              </div>
               <input
                 id="displayAlterations"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) =>
                   updateSetting('circleOfFifths.displayAlterations', e.target.checked)
                 }
@@ -174,20 +168,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayModes"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayModes')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayModesHint')}
-              </span>
+            <label htmlFor="displayModes" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayModes')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayModesHint')}
+                </span>
+              </div>
               <input
                 id="displayModes"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displayModes', e.target.checked)}
                 checked={settings.circleOfFifths.displayModes}
               />
@@ -195,20 +188,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayDegrees"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayDegrees')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayDegreesHint')}
-              </span>
+            <label htmlFor="displayDegrees" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayDegrees')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayDegreesHint')}
+                </span>
+              </div>
               <input
                 id="displayDegrees"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.displayDegrees', e.target.checked)}
                 checked={settings.circleOfFifths.displayDegrees}
               />
@@ -216,20 +208,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="displayDegreeLabels"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.displayDegreeLabels')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.displayDegreeLabelsHint')}
-              </span>
+            <label htmlFor="displayDegreeLabels" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.displayDegreeLabels')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.displayDegreeLabelsHint')}
+                </span>
+              </div>
               <input
                 id="displayDegreeLabels"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) =>
                   updateSetting('circleOfFifths.displayDegreeLabels', e.target.checked)
                 }
@@ -251,7 +242,7 @@ const CircleOfFifthsSettings: React.FC = () => {
             </label>
             <select
               id="highlightSectors"
-              className="select select-bordered w-full"
+              className="select select-bordered w-full max-w-xs"
               onChange={(e) => updateSetting('circleOfFifths.highlightSector', e.target.value)}
               value={settings.circleOfFifths.highlightSector}
             >
@@ -264,20 +255,19 @@ const CircleOfFifthsSettings: React.FC = () => {
           </div>
 
           <div className="form-control w-full">
-            <label
-              htmlFor="highlightInScale"
-              className="label cursor-pointer flex-row-reverse justify-between"
-            >
-              <span className="label-text">
-                {t('settings.circleOfFifthsSettings.highlightSectorsInKey')}
-              </span>
-              <span className="label-text-alt">
-                {t('settings.circleOfFifthsSettings.highlightSectorsInKeyHint')}
-              </span>
+            <label htmlFor="highlightInScale" className="label cursor-pointer justify-between">
+              <div>
+                <span className="label-text">
+                  {t('settings.circleOfFifthsSettings.highlightSectorsInKey')}
+                </span>
+                <span className="label-text-alt">
+                  {t('settings.circleOfFifthsSettings.highlightSectorsInKeyHint')}
+                </span>
+              </div>
               <input
                 id="highlightInScale"
                 type="checkbox"
-                className="toggle"
+                className="toggle toggle-primary"
                 onChange={(e) => updateSetting('circleOfFifths.highlightInScale', e.target.checked)}
                 checked={settings.circleOfFifths.highlightInScale}
               />

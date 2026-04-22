@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { Section, CircleOfFifthsConfig } from '../types';
 import {
@@ -11,10 +10,6 @@ import {
   drawArc,
   drawLineSeparator,
 } from '../utils';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type ModesProps = {
   section: Section;
@@ -38,13 +33,13 @@ const Modes: React.FC<ModesProps> = ({ section, config }) => {
   const scaleOffset = scale === 'minor' ? -3 : 0;
 
   return (
-    <g className={cx('modes')}>
+    <g className="modes">
       {MODE_OFFSETS.map((offset, index) => {
         return (
-          <g className={cx('mode')} key={index}>
+          <g className="mode" key={index}>
             <path
               id={`mode_${index}_followpath`}
-              className={cx('followPath')}
+              className="followPath"
               d={drawArc(
                 CX,
                 CY,
@@ -54,7 +49,7 @@ const Modes: React.FC<ModesProps> = ({ section, config }) => {
               )}
             />
             <path
-              className={cx('modeSeparator')}
+              className="modeSeparator"
               d={drawLineSeparator(
                 CX,
                 CY,

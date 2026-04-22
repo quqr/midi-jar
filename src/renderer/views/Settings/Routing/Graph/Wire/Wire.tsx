@@ -1,14 +1,9 @@
 import React, { useMemo } from 'react';
-import classnames from 'classnames/bind';
 import { getBezierPath, EdgeProps } from 'react-flow-renderer';
 
 import { ApiMidiWire } from 'main/types/api';
 
 import { Icon } from 'renderer/components';
-
-import styles from './Wire.module.scss';
-
-const cx = classnames.bind(styles);
 
 const FOREIGN_OBJECT_SIZE = 32;
 
@@ -49,7 +44,7 @@ const CustomEdge: React.FC<Props> = ({
 
   return (
     <>
-      <path id={id} style={style} className={cx('react-flow__edge-path', 'path')} d={edgePath} />
+      <path id={id} style={style} className="react-flow__edge-path stroke-[2]" d={edgePath} />
       <foreignObject
         width={FOREIGN_OBJECT_SIZE}
         height={FOREIGN_OBJECT_SIZE}
@@ -57,8 +52,12 @@ const CustomEdge: React.FC<Props> = ({
         y={positionY - FOREIGN_OBJECT_SIZE / 2}
         requiredExtensions="http://www.w3.org/1999/xhtml"
       >
-        <div className={cx('container')}>
-          <button type="button" className={cx('button')} onClick={onClick}>
+        <div className="w-full h-full bg-transparent flex justify-center items-center">
+          <button
+            type="button"
+            className="appearance-none w-[20px] h-[20px] bg-[#5c5c5c] border-none text-white cursor-pointer rounded-full text-[8px] leading-1 z-[10] transition-all duration-300 ease-in-out hover:bg-[#d89845] hover:shadow-[0_0_6px_2px_rgba(216,152,69,0.4)]"
+            onClick={onClick}
+          >
             <Icon name="cross" />
           </button>
         </div>

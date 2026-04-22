@@ -1,5 +1,4 @@
 import React, { memo, useCallback } from 'react';
-import classnames from 'classnames/bind';
 import { Chord } from '@tonaljs/chord';
 
 import { KeySignatureConfig } from 'renderer/helpers/note';
@@ -17,11 +16,7 @@ import {
   isMainSection,
 } from '../utils';
 
-import styles from '../CircleFifths.module.scss';
-
 import SectionLabel from './Label';
-
-const cx = classnames.bind(styles);
 
 type SectionMajorProps = {
   label: string[];
@@ -54,20 +49,19 @@ const SectionMajor: React.FC<SectionMajorProps> = ({
 
   return (
     <g
-      className={cx('key', 'key--major', {
-        'key--isMainSection': isMainSection('major', config),
-        'key--selected': value === current,
-        'key--isInScale': config?.highlightInScale && isInScale(current, value),
-        'key--active':
-          config.highlightSector === 'notes'
-            ? isNotePressed(label[0], notes)
-            : isChordPressed(label[0], 'major', chord, config),
-        'key--multiple': label.length > 1,
-      })}
+      className={`key key--major ${isMainSection('major', config) ? 'key--isMainSection' : ''} ${
+        value === current ? 'key--selected' : ''
+      } ${config?.highlightInScale && isInScale(current, value) ? 'key--isInScale' : ''} ${
+        config.highlightSector === 'notes'
+          ? isNotePressed(label[0], notes)
+          : isChordPressed(label[0], 'major', chord, config)
+          ? 'key--active'
+          : ''
+      } ${label.length > 1 ? 'key--multiple' : ''}`}
       onClick={handleClick}
     >
       <path
-        className={cx('sector')}
+        className="sector"
         d={drawSection(
           CX,
           CY,
@@ -79,7 +73,7 @@ const SectionMajor: React.FC<SectionMajorProps> = ({
         strokeWidth="0.5"
       />
       <circle
-        className={cx('badge')}
+        className="badge"
         cx={polar(CX, CY, section.middle, value / 12)[0]}
         cy={polar(CX, CY, section.middle, value / 12)[1]}
         r="3.6"

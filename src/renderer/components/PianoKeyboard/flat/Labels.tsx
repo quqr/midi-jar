@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { KeyboardKeys } from './types';
 import { KeyboardSizes } from './constants';
 
-import styles from './flat.module.scss';
+import './flat.css';
 
 type Props = {
   keys: KeyboardKeys;
@@ -12,11 +12,11 @@ type Props = {
 };
 
 const Board: React.FC<Props> = ({ keys, sizes }) => (
-  <g className={styles.labels} transform="translate(0,0)">
+  <g className="labels" transform="translate(0,0)">
     {keys.notes.map(({ note, labelOffset }) => (
       <text
         key={note.midi}
-        className={classNames([styles.pianoLabel, `label-${note.midi}`])}
+        className={classNames(['pianoLabel', `label-${note.midi}`])}
         x={labelOffset}
         y={sizes.LABEL_HEIGHT - sizes.LABEL_OFFSET}
         textAnchor="middle"

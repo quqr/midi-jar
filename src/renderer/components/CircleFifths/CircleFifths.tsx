@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react';
-import classnames from 'classnames/bind';
 
 import { debounce } from 'renderer/helpers/debounce';
 import { getKeySignature } from 'renderer/helpers/note';
@@ -32,9 +31,6 @@ import {
 } from './Sections';
 
 import { CircleFifthsProps } from './types';
-import styles from './CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 const defaultConfig = {
   scale: 'major' as const,
@@ -122,17 +118,21 @@ export const CircleFifths: React.FC<CircleFifthsProps> = ({
   }, [resize, debouncedResize]);
 
   return (
-    <div className={cx('root', { 'root--interactive': !!onChange }, className)}>
+    <div
+      className={`flex h-full w-full items-center justify-center overflow-hidden ${
+        onChange ? 'root--interactive' : ''
+      } ${className ?? ''}`}
+    >
       <svg
         ref={ref}
-        className={cx('circle')}
+        className="flex-shrink-0 will-change-[contents]"
         style={{ width: `${size}px`, height: `${size}px` }}
         viewBox={`0 0 ${SIZE} ${SIZE}`}
       >
         {size && (
           <>
             <g
-              className={cx('wheel', isRotating && 'wheel--isRotating')}
+              className={`fill-[#303030] ${isRotating ? '[transition:transform_0.7s_ease]' : ''}`}
               transform={`rotate(${-rotation}, ${CX}, ${CY})`}
               onTransitionEnd={handleTransitionEnd}
             >
@@ -290,7 +290,9 @@ export const CircleFifths: React.FC<CircleFifthsProps> = ({
           </>
         )}
       </svg>
-      <div className={cx('content')}>{children}</div>
+      <div className="absolute bottom-0 left-0 right-0 top-0 z-[-1] flex flex-row items-center justify-center">
+        {children}
+      </div>
     </div>
   );
 };

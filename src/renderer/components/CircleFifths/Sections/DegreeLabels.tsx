@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { range } from 'renderer/helpers';
 
@@ -7,10 +6,6 @@ import { Sections, CircleOfFifthsConfig } from '../types';
 import { getDegreePosition } from '../utils';
 
 import DegreeLabel from './DegreeLabel';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type DegreeLabelsProps = {
   scale: 'major' | 'minor';
@@ -20,7 +15,7 @@ type DegreeLabelsProps = {
 
 const DegreeLabels: React.FC<DegreeLabelsProps> = ({ scale, sections, config }) => {
   return (
-    <g className={cx('degreeLabels')}>
+    <g className="degreeLabels pointer-events-none">
       {range(0, 6).map((degree) => {
         const position = getDegreePosition(scale, degree, config);
 

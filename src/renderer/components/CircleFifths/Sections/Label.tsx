@@ -1,11 +1,6 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { CX, CY, polar, cPolar, isKeySelected, formatLabel } from '../utils';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type SectionLabelProps = {
   value: number;
@@ -32,9 +27,7 @@ const SectionLabel: React.FC<SectionLabelProps> = ({
     return (
       <>
         <text
-          className={cx('name', {
-            'name--selected': isKeySelected(value, 0, tonic),
-          })}
+          className={`name ${isKeySelected(value, 0, tonic) ? 'name--selected' : ''}`}
           x={polar(CX, CY, radius, value / 12)[0]}
           y={polar(CX, CY, radius, value / 12)[1]}
           textAnchor="middle"
@@ -46,9 +39,7 @@ const SectionLabel: React.FC<SectionLabelProps> = ({
           {formatLabel(labels[0], quality)}
         </text>
         <text
-          className={cx('name', {
-            'name--selected': isKeySelected(value, 1, tonic),
-          })}
+          className={`name ${isKeySelected(value, 1, tonic) ? 'name--selected' : ''}`}
           x={polar(CX, CY, radius, value / 12)[0]}
           y={polar(CX, CY, radius, value / 12)[1]}
           textAnchor="middle"
@@ -65,7 +56,7 @@ const SectionLabel: React.FC<SectionLabelProps> = ({
 
   return (
     <text
-      className={cx('name')}
+      className="name"
       x={polar(CX, CY, radius, value / 12)[0]}
       y={polar(CX, CY, radius, value / 12)[1]}
       textAnchor="middle"

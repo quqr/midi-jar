@@ -1,5 +1,4 @@
 import React, { memo, useCallback } from 'react';
-import classnames from 'classnames/bind';
 import { Chord } from '@tonaljs/chord';
 
 import { KeySignatureConfig } from 'renderer/helpers/note';
@@ -17,10 +16,6 @@ import {
 } from '../utils';
 
 import SectionSusLabel from './SusLabel';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type SectionSuspendedProps = {
   value: number;
@@ -52,15 +47,13 @@ const SectionSuspended: React.FC<SectionSuspendedProps> = ({
 
   return (
     <g
-      className={cx('key', 'key--suspended', {
-        'key--selected': value === current,
-        'key--isInScale': isSusInScale(current, value, quality, sectionType),
-        'key--active': isChordPressed(label[0], quality, chord, config),
-      })}
+      className={`key key--suspended ${value === current ? 'key--selected' : ''} ${
+        isSusInScale(current, value, quality, sectionType) ? 'key--isInScale' : ''
+      } ${isChordPressed(label[0], quality, chord, config) ? 'key--active' : ''}`}
       onClick={handleClick}
     >
       <path
-        className={cx('sector')}
+        className="sector"
         d={drawSection(
           CX,
           CY,

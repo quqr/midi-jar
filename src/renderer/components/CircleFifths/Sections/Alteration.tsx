@@ -1,14 +1,9 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { formatSharpsFlats } from 'renderer/helpers/note';
 
 import { Section } from '../types';
 import { CX, CY, drawArc, isKeySelected } from '../utils';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type SectionAlterationProps = {
   value: number;
@@ -30,23 +25,17 @@ const SectionAlteration: React.FC<SectionAlterationProps> = ({
   const renderFollowPath = (
     <path
       id={`alteration_${value}_followpath`}
-      className={cx('followPath')}
+      className="followPath"
       d={drawArc(CX, CY, section.middle, (value - 0.5) / 12, (value + 0.5) / 12)}
     />
   );
 
   if (labels.length > 1) {
     return (
-      <g
-        className={cx('alterations', {
-          'alterations--selected': value === current,
-        })}
-      >
+      <g className={`alterations ${value === current ? 'alterations--selected' : ''}`}>
         {renderFollowPath}
         <text
-          className={cx({
-            'alteration--selected': isKeySelected(value, 0, tonic),
-          })}
+          className={`${isKeySelected(value, 0, tonic) ? 'alteration--selected' : ''}`}
           fontSize="3"
           textAnchor="middle"
         >
@@ -55,9 +44,7 @@ const SectionAlteration: React.FC<SectionAlterationProps> = ({
           </textPath>
         </text>
         <text
-          className={cx({
-            'alteration--selected': isKeySelected(value, 1, tonic),
-          })}
+          className={`${isKeySelected(value, 1, tonic) ? 'alteration--selected' : ''}`}
           fontSize="3"
           textAnchor="middle"
         >
@@ -70,13 +57,9 @@ const SectionAlteration: React.FC<SectionAlterationProps> = ({
   }
 
   return (
-    <g
-      className={cx('alterations', {
-        'alterations--selected': value === current,
-      })}
-    >
+    <g className={`alterations ${value === current ? 'alterations--selected' : ''}`}>
       {renderFollowPath}
-      <text className={cx('alteration--selected')} fontSize="3" textAnchor="middle">
+      <text className="alteration--selected" fontSize="3" textAnchor="middle">
         <textPath href={`#alteration_${value}_followpath`} startOffset="50%">
           {formatSharpsFlats(labels[0])}
         </textPath>

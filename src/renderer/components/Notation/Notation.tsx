@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 import {
   Accidental,
@@ -17,9 +16,7 @@ import { formatSharpsFlats } from 'renderer/helpers/note';
 import { NotationProps } from './types';
 import { getTransposedNotes, getVoice } from './utils';
 
-import styles from './Notation.module.scss';
-
-const cx = classnames.bind(styles);
+import './Notation.css';
 
 const NOTATION_HEIGHT = 300;
 const STAVE_NOTE_WIDTH = 200;
@@ -147,7 +144,7 @@ export const Notation: React.FC<NotationProps> = ({
     }
   }, [notes, staffClef, keySignature, t]);
 
-  return <div id={id} ref={container} className={cx('base', className)} />;
+  return <div id={id} ref={container} className={`base ${className || ''}`} />;
 };
 
 Notation.defaultProps = {

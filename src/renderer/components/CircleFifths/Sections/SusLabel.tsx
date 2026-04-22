@@ -1,14 +1,9 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 
 import { KeySignatureConfig, getNoteInKeySignature } from 'renderer/helpers/note';
 
 import { Section } from '../types';
 import { CX, CY, SUSPENDED_OFFSET, polar, cPolar, formatLabel } from '../utils';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type SectionSusLabelProps = {
   value: number;
@@ -35,7 +30,7 @@ const SectionSusLabel: React.FC<SectionSusLabelProps> = ({
 
   return (
     <text
-      className={cx('name', 'name--sus')}
+      className="name name--sus"
       x={polar(CX, CY, section.middle, angle)[0]}
       y={polar(CX, CY, section.middle, angle)[1]}
       textAnchor="middle"

@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { NavLink, Params, useMatches } from 'react-router-dom';
 
 import { Icon } from 'renderer/components';
-import styles from './Layout.module.scss';
 
 type CallableTitle = (params: Params) => string | React.ReactNode;
 
@@ -20,8 +18,6 @@ type MatchWithHandle = {
     hasSettings?: boolean;
   };
 };
-
-const cx = classnames.bind(styles);
 
 const AppBreadcrumb: React.FC = () => {
   const matches = useMatches() as unknown as MatchWithHandle[];
@@ -51,18 +47,34 @@ const AppBreadcrumb: React.FC = () => {
 
   return (
     <div className="breadcrumbs text-sm">
-      <ul>
+      <ul className="gap-2">
         {crumbs.map(({ title, icon, path, hasSettings }, index) => (
           <Fragment key={index}>
             <li>
-              <NavLink to={path} aria-label={typeof title === 'string' ? title : ''}>
-                {icon}
-                <span className={cx('label')}>{title}</span>
+              <NavLink
+                to={path}
+                aria-label={typeof title === 'string' ? title : ''}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-1.5 rounded-md transition-all duration-200 ease-in-out
+                   text-base-content/70 hover:text-base-content hover:bg-base-300/50
+                   ${isActive ? 'active bg-base-300/60 text-base-content font-semibold' : ''}`
+                }
+              >
+                {icon && <span className="flex-shrink-0">{icon}</span>}
+                <span className="flex-1 truncate">{title}</span>
               </NavLink>
             </li>
             {hasSettings && (
               <li>
-                <NavLink to={`${path}/settings`} aria-label={t('common.settings')}>
+                <NavLink
+                  to={`${path}/settings`}
+                  aria-label={t('common.settings')}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1.5 rounded-md transition-all duration-200 ease-in-out
+                     text-base-content/70 hover:text-base-content hover:bg-base-300/50
+                     ${isActive ? 'active bg-base-300/60 text-base-content font-semibold' : ''}`
+                  }
+                >
                   <Icon name="settings" />
                 </NavLink>
               </li>

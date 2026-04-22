@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { ChordDictionarySettings } from 'main/types';
@@ -8,10 +7,6 @@ import { KeySignatureConfig } from 'renderer/helpers';
 
 import { Icon } from 'renderer/components';
 import { ChordGroup, ChordItem, getChordGroups } from './utils';
-
-import styles from './ChordDictionary.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   keySignature: KeySignatureConfig;
@@ -53,13 +48,15 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
     return item.type === 'item' ? (
       <li
         key={item.chordType.aliases[0]}
-        className={cx('item', { 'item--isDisabled': item.isDisabled })}
+        className={`transition-colors duration-150 hover:bg-white/5 ${
+          item.isDisabled ? 'opacity-50' : ''
+        }`}
       >
         <button
           type="button"
-          className={cx('btn btn-ghost btn-block justify-start', {
-            'btn-active': selected === item.chordType.aliases[0],
-          })}
+          className={`btn btn-ghost btn-block justify-start ${
+            selected === item.chordType.aliases[0] ? 'btn-active' : ''
+          }`}
           onClick={() => onSelect(item.chordType.aliases[0])}
           title={item.chordType.aliases[0]}
         >
@@ -68,9 +65,9 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
         </button>
       </li>
     ) : (
-      <li key={item.value} className={cx('group')}>
+      <li key={item.value}>
         <details open>
-          <summary className="font-semibold px-3 py-2 sticky top-0 bg-base-100 z-10">
+          <summary className="font-semibold px-3 py-2 sticky top-0 bg-base-100 z-10 transition-colors duration-150 hover:bg-white/5">
             {item.label}
           </summary>
           <ul className="pl-2">{item.items.map((i) => renderTreeViewGroup(i))}</ul>
@@ -80,7 +77,7 @@ const ChordDictionaryChordMenu: React.FC<Props> = ({
   };
 
   return (
-    <nav className={cx('chordnav')} aria-label={t('chordDictionary.chordTypesNavigation')}>
+    <nav className="h-full" aria-label={t('chordDictionary.chordTypesNavigation')}>
       <ul>{groups.map((item) => renderTreeViewGroup(item))}</ul>
     </nav>
   );

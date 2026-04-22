@@ -45,7 +45,7 @@ export const NavTab = React.forwardRef<HTMLAnchorElement, LinkProps & NavTabProp
 
     return (
       <Link
-        className={`tab ${isActive ? 'tab-active' : ''}`}
+        className={`tab transition-all duration-200 ease-in-out ${isActive ? 'tab-active' : ''}`}
         aria-current={ariaCurrent}
         ref={ref}
         to={to}

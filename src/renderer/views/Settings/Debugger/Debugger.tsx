@@ -1,5 +1,4 @@
 import React, { useRef, useCallback, useState } from 'react';
-import classnames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { MidiMessage } from 'main/types';
@@ -10,10 +9,6 @@ import { Icon } from 'renderer/components';
 
 import { formatMidiMessage } from './utils';
 import { MIDI_CLOCK_CMD, MIDI_SYSEX_CMD } from './constants';
-
-import styles from './Debugger.module.scss';
-
-const cx = classnames.bind(styles);
 
 const Debugger: React.FC = () => {
   const [displayTimingClock, setDisplayTimingClock] = useState(false);
@@ -71,22 +66,29 @@ const Debugger: React.FC = () => {
   useMidiMessages(onMessages);
 
   return (
-    <div className={cx('base')}>
-      <div className={cx('toolbar')}>
+    <div className="flex flex-col h-full overflow-hidden gap-1">
+      <div className="flex items-center gap-2 px-4 py-2 bg-base-100 shadow-sm border-b border-base-content/10">
         <button
           type="button"
-          className={`btn ${displayTimingClock ? 'btn-active' : ''} btn-sm`}
+          className={`btn btn-sm btn-primary ${displayTimingClock ? 'btn-active' : ''}`}
           onClick={toggleTimingClock}
         >
           <Icon name="clock" />
           {t('settings.debuggerSettings.midiClock')}
         </button>
       </div>
-      <div className={cx('container')}>
-        <pre ref={preElementRef} className={cx('output')} />
+      <div className="flex flex-grow flex-shrink overflow-hidden p-4">
+        <pre
+          ref={preElementRef}
+          className="user-select-text flex-grow flex-shrink overflow-auto m-0 p-4 border border-base-content/10 rounded-lg bg-base-200 text-sm leading-snug tracking-[-0.01em] shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.06)] transition-[border-color] duration-150"
+          style={{
+            fontFamily:
+              "'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
+          }}
+        />
       </div>
-      <div className={cx('footer')}>
-        <button type="button" className="btn btn-neutral btn-sm" onClick={clearMessages}>
+      <div className="flex items-center gap-2 px-4 py-2 bg-base-100 shadow-[0_-2px_8px_rgba(0,0,0,0.15)] border-t border-base-content/10">
+        <button type="button" className="btn btn-error btn-sm" onClick={clearMessages}>
           <Icon name="trash" />
           {t('settings.debuggerSettings.clearMessages')}
         </button>

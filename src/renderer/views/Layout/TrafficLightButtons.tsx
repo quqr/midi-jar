@@ -23,10 +23,10 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={classnames('join', className)}>
+    <div className={classnames('flex items-center gap-2', className)}>
       <button
         type="button"
-        className="join-item btn btn-warning btn-ghost btn-sm"
+        className="btn btn-warning btn-outline btn-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
         aria-label={t('layout.minimize')}
         onClick={handleEvent(minimize)}
       >
@@ -35,7 +35,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
       {windowState.maximized ? (
         <button
           type="button"
-          className="join-item btn btn-success btn-ghost btn-sm"
+          className="btn btn-success btn-outline btn-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
           aria-label={t('layout.unmaximize')}
           onClick={handleEvent(unmaximize)}
         >
@@ -44,7 +44,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
       ) : (
         <button
           type="button"
-          className="join-item btn btn-success btn-ghost btn-sm"
+          className="btn btn-success btn-outline btn-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
           aria-label={t('layout.maximize')}
           onClick={handleEvent(maximize)}
         >
@@ -53,7 +53,7 @@ const TrafficLightButtons: React.FC<Props> = ({ className }) => {
       )}
       <button
         type="button"
-        className="join-item btn btn-error btn-ghost btn-sm"
+        className="btn btn-error btn-outline btn-sm transition-all duration-200 hover:scale-105 hover:shadow-md"
         aria-label={t('common.close')}
         onClick={close}
       >

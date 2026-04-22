@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classnames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -8,10 +7,6 @@ import { Icon, NavTab } from 'renderer/components';
 
 import { addModule } from './utils';
 import ChordDisplayAddModal from './ChordDisplayAddModal';
-
-import styles from './ChordDisplaySettings.module.scss';
-
-const cx = classnames.bind(styles);
 
 const ChordDisplayList: React.FC = () => {
   const navigate = useNavigate();
@@ -39,9 +34,9 @@ const ChordDisplayList: React.FC = () => {
 
   return (
     <>
-      <div className={`flex items-center gap-2 p-2 bg-base-100 shadow-lg ${cx('header')}`}>
+      <div className="flex items-center gap-2 p-2 bg-base-100 shadow-lg">
         <div
-          className={`tabs tabs-boxed ${cx('list')}`}
+          className="tabs tabs-boxed"
           aria-label={t('settings.chordDisplaySettings.chordDisplayList')}
         >
           {moduleIds.map((moduleId) => (
@@ -52,7 +47,7 @@ const ChordDisplayList: React.FC = () => {
         </div>
         <button
           type="button"
-          className="btn btn-success"
+          className="btn btn-success btn-sm"
           aria-label={t('settings.chordDisplaySettings.addSession')}
           onClick={handleAdd}
         >

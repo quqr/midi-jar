@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import classnames from 'classnames/bind';
 import { Chord, Note } from 'tonal';
 
 import { useSettings } from 'renderer/contexts/Settings';
@@ -11,10 +10,6 @@ import ChordDictionaryChromaMenu from './ChordDictionaryChromaMenu';
 import ChordDictionaryChordMenu from './ChordDictionaryChordMenu';
 import ChordDictionaryToolbar from './ChordDictionaryToolbar';
 import ChordDictionaryModuleProvider from './ChordDictionaryModuleProvider';
-
-import styles from './ChordDictionary.module.scss';
-
-const cx = classnames.bind(styles);
 
 type Props = {
   disableUpdate?: boolean;
@@ -102,8 +97,8 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
       disableUpdate={disableUpdate}
     >
       <ChordDictionaryToolbar disableUpdate={disableUpdate} />
-      <div className={cx('container', 'sidebar-layout')}>
-        <div className={cx('pitchbar')}>
+      <div className="relative flex flex-col w-full h-full justify-end items-center overflow-hidden flex-1">
+        <div className="w-[200px] min-w-[200px] max-w-[200px] h-full overflow-y-auto overflow-x-hidden border-r border-neutral-300 bg-neutral-100 transition-[width,opacity] duration-300">
           <ChordDictionaryChromaMenu
             keySignature={keySignature}
             selected={chroma}
@@ -111,9 +106,9 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
             filterChordsInKey={settings.chordDictionary.filterInKey}
           />
         </div>
-        <div className={cx('content', 'main-content')}>
-          <div className={cx('container', 'sidebar-layout-inner')}>
-            <div className={cx('chordbar')}>
+        <div className="h-full flex-1 min-w-0 overflow-hidden flex flex-1">
+          <div className="flex w-full h-full overflow-hidden">
+            <div className="w-[280px] min-w-[280px] max-w-[280px] h-full overflow-y-auto overflow-x-hidden border-r border-neutral-300 bg-neutral-100 transition-[width,opacity] duration-300">
               <ChordDictionaryChordMenu
                 keySignature={keySignature}
                 selected={chordType}
@@ -125,7 +120,7 @@ const ChordDictionary: React.FC<Props> = ({ disableUpdate }) => {
                 filterChordsInKey={settings.chordDictionary.filterInKey}
               />
             </div>
-            <div className={cx('content', 'inner-content')}>
+            <div className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden bg-neutral-0">
               <Outlet />
             </div>
           </div>

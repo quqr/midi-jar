@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames/bind';
 
 import { formatSharpsFlats } from 'renderer/helpers/note';
 import {
@@ -11,10 +10,6 @@ import {
 
 import { useChordDictionary } from 'renderer/contexts/ChordDictionary';
 import { ChordNameProps } from './types';
-
-import styles from './ChordName.module.scss';
-
-const cx = classnames.bind(styles);
 
 function getChordSymbol(
   chord: ChordNameProps['chord'],
@@ -64,21 +59,32 @@ export const ChordName: React.FC<ChordNameProps> = ({
   const [first, ...rest] = tokens;
 
   return (
-    <div className={cx('base', 'chord', highlightAlterations && '--highlighted', className)}>
-      <span className={cx('tonic', 'chord-tonic')}>
-        {latinSharpsFlats ? tonic : formatSharpsFlats(tonic)}
-      </span>
-      <span className={cx('name', 'chord-name')}>
-        <span className={cx('quality')}>{formatQuality(first)}</span>
+    <div
+      className={`inline-flex items-end h-[1.5em] leading-[1.5em] align-bottom ${className ?? ''}`}
+    >
+      <span className="font-bold">{latinSharpsFlats ? tonic : formatSharpsFlats(tonic)}</span>
+      <span className="text-[0.9em] leading-[1.5em]">
+        <span
+          className={`mx-[0.05em] font-bold italic ${
+            highlightAlterations ? 'bg-red-500 rounded-[0.1em]' : ''
+          }`}
+        >
+          {formatQuality(first)}
+        </span>
         {rest.map((part, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <span className={cx('extension')} key={`${part}_${index}`}>
+          <span
+            className={`mx-[0.05em] align-super italic text-[0.8em] ${
+              highlightAlterations ? 'bg-blue-500 rounded-[0.1em]' : ''
+            }`}
+            key={`${part}_${index}`}
+          >
             {latinSharpsFlats ? part : formatSharpsFlats(part)}
           </span>
         ))}
       </span>
       {!hideRoot && chord.root && (
-        <span className={cx('root', 'chord-root')}>
+        <span className="leading-[1.5em] ml-[0.25em] text-[0.6em] opacity-50">
           /{latinSharpsFlats ? chord.root : formatSharpsFlats(chord.root)}
         </span>
       )}

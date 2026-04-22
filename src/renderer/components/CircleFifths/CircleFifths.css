@@ -1,0 +1,178 @@
+:root {
+  --cf-color-black: #0e0e0e;
+  --cf-color-white: #ffffff;
+  --cf-color-neutral-darker: #252525;
+  --cf-color-neutral-dark: #303030;
+  --cf-color-neutral-normal: #5c5c5c;
+  --cf-color-neutral-light: #999999;
+  --cf-color-neutral-lighter: #cccccc;
+  --cf-color-primary-dark: #1148e1;
+  --cf-color-primary-normal: #3567f0;
+  --cf-color-primary-light: #648bf4;
+  --cf-color-success-dark: #127c4f;
+  --cf-color-success-normal: #19a86c;
+  --cf-color-danger-dark: #c1292b;
+  --cf-color-danger-normal: #d84547;
+}
+
+.root--interactive .key {
+  cursor: pointer;
+}
+
+.root--interactive .key:hover,
+.root--interactive .key.key--isInScale:hover .sector {
+  fill: var(--cf-color-primary-light);
+}
+
+/* Circle of Fifths classes */
+
+.wheel--isRotating {
+  transition: transform 0.7s ease;
+}
+
+.wheel--isRotating .name {
+  transition: transform 0.7s ease;
+}
+
+/* Sector base styles */
+.sector {
+  fill: var(--cf-color-neutral-normal);
+  stroke: var(--cf-color-neutral-darker);
+}
+
+.badge {
+  fill: rgba(0, 0, 0, 0.3);
+}
+
+.followPath {
+  fill: none;
+  stroke: none;
+}
+
+/* DEGREES */
+
+.degreeLabels {
+  pointer-events: none;
+}
+
+.degreeLabel {
+  font-family: serif;
+  font-weight: bold;
+  fill: rgba(var(--cf-color-white), 0.5);
+}
+
+.degreeTitle .degreeSection {
+  fill: var(--cf-color-neutral-dark);
+}
+
+.degreeTitle text {
+  fill: var(--cf-color-white);
+}
+
+.degree text {
+  fill: var(--cf-color-neutral-darker);
+}
+
+/* MODES */
+
+.mode text {
+  fill: var(--cf-color-white);
+}
+
+.modeSeparator {
+  stroke: var(--cf-color-white);
+  stroke-width: 0.1;
+}
+
+/* ALTERATIONS */
+
+.alterations text {
+  fill: rgba(var(--cf-color-white), 0.5);
+}
+
+.alterations--selected > .alteration--selected {
+  fill: var(--cf-color-white);
+}
+
+/* DOMINANTS */
+
+.dominants text {
+  fill: rgba(var(--cf-color-white), 0.5);
+}
+
+.dominants--selected text {
+  fill: var(--cf-color-white);
+}
+
+.dominant--isInScale .sector {
+  fill: var(--cf-color-primary-dark);
+}
+
+/* Section variants */
+
+.key--isMainSection .sector {
+  fill: var(--cf-color-neutral-light);
+}
+
+.key.key--isInScale .sector {
+  fill: var(--cf-color-primary-dark);
+}
+
+.key.key--selected {
+  pointer-events: none;
+}
+
+.key.key--selected .name {
+  fill: var(--cf-color-white);
+}
+
+.key.key--multiple {
+  pointer-events: all;
+}
+
+.key.key--multiple.key--selected .name {
+  fill: rgba(var(--cf-color-white), 0.5);
+}
+
+.key.key--multiple.key--selected .name--selected {
+  fill: var(--cf-color-white);
+  font-weight: bold;
+}
+
+.key--major.key--selected .sector {
+  fill: var(--cf-color-primary-normal);
+}
+
+.key--minor.key--selected .sector {
+  fill: var(--cf-color-primary-normal);
+}
+
+.key--diminished .sector {
+  fill: var(--cf-color-neutral-dark);
+}
+
+.key--diminished.key--selected .sector {
+  fill: var(--cf-color-primary-normal);
+}
+
+.key--suspended {
+  pointer-events: none;
+}
+
+.key--suspended .sector {
+  fill: var(--cf-color-neutral-normal);
+}
+
+.key--suspended.key--selected .sector {
+  fill: var(--cf-color-primary-normal);
+}
+
+/* Chord play */
+
+.dominant.dominant--active .sector {
+  fill: var(--cf-color-success-normal);
+}
+
+.key.key--active .sector {
+  fill: var(--cf-color-success-normal);
+}

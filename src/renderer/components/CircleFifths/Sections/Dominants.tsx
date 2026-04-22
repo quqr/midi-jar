@@ -1,15 +1,10 @@
 import React, { memo } from 'react';
-import classnames from 'classnames/bind';
 import { Chord } from '@tonaljs/chord';
 
 import { getNoteInKeySignature, KeySignatureConfig } from 'renderer/helpers/note';
 
 import { Section, CircleOfFifthsConfig } from '../types';
 import { CX, CY, drawArc, drawSection, isChordPressed, formatLabel } from '../utils';
-
-import styles from '../CircleFifths.module.scss';
-
-const cx = classnames.bind(styles);
 
 type SectionDominantsProps = {
   value: number;
@@ -33,29 +28,26 @@ const SectionDominants: React.FC<SectionDominantsProps> = ({
   const labels = Array.isArray(label) ? label : [label];
 
   return (
-    <g
-      className={cx('dominants', {
-        'dominants--selected': current === value,
-      })}
-    >
+    <g className={`dominants ${current === value ? 'dominants--selected' : ''}`}>
       {labels.map((l: string, index: number) => {
         const angleStart = (value - 0.5 + index / labels.length) / 12;
         const angleEnd = (value - 0.5 + (index + 1) / labels.length) / 12;
         return (
           <g
             key={l}
-            className={cx('dominant', {
-              'dominant--active': isChordPressed(l, 'dom', chord, config),
-              'dominant--isInScale': config?.highlightInScale && index === 0 && current === value,
-            })}
+            className={`${isChordPressed(l, 'dom', chord, config) ? 'dominant--active' : ''} ${
+              config?.highlightInScale && index === 0 && current === value
+                ? 'dominant--isInScale'
+                : ''
+            }`}
           >
             <path
               id={`dominants_${value}_${index}_followpath`}
-              className={cx('followPath')}
+              className="followPath"
               d={drawArc(CX, CY, section.middle, angleStart, angleEnd)}
             />
             <path
-              className={cx('sector')}
+              className="sector"
               d={drawSection(CX, CY, section.start, section.end, angleStart, angleEnd)}
               strokeWidth="0.5"
             />

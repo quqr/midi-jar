@@ -1,13 +1,8 @@
 import React, { useCallback } from 'react';
-import classNames from 'classnames/bind';
 
 import { InputColorProps } from './types';
 
-import styles from './InputColor.module.scss';
-
 const COLOR_CHARS = '0 1 2 3 4 5 6 7 8 9 a b c d e f'.split(' ');
-
-const cx = classNames.bind(styles);
 
 export const InputColor: React.FC<InputColorProps> = ({ className, value, onChange, ...rest }) => {
   const handleKeyPress = useCallback(
@@ -45,22 +40,13 @@ export const InputColor: React.FC<InputColorProps> = ({ className, value, onChan
   return (
     <div className="relative">
       <input
-        className={cx(
-          'color',
-          'absolute',
-          'top-0',
-          'left-0',
-          'w-8',
-          'h-full',
-          'opacity-0',
-          'cursor-pointer'
-        )}
+        className="absolute top-0 left-0 w-8 h-full opacity-0 cursor-pointer"
         type="color"
         onChange={handleColorChange}
         value={value ?? ''}
       />
       <input
-        className={cx('base', 'input', 'input-bordered', 'w-full', 'pl-10', className)}
+        className={`input input-bordered w-full pl-10 w-[7ch] font-mono ${className ?? ''}`}
         value={value ?? ''}
         onKeyPress={handleKeyPress}
         onChange={(e) => handleTextChange(e.target.value)}

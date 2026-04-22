@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
@@ -16,12 +15,9 @@ import ThumbnailRouting from 'renderer/assets/thumbnails/routing.jpg';
 import ThumbnailDebugger from 'renderer/assets/thumbnails/debugger.jpg';
 import { useServerState } from 'renderer/contexts/ServerState';
 import { useSettings } from 'renderer/contexts/Settings';
-import styles from './Home.module.scss';
 
 const getOverlayUrl = (state: ServerState, path: string) =>
   `http://${state.addresses[0]}:${state.port}${path}`;
-
-const cx = classnames.bind(styles);
 
 const Home: React.FC = () => {
   const { settings } = useSettings();
@@ -30,7 +26,7 @@ const Home: React.FC = () => {
   const overlayEnabled = state.started && !!state.addresses.length;
 
   return (
-    <div className={classnames('container mx-auto max-w-7xl', styles.base)}>
+    <div className="container mx-auto max-w-7xl flex flex-col justify-center items-center flex-1 px-2 py-4 sm:px-2 sm:py-6 md:px-4 md:py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
         {settings.chordDisplay.map((module) => (
           <div

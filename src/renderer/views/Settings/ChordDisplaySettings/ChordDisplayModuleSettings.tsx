@@ -33,20 +33,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             <legend className="fieldset-legend">{t('settings.chordDisplaySettings.chords')}</legend>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="displayChord"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayChord')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayChordHint')}
-                </span>
+              <label htmlFor="displayChord" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayChord')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayChordHint')}
+                  </span>
+                </div>
                 <input
                   id="displayChord"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayChord', e.target.checked)}
                   checked={moduleSettings.displayChord}
                 />
@@ -54,20 +53,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="displayAltChords"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayAltChords')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayAltChordsHint')}
-                </span>
+              <label htmlFor="displayAltChords" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayAltChords')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayAltChordsHint')}
+                  </span>
+                </div>
                 <input
                   id="displayAltChords"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayAltChords', e.target.checked)}
                   checked={moduleSettings.displayAltChords}
                 />
@@ -75,20 +73,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="displayName"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayChordName')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayChordNameHint')}
-                </span>
+              <label htmlFor="displayName" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayChordName')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayChordNameHint')}
+                  </span>
+                </div>
                 <input
                   id="displayName"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayName', e.target.checked)}
                   checked={moduleSettings.displayName}
                 />
@@ -96,19 +93,18 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="chordNotation"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.chordNotation')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.chordNotationHint')}
-                </span>
+              <label htmlFor="chordNotation" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.chordNotation')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.chordNotationHint')}
+                  </span>
+                </div>
                 <select
                   id="chordNotation"
-                  className="select select-bordered w-full"
+                  className="select select-bordered w-full max-w-xs"
                   value={moduleSettings.chordNotation}
                   onChange={(e) => updateModuleSetting('chordNotation', e.target.value)}
                 >
@@ -124,18 +120,20 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             <div className="form-control w-full">
               <label
                 htmlFor="highlightAlterations"
-                className="label cursor-pointer flex-row-reverse justify-between"
+                className="label cursor-pointer justify-between"
               >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.highlightAlterations')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.highlightAlterationsHint')}
-                </span>
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.highlightAlterations')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.highlightAlterationsHint')}
+                  </span>
+                </div>
                 <input
                   id="highlightAlterations"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('highlightAlterations', e.target.checked)}
                   checked={moduleSettings.highlightAlterations}
                 />
@@ -143,20 +141,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="allowOmissions"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.allowOmissions')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.allowOmissionsHint')}
-                </span>
+              <label htmlFor="allowOmissions" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.allowOmissions')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.allowOmissionsHint')}
+                  </span>
+                </div>
                 <input
                   id="allowOmissions"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('allowOmissions', e.target.checked)}
                   checked={moduleSettings.allowOmissions}
                 />
@@ -164,19 +161,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label
-                htmlFor="useSustainPedal"
-                className="label cursor-pointer flex-row-reverse justify-between"
-              >
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.useSustainPedal')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.useSustainPedalHint')}
-                </span>
+              <label htmlFor="useSustainPedal" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.useSustainPedal')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.useSustainPedalHint')}
+                  </span>
+                </div>
                 <input
+                  id="useSustainPedal"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('useSustain', e.target.checked)}
                   checked={moduleSettings.useSustain}
                 />
@@ -184,16 +181,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.detectOnRelease')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.detectOnReleaseHint')}
-                </span>
+              <label htmlFor="detectOnRelease" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.detectOnRelease')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.detectOnReleaseHint')}
+                  </span>
+                </div>
                 <input
+                  id="detectOnRelease"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('detectOnRelease', e.target.checked)}
                   checked={moduleSettings.detectOnRelease}
                 />
@@ -207,16 +207,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </legend>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayNotation')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayNotationHint')}
-                </span>
+              <label htmlFor="displayNotation" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayNotation')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayNotationHint')}
+                  </span>
+                </div>
                 <input
+                  id="displayNotation"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayNotation', e.target.checked)}
                   checked={moduleSettings.displayNotation}
                 />
@@ -224,16 +227,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayIntervals')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayIntervalsHint')}
-                </span>
+              <label htmlFor="displayIntervals" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayIntervals')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayIntervalsHint')}
+                  </span>
+                </div>
                 <input
+                  id="displayIntervals"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayIntervals', e.target.checked)}
                   checked={moduleSettings.displayIntervals}
                 />
@@ -247,16 +253,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </legend>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displayKeyboard')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displayKeyboardHint')}
-                </span>
+              <label htmlFor="displayKeyboard" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displayKeyboard')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displayKeyboardHint')}
+                  </span>
+                </div>
                 <input
+                  id="displayKeyboard"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('displayKeyboard', e.target.checked)}
                   checked={moduleSettings.displayKeyboard}
                 />
@@ -264,12 +273,15 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">{t('settings.chordDisplaySettings.noteStart')}</span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.noteStartHint')}
-                </span>
+              <label htmlFor="noteStart" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">{t('settings.chordDisplaySettings.noteStart')}</span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.noteStartHint')}
+                  </span>
+                </div>
                 <InputNote
+                  id="noteStart"
                   onChange={(value) => updateModuleSetting('keyboard.from', value)}
                   value={moduleSettings.keyboard.from}
                   withOctave
@@ -279,12 +291,15 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">{t('settings.chordDisplaySettings.noteEnd')}</span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.noteEndHint')}
-                </span>
+              <label htmlFor="noteEnd" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">{t('settings.chordDisplaySettings.noteEnd')}</span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.noteEndHint')}
+                  </span>
+                </div>
                 <InputNote
+                  id="noteEnd"
                   onChange={(value) => updateModuleSetting('keyboard.to', value)}
                   value={moduleSettings.keyboard.to}
                   withOctave
@@ -294,16 +309,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.wrapKeyboard')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.wrapKeyboardHint')}
-                </span>
+              <label htmlFor="wrapKeyboard" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.wrapKeyboard')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.wrapKeyboardHint')}
+                  </span>
+                </div>
                 <input
+                  id="wrapKeyboard"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) => updateModuleSetting('keyboard.wrap', e.target.checked)}
                   checked={moduleSettings.keyboard.wrap}
                 />
@@ -311,16 +329,22 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.displaySustainedNotes')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.displaySustainedNotesHint')}
-                </span>
+              <label
+                htmlFor="displaySustainedNotes"
+                className="label cursor-pointer justify-between"
+              >
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.displaySustainedNotes')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.displaySustainedNotesHint')}
+                  </span>
+                </div>
                 <input
+                  id="displaySustainedNotes"
                   type="checkbox"
-                  className="toggle"
+                  className="toggle toggle-primary"
                   onChange={(e) =>
                     updateModuleSetting('keyboard.displaySustained', e.target.checked)
                   }
@@ -330,13 +354,16 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">{t('settings.chordDisplaySettings.keyNames')}</span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.keyNamesHint')}
-                </span>
+              <label htmlFor="keyNames" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">{t('settings.chordDisplaySettings.keyNames')}</span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.keyNamesHint')}
+                  </span>
+                </div>
                 <select
-                  className="select select-bordered w-full"
+                  id="keyNames"
+                  className="select select-bordered w-full max-w-xs"
                   value={moduleSettings.keyboard.keyName}
                   onChange={(e) => updateModuleSetting('keyboard.keyName', e.target.value)}
                 >
@@ -350,15 +377,18 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.playedKeyInfo')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.playedKeyInfoHint')}
-                </span>
+              <label htmlFor="playedKeyInfo" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.playedKeyInfo')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.playedKeyInfoHint')}
+                  </span>
+                </div>
                 <select
-                  className="select select-bordered w-full"
+                  id="playedKeyInfo"
+                  className="select select-bordered w-full max-w-xs"
                   value={moduleSettings.keyboard.keyInfo}
                   onChange={(e) => updateModuleSetting('keyboard.keyInfo', e.target.value)}
                 >
@@ -372,15 +402,18 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">
-                  {t('settings.chordDisplaySettings.playedKeyLabel')}
-                </span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.playedKeyLabelHint')}
-                </span>
+              <label htmlFor="playedKeyLabel" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">
+                    {t('settings.chordDisplaySettings.playedKeyLabel')}
+                  </span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.playedKeyLabelHint')}
+                  </span>
+                </div>
                 <select
-                  className="select select-bordered w-full"
+                  id="playedKeyLabel"
+                  className="select select-bordered w-full max-w-xs"
                   value={moduleSettings.keyboard.label}
                   onChange={(e) => updateModuleSetting('keyboard.label', e.target.value)}
                 >
@@ -427,13 +460,16 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </legend>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
-                <span className="label-text">{t('settings.chordDisplaySettings.skin')}</span>
-                <span className="label-text-alt">
-                  {t('settings.chordDisplaySettings.skinHint')}
-                </span>
+              <label htmlFor="skin" className="label cursor-pointer justify-between">
+                <div>
+                  <span className="label-text">{t('settings.chordDisplaySettings.skin')}</span>
+                  <span className="label-text-alt">
+                    {t('settings.chordDisplaySettings.skinHint')}
+                  </span>
+                </div>
                 <select
-                  className="select select-bordered w-full"
+                  id="skin"
+                  className="select select-bordered w-full max-w-xs"
                   value={moduleSettings.keyboard.skin}
                   onChange={(e) => updateModuleSetting('keyboard.skin', e.target.value)}
                 >
@@ -549,14 +585,19 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             )}
             {moduleSettings.keyboard.skin === 'classic' && (
               <div className="form-control w-full">
-                <label className="label cursor-pointer flex-row-reverse justify-between">
-                  <span className="label-text">{t('settings.chordDisplaySettings.keyBevel')}</span>
-                  <span className="label-text-alt">
-                    {t('settings.chordDisplaySettings.keyBevelHint')}
-                  </span>
+                <label htmlFor="keyBevel" className="label cursor-pointer justify-between">
+                  <div>
+                    <span className="label-text">
+                      {t('settings.chordDisplaySettings.keyBevel')}
+                    </span>
+                    <span className="label-text-alt">
+                      {t('settings.chordDisplaySettings.keyBevelHint')}
+                    </span>
+                  </div>
                   <input
+                    id="keyBevel"
                     type="checkbox"
-                    className="toggle"
+                    className="toggle toggle-primary"
                     onChange={(e) => updateModuleSetting('keyboard.sizes.bevel', e.target.checked)}
                     checked={moduleSettings.keyboard.sizes.bevel}
                   />
@@ -571,9 +612,10 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </legend>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
+              <label htmlFor="blackKeys" className="label cursor-pointer justify-between">
                 <span className="label-text">{t('settings.chordDisplaySettings.blackKeys')}</span>
                 <InputColor
+                  id="blackKeys"
                   onChange={(value) => updateModuleSetting('keyboard.colors.black', value)}
                   value={moduleSettings.keyboard.colors.black}
                 />
@@ -581,9 +623,10 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
+              <label htmlFor="whiteKeys" className="label cursor-pointer justify-between">
                 <span className="label-text">{t('settings.chordDisplaySettings.whiteKeys')}</span>
                 <InputColor
+                  id="whiteKeys"
                   onChange={(value) => updateModuleSetting('keyboard.colors.white', value)}
                   value={moduleSettings.keyboard.colors.white}
                 />
@@ -591,9 +634,10 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
+              <label htmlFor="playedKeys" className="label cursor-pointer justify-between">
                 <span className="label-text">{t('settings.chordDisplaySettings.playedKeys')}</span>
                 <InputColor
+                  id="playedKeys"
                   onChange={(value) => updateModuleSetting('keyboard.colors.played', value)}
                   value={moduleSettings.keyboard.colors.played}
                 />
@@ -601,9 +645,10 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
+              <label htmlFor="wrappedKeys" className="label cursor-pointer justify-between">
                 <span className="label-text">{t('settings.chordDisplaySettings.wrappedKeys')}</span>
                 <InputColor
+                  id="wrappedKeys"
                   onChange={(value) => updateModuleSetting('keyboard.colors.wrapped', value)}
                   value={moduleSettings.keyboard.colors.wrapped}
                 />
@@ -611,11 +656,12 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
             </div>
 
             <div className="form-control w-full">
-              <label className="label cursor-pointer flex-row-reverse justify-between">
+              <label htmlFor="sustainedKeys" className="label cursor-pointer justify-between">
                 <span className="label-text">
                   {t('settings.chordDisplaySettings.sustainedKeys')}
                 </span>
                 <InputColor
+                  id="sustainedKeys"
                   onChange={(value) => updateModuleSetting('keyboard.colors.sustained', value)}
                   value={moduleSettings.keyboard.colors.sustained}
                 />
@@ -625,12 +671,15 @@ const ChordDisplayModuleSettings: React.FC<Props> = ({ parentPath }) => {
         </div>
       </ScrollContainer>
       <div className="flex items-center gap-2 p-2 fixed bottom-0 left-0 right-0 z-10 bg-base-100 shadow-[0_-2px_8px_rgba(0,0,0,0.15)]">
-        <button type="button" className="btn btn-neutral" onClick={() => resetModuleSettings()}>
+        <button
+          type="button"
+          className="btn btn-primary btn-sm"
+          onClick={() => resetModuleSettings()}
+        >
           <Icon name="reset" />
           {t('common.resetToDefaults')}
         </button>
-        <div className="border-t border-base-300 my-0 mx-2" />
-        <button type="button" className="btn btn-neutral" onClick={handleDeleteModule}>
+        <button type="button" className="btn btn-error btn-sm" onClick={handleDeleteModule}>
           <Icon name="trash" />
           {t('common.delete')}
         </button>

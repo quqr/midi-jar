@@ -1,15 +1,10 @@
 import React, { useCallback, useState, useRef } from 'react';
-import classNames from 'classnames/bind';
 import { useTranslation } from 'react-i18next';
 
 import { Note } from 'tonal';
 import { MidiLearn } from '../MidiLearn';
 
 import { InputNoteProps } from './types';
-
-import styles from './InputNote.module.scss';
-
-const cx = classNames.bind(styles);
 
 const NOTES = 'A B C D E F G'.split(' ');
 const ACCIDENTALS = '# b'.split(' ');
@@ -80,7 +75,7 @@ export const InputNote: React.FC<InputNoteProps> = ({
   return (
     <div className="join">
       <input
-        className={cx('base', 'input', 'input-bordered', 'w-full', 'join-item', className)}
+        className={`input input-bordered w-full join-item w-[4ch] ${className ?? ''}`}
         value={value ?? ''}
         onChange={(e) => onChange(e.target.value)}
         onKeyPress={handleKeyPress}
@@ -90,7 +85,7 @@ export const InputNote: React.FC<InputNoteProps> = ({
       {learn ? (
         <button
           type="button"
-          className={cx('learn', 'btn', 'join-item', learning ? 'btn-success' : 'btn-neutral')}
+          className={`btn join-item w-[80px] ${learning ? 'btn-success' : 'btn-neutral'}`}
           onClick={toggleLearning}
         >
           {learning ? '...' : t('common.learn')}

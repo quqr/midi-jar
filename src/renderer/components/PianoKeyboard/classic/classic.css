@@ -1,0 +1,216 @@
+:root {
+  --pk-classic-pianoKeyBackground-fill: url(#whiteKey);
+  --pk-classic-pianoKey-stroke: #252525;
+  --pk-classic-pianoKey-stroke-opacity: 0.5;
+  --pk-classic-pianoKeyBevel-transition: fill 0.2s ease;
+  --pk-classic-black-pianoKeyBackground-fill: url(#blackKey);
+  --pk-classic-black-pianoKey-stroke-opacity: 0.3;
+}
+
+.keyboard {
+  &.--withTargets {
+    .white.target {
+      .pianoKey {
+        fill: var(--pk-color-neutral-lighter, #cccccc);
+      }
+
+      .pianoKeyName,
+      .pianoInfo,
+      .pianoTonic {
+        fill: var(--pk-color-neutral-dark, #303030);
+      }
+    }
+
+    .black.target {
+      .pianoKey {
+        fill: var(--pk-color-neutral-normal, #5c5c5c);
+      }
+
+      .pianoKeyName,
+      .pianoInfo,
+      .pianoTonic {
+        fill: var(--pk-color-white, #ffffff);
+      }
+    }
+
+    .note {
+      &.exactTarget {
+        .pianoKey {
+          fill: var(--pk-color-primary-normal, #3567f0);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+
+      &.exactWrapTarget {
+        .pianoKey {
+          fill: var(--pk-color-primary-dark, #1148e1);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+
+      &.wrapPlayed {
+        .pianoKey {
+          fill: var(--pk-color-danger-dark, #c1292b);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+
+      &.played {
+        .pianoKey {
+          fill: var(--pk-color-danger-normal, #d84547);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+
+      &.wrapTarget.wrapPlayed,
+      &.target.wrapPlayed {
+        .pianoKey {
+          fill: var(--pk-color-success-dark, #127c4f);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+
+      &.exactTarget.played,
+      &.target.played {
+        .pianoKey {
+          fill: var(--pk-color-success-normal, #19a86c);
+        }
+
+        .pianoKeyName,
+        .pianoInfo,
+        .pianoTonic {
+          fill: var(--pk-color-white, #ffffff);
+        }
+      }
+    }
+  }
+}
+
+.board {
+  .note {
+    &.tonic.played .pianoTonic,
+    &.info.played .pianoInfo {
+      opacity: 1;
+    }
+
+    &.wrapSustained,
+    &.sustained {
+      .pianoKey {
+        fill: var(--pk-sustained_background, #808080);
+      }
+
+      .pianoKeyName,
+      .pianoInfo,
+      .pianoTonic {
+        fill: var(--pk-sustained_color, #ffffff);
+      }
+    }
+
+    &.wrapPlayed {
+      .pianoKey {
+        fill: var(--pk-wrapPlayed_background, #800000);
+        transition: fill ease 0s;
+      }
+
+      .pianoKeyName,
+      .pianoInfo,
+      .pianoTonic {
+        fill: var(--pk-wrapPlayed_color, #ffffff);
+      }
+    }
+
+    &.played {
+      .pianoKey {
+        fill: var(--pk-played_background, #ff0000);
+        transition: fill ease 0s;
+      }
+
+      .pianoKeyName,
+      .pianoInfo,
+      .pianoTonic {
+        fill: var(--pk-played_color, #ffffff);
+      }
+    }
+  }
+}
+
+.note.white {
+  .pianoKeyBackground {
+    fill: var(--pk-classic-pianoKeyBackground-fill);
+  }
+
+  .pianoKey {
+    fill: var(--pk-white_background, #ffffff);
+    stroke: var(--pk-classic-pianoKey-stroke);
+    stroke-opacity: var(--pk-classic-pianoKey-stroke-opacity);
+    transition: var(--pk-classic-pianoKeyBevel-transition);
+  }
+
+  .pianoKeyName {
+    fill: var(--pk-white_color, #000000);
+    opacity: var(--pk-text_opacity, 0.5);
+  }
+
+  .pianoTonic {
+    fill: var(--pk-white_color, #000000);
+    opacity: 0;
+  }
+
+  .pianoInfo {
+    fill: var(--pk-white_color, #000000);
+    opacity: var(--pk-text_opacity, 0.5);
+  }
+}
+
+.note.black {
+  .pianoKeyBackground {
+    fill: var(--pk-classic-black-pianoKeyBackground-fill);
+  }
+
+  .pianoKey {
+    fill: var(--pk-black_background, #000000);
+    stroke: var(--pk-classic-pianoKey-stroke);
+    stroke-opacity: var(--pk-classic-black-pianoKey-stroke-opacity);
+    transition: var(--pk-classic-pianoKeyBevel-transition);
+  }
+
+  .pianoKeyName {
+    fill: var(--pk-black_color, #ffffff);
+    opacity: var(--pk-text_opacity, 0.5);
+  }
+
+  .pianoTonic {
+    fill: var(--pk-black_color, #ffffff);
+    opacity: 0;
+  }
+
+  .pianoInfo {
+    fill: var(--pk-black_color, #ffffff);
+    opacity: var(--pk-text_opacity, 0.5);
+  }
+}
