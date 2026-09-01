@@ -1,0 +1,179 @@
+import type { WaterfallPianoSettings } from "./types";
+
+// ─── 默认设置 ───
+export const defaultWaterfallSettings: WaterfallPianoSettings = {
+  particles: {
+    colorScheme: "pitch",
+    customColors: { low: "#6366f1", mid: "#14b8a6", high: "#f59e0b" },
+    speed: 2,
+    lookAhead: 3,
+    opacity: 1.0,
+    cornerRadius: 3,
+    hitExplosionRadius: 0.03,
+    hitLine: {
+      visible: true,
+      color: "#ffffff",
+      thickness: 2,
+    },
+  },
+  background: {
+    solidColor: "#1a1a2e",
+    fluidEnabled: true,
+    fluidQuality: "medium",
+    fluidStyle: "standard",
+    fluidParams: {
+      hitExplosion: true,
+      blockCoverage: false,
+      splatRadius: 0.0001,
+    },
+    fluidLayerPosition: "bottom",
+  },
+  keyboard: {
+    visible: true,
+    range: "88",
+    customFrom: "A0",
+    customTo: "C8",
+    keyLabel: "none",
+    theme: "coral",
+    whiteKeyColor: "#FBF8F3",
+    blackKeyColor: "#2B2020",
+    pressedKeyColor: "#FF5C5C",
+    heightRatio: 0.3,
+    blackKeyHeightRatio: 0.62,
+    keyCornerRadius: 4,
+    keyBorderWidth: 1,
+    keyBorderColor: "#EBE0D6",
+    separatorEnabled: true,
+    separatorColor: "#FFC4B0",
+    separatorThickness: 2,
+    showNoteNames: false,
+    defaultVelocity: 90,
+  },
+  midiFile: {
+    playbackSpeed: 1,
+    loop: false,
+    rightHandTrackIdx: 0,
+    leftHandTrackIdx: 1,
+  },
+  aura: {
+    enabled: false,
+    style: "glow",
+    target: "triggered",
+    // 第 1 层：Aura 区域
+    padding: 2,
+    // 第 2 层：双层光晕
+    innerBlur: 4,
+    innerOpacity: 70,
+    outerBlur: 16,
+    outerOpacity: 30,
+    // 第 3 层：动画
+    duration: 6,
+    // 第 4 层：Glow 专属
+    glowPeakOpacity: 100,
+    glowPeakBlur: 12,
+    glowAfterPeakOpacity: 60,
+    glowAfterPeakBlur: 24,
+  },
+  effects: {
+    advancedBloomEnabled: false,
+    advancedBloomThreshold: 0.5,
+    advancedBloomBloomScale: 1.0,
+    advancedBloomBlur: 4,
+    backdropBlurEnabled: false,
+    backdropBlurStrength: 4,
+  },
+};
+
+// ─── 键盘快捷键映射（A-K → C4-C5） ───
+export const keyboardMap: Record<string, number> = {
+  a: 60, // C4
+  w: 61, // C#4
+  s: 62, // D4
+  e: 63, // D#4
+  d: 64, // E4
+  f: 65, // F4
+  t: 66, // F#4
+  g: 67, // G4
+  y: 68, // G#4
+  h: 69, // A4
+  u: 70, // A#4
+  j: 71, // B4
+  k: 72, // C5
+};
+
+// ─── 持久化键 ───
+export const STORAGE_KEY = "waterfall-piano-settings";
+export const SETTINGS_VERSION = 6; // 递增此版本号可强制重置 localStorage 中的旧设置
+export const RECORDING_STORAGE_KEY = "waterfall-piano-recordings";
+
+// ─── MIDI 路由 namespace ───
+export const MIDI_NAMESPACE = "waterfall-piano/default";
+
+/** 键盘范围定义，from/to 为 MIDI 音符号 */
+export const KEYBOARD_RANGES: Record<string, { from: number; to: number }> = {
+  "88": { from: 21, to: 108 },
+  "61": { from: 36, to: 96 },
+  "49": { from: 36, to: 84 },
+};
+
+// ─── 响应式断点 ───
+export const NARROW_BREAKPOINT = 768;
+
+// ─── 播放速度共享范围（避免 MidiFileSection 与 MidiDrawer 不一致） ───
+export const PLAYBACK_SPEED = {
+  min: 0.25,
+  max: 2,
+  step: 0.05,
+  decimals: 1,
+} as const;
+
+// ─── 窄屏收束范围（C2-C6，49 键） ───
+export const NARROW_RANGE = { from: 36, to: 84 };
+
+// ─── 音名 ↔ MIDI 工具 ───
+const NOTE_NAMES = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+];
+
+/**
+ * 将 MIDI 音符号转换为音名（如 60 → "C4"）
+ * @param midi - MIDI 音符号（0-127）
+ * @returns 音名字符串，格式为 音名+八度（如 "C#3"）
+ */
+export function midiToNoteName(midi: number): string {
+  const octave = Math.floor(midi / 12) - 1;
+  return NOTE_NAMES[midi % 12] + octave;
+}
+
+/**
+ * 将音名转换为 MIDI 音符号（如 "C4" → 60）
+ * @param name - 音名字符串，格式为 音名+八度（如 "F#5"）
+ * @returns MIDI 音符号；解析失败时返回 60（C4）
+ */
+export function noteNameToMidi(name: string): number {
+  const match = name.match(/^([A-G]#?)(-?\d+)$/);
+  if (!match) return 60;
+  const idx = NOTE_NAMES.indexOf(match[1]);
+  if (idx < 0) return 60;
+  return (parseInt(match[2], 10) + 1) * 12 + idx;
+}
+
+/**
+ * 获取 MIDI 音符号对应的音高类名（不含八度，如 61 → "C#"）
+ * @param midi - MIDI 音符号（0-127）
+ * @returns 音高类名（C, C#, D, ... B）
+ */
+export function midiToPitchClass(midi: number): string {
+  return NOTE_NAMES[midi % 12];
+}

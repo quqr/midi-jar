@@ -1,0 +1,376 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, watch, watchEffect } from "vue";
+import { Application, Container } from "pixi.js";
+import { KeyboardRenderer } from "@/views/WaterfallPiano/engine/KeyboardRenderer";
+import type { KeyboardSettings } from "@/types/settings";
+import { Event } from "@/utils/delegate";
+import { getCanvasDpr, chordNotesToMidi, toKeyboardConfig } from "./utils";
+
+// ============================================================================
+// 事件参数类型定义（供 Event 系统使用）
+// ============================================================================
+
+export interface NoteEventArgs {
+  midi: number;
+}
+
+// ── Props ──
+
+interface ChordLike {
+  notes?: string[];
+}
+
+interface Props {
+  id?: string;
+  className?: string;
+  keyboard?: KeyboardSettings;
+  played?: number[];
+  sustained?: number[];
+  midi?: number[];
+  targets?: number[] | null;
+  /** 和弦对象（仅用 .notes），可接收 @tonaljs/chord#Chord */
+  chord?: ChordLike;
+  clickable?: boolean;
+  /** true: 按下保持并 emit noteOn/noteOff；false: 点击即 emit noteClick */
+  sustainMode?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  id: undefined,
+  className: undefined,
+  keyboard: () => ({
+    skin: "coral",
+    from: "C3",
+    to: "B5",
+    label: "none",
+    keyName: "none",
+    keyInfo: "none",
+    fadeOutDuration: 0,
+    textOpacity: 0.5,
+    displaySustained: false,
+    wrap: false,
+    sizes: { radius: 1, height: 5, ratio: 0.6, bevel: true },
+    colors: {
+      white: "#FBF8F3",
+      black: "#2B2020",
+      played: "#FF5C5C",
+      wrapped: "#800000",
+      sustained: "#777777",
+    },
+  }),
+  played: () => [],
+  sustained: () => [],
+  midi: () => [],
+  targets: null,
+  chord: undefined,
+  clickable: false,
+  sustainMode: false,
+});
+
+const emit = defineEmits<{
+  noteClick: [midi: number];
+  noteOn: [midi: number];
+  noteOff: [midi: number];
+}>();
+
+// ── Event 系统（供 JS 层订阅） ──
+
+const events = {
+  noteClick: new Event<NoteEventArgs>(),
+  noteOn: new Event<NoteEventArgs>(),
+  noteOff: new Event<NoteEventArgs>(),
+};
+
+defineExpose({ events });
+
+// ── 事件触发函数（统一 Vue emit 和 Event 系统） ──
+
+function triggerNoteClick(midi: number): void {
+  emit("noteClick", midi);
+  events.noteClick.internalInvoke({ midi });
+}
+
+function triggerNoteOn(midi: number): void {
+  emit("noteOn", midi);
+  events.noteOn.internalInvoke({ midi });
+}
+
+function triggerNoteOff(midi: number): void {
+  emit("noteOff", midi);
+  events.noteOff.internalInvoke({ midi });
+}
+
+// ── 模板引用 ──
+
+const containerRef = ref<HTMLDivElement | null>(null);
+
+// ── 内部状态 ──
+
+let renderer: KeyboardRenderer | null = null;
+let pixiApp: Application | null = null;
+let pixiContainer: Container | null = null;
+let resizeObserver: ResizeObserver | null = null;
+let themeObserver: MutationObserver | null = null;
+let rafId: number | null = null;
+let resizeRafId: number | null = null;
+/** sustainMode 下当前按住的音符 */
+const sustainedNotes = new Set<number>();
+/** 上一次渲染时的活跃音符快照，用于跳过无变化的重渲染 */
+let lastActiveSnapshot = "";
+
+// ── 高亮更新（经 RAF 去抖） ──
+
+function applyHighlights(): void {
+  if (!renderer) return;
+
+  // 构建当前活跃音符快照，跳过无变化的重渲染
+  const current = [
+    ...props.played,
+    ...props.sustained,
+    ...props.midi,
+    ...(props.targets ?? []),
+    ...sustainedNotes,
+  ]
+    .sort((a, b) => a - b)
+    .join(",");
+  const chordKey = props.chord?.notes?.join(",") ?? "";
+  const snapshot = `${current}|${chordKey}`;
+  if (snapshot === lastActiveSnapshot) return;
+  lastActiveSnapshot = snapshot;
+
+  renderer.clearAllHighlights();
+
+  const highlight = (notes?: number[] | null) => {
+    if (!notes?.length) return;
+    for (const midi of notes) renderer!.highlightNote(midi);
+  };
+
+  highlight(props.played);
+  highlight(props.sustained);
+  highlight(props.targets);
+  highlight(props.midi);
+  // 和弦音高亮：优先匹配已活跃的 MIDI，避免引入用户未点击的"幽灵键"
+  // （例如点击 A3+E4 识别为 A5 时，不应把 E3 也高亮）
+  const hintMidi = [
+    ...(props.played ?? []),
+    ...(props.sustained ?? []),
+    ...(props.midi ?? []),
+    ...(props.targets ?? []),
+  ];
+  highlight(
+    chordNotesToMidi(
+      props.chord?.notes ?? [],
+      renderer.getVisibleRange().from,
+      renderer.getVisibleRange().to,
+      hintMidi,
+    ),
+  );
+  // sustainMode 下保持按住的键也要持续高亮
+  if (sustainedNotes.size > 0) {
+    for (const midi of sustainedNotes) renderer.highlightNote(midi);
+  }
+
+  renderer.render();
+  // 驱动 PixiJS 渲染
+  pixiApp?.render();
+}
+
+function scheduleRender(): void {
+  if (rafId !== null) return;
+  rafId = requestAnimationFrame(() => {
+    rafId = null;
+    applyHighlights();
+  });
+}
+
+// ── 指针事件 ──
+
+function onPointerDown(e: PointerEvent): void {
+  if (!renderer || !props.clickable) return;
+  e.preventDefault();
+
+  const target = e.currentTarget as HTMLElement;
+  const rect = target.getBoundingClientRect();
+  const midi = renderer.xToMidi(e.clientX - rect.left, e.clientY - rect.top);
+  if (midi === null) return;
+
+  target.setPointerCapture(e.pointerId);
+
+  if (props.sustainMode) {
+    sustainedNotes.add(midi);
+    triggerNoteOn(midi);
+  } else {
+    triggerNoteClick(midi);
+  }
+  scheduleRender();
+}
+
+function releasePointer(e: PointerEvent): void {
+  if (!renderer) return;
+
+  // 非 sustainMode 下 sustainedNotes 恒为空，直接跳过
+  if (sustainedNotes.size > 0) {
+    for (const midi of sustainedNotes) triggerNoteOff(midi);
+    sustainedNotes.clear();
+  }
+
+  const target = e.currentTarget as HTMLElement;
+  if (target?.hasPointerCapture(e.pointerId)) {
+    target.releasePointerCapture(e.pointerId);
+  }
+  scheduleRender();
+}
+
+// ── 生命周期 ──
+
+onMounted(async () => {
+  if (!containerRef.value) return;
+
+  // 获取容器尺寸，确保 PixiJS 渲染缓冲区与容器对齐
+  const rect = containerRef.value.getBoundingClientRect();
+  const canvasW = Math.max(1, Math.ceil(rect.width));
+  const canvasH = Math.max(1, Math.ceil(rect.height));
+
+  // 创建 PixiJS Application（使用容器尺寸初始化，避免默认 800x600 导致渲染不对齐）
+  pixiApp = new Application();
+  await pixiApp.init({
+    width: canvasW,
+    height: canvasH,
+    antialias: true,
+    backgroundAlpha: 0,
+    preference: "webgl",
+    resolution: window.devicePixelRatio,
+    autoDensity: true,
+    autoStart: false,
+  });
+
+  // 将 PixiJS canvas 添加到容器（autoDensity 自动管理 CSS 尺寸，无需手动设置 100%）
+  containerRef.value.appendChild(pixiApp.canvas);
+
+  // 创建键盘 Container
+  pixiContainer = new Container();
+  pixiApp.stage.addChild(pixiContainer);
+
+  renderer = new KeyboardRenderer();
+  renderer.init(
+    pixiContainer,
+    pixiApp.renderer,
+    toKeyboardConfig(props.keyboard),
+  );
+
+  const dpr = getCanvasDpr();
+  renderer.resize(canvasW, canvasH, dpr);
+
+  applyHighlights();
+
+  // ResizeObserver — 经 RAF 去抖，避免高频触发浪费渲染
+  resizeObserver = new ResizeObserver(() => {
+    if (resizeRafId !== null) return;
+    resizeRafId = requestAnimationFrame(() => {
+      resizeRafId = null;
+      if (!containerRef.value || !renderer || !pixiApp) return;
+      const r = containerRef.value.getBoundingClientRect();
+      const d = getCanvasDpr();
+      const newW = Math.max(1, Math.ceil(r.width));
+      const newH = Math.max(1, Math.ceil(r.height));
+      // 同步 PixiJS 渲染器尺寸，确保渲染缓冲区与容器对齐
+      pixiApp.renderer.resize(newW, newH);
+      renderer.resize(newW, newH, d);
+      // 失效活跃音符快照：尺寸变化时即使音符未变也必须重渲染，
+      // 否则 applyHighlights 会因快照相同而早退，导致 renderer.render() 不被调用，
+      // 静态层（RenderTexture）不会按新尺寸重建，画布保持空白 → 键盘消失
+      lastActiveSnapshot = "";
+      scheduleRender();
+    });
+  });
+  resizeObserver.observe(containerRef.value);
+
+  // 监听 DaisyUI 主题切换（data-theme 属性变化），重新读取主题色
+  themeObserver = new MutationObserver(() => {
+    if (!renderer || !props.keyboard) return;
+    renderer.setKeyboardConfig(toKeyboardConfig(props.keyboard));
+    // 主题变化同样需要失效快照：setKeyboardConfig 已将 _staticCacheDirty 置为 true，
+    // 但若活跃音符未变，applyHighlights 仍会早退跳过 render()
+    lastActiveSnapshot = "";
+    scheduleRender();
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme", "class"],
+  });
+});
+
+onUnmounted(() => {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+  if (resizeRafId !== null) cancelAnimationFrame(resizeRafId);
+  resizeObserver?.disconnect();
+  resizeObserver = null;
+  themeObserver?.disconnect();
+  themeObserver = null;
+  renderer?.dispose();
+  renderer = null;
+  // pixiApp.destroy 可能触发 PixiJS v8 内部 TexturePool 崩溃（renderer resize 后
+  // CanvasTextPipe 的纹理池可能损坏）。包裹 try/catch 避免未捕获异常冒泡到 Vue。
+  // 注意：第一参数传 false（不释放全局资源）。
+  // TexturePool 是全局单例，和弦词典页面同时存在多个 PianoKeyboard 实例共享同一池。
+  // 若传 true 会触发 GlobalResourceRegistry.release() 把 _texturePool 清空但
+  // _poolKeyHash 保留，后续实例销毁 Text 时 returnTexture 查到 key 但池已空 → 崩溃。
+  try {
+    pixiApp?.destroy(false, { children: true });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn("[PianoKeyboard] pixiApp.destroy failed:", e);
+  }
+  pixiApp = null;
+  pixiContainer = null;
+  sustainedNotes.clear();
+});
+
+// ── 响应性 ──
+
+// watchEffect 自动追踪 props.played/sustained/midi/targets/chord 的变化，
+// 无需 deep:true，且不产生无谓的新引用比较
+watchEffect(() => {
+  // 显式读取所有依赖，让 watchEffect 追踪
+  const _deps = [
+    props.played,
+    props.sustained,
+    props.midi,
+    props.targets,
+    props.chord,
+  ] as const;
+  void _deps;
+  scheduleRender();
+});
+
+watch(
+  () => props.keyboard,
+  (kb) => {
+    if (!renderer) return;
+    renderer.setKeyboardConfig(toKeyboardConfig(kb));
+    // keyboard 配置变化（范围、可见性、颜色等）已将 _staticCacheDirty 置为 true，
+    // 同样需要失效快照，否则 applyHighlights 早退会跳过 render()
+    lastActiveSnapshot = "";
+    scheduleRender();
+  },
+  // 父组件可能原地修改 keyboard 对象的嵌套字段而不换引用，因此需要 deep
+  { deep: true },
+);
+</script>
+
+<template>
+  <div
+    ref="containerRef"
+    :id="id"
+    :class="className"
+    style="width: 100%; height: 100%; position: relative"
+    :style="{
+      touchAction: clickable ? 'none' : 'auto',
+      cursor: clickable ? 'pointer' : 'default',
+    }"
+    @pointerdown="onPointerDown"
+    @pointerup="releasePointer"
+    @pointercancel="releasePointer"
+    @pointerleave="releasePointer"
+  />
+</template>
